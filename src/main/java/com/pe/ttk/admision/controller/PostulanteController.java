@@ -47,12 +47,23 @@ public class PostulanteController {
     @GetMapping("/listar")
     public ResponseEntity<?> listarPostulantes(@RequestParam(defaultValue = "0") Integer numPagina,
                                                @RequestParam(defaultValue = "10") Integer tamPagina) {
-        //400
 
-        //200
         return ResponseEntity.ok(postulanteService.listarPostulantes(numPagina, tamPagina));
     }
-
+    @ApiOperation("Lista todos los postulantes")
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/listarFiltro")
+    public ResponseEntity<?> listarPostulanteFiltro(@RequestParam(required = false) Integer estado,
+                                                    @RequestParam(required = false) @DateTimeFormat(pattern = "dd/MM/yyyy" ) Date fechaPostulacion,
+                                                    @RequestParam(required = false) String dni) {
+        try {
+            return ResponseEntity.ok(postulanteService.listarPostulanteFiltro(estado, fechaPostulacion,dni));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.ok(e);
+        }
+    }
     @ApiOperation("Lista filtrada por datos del postulante")
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/lista/filtrada")

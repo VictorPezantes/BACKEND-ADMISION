@@ -8,7 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +19,7 @@ public interface OfertaService {
     Page<OfertaDto> listarOfertas(Integer numPagina, Integer tamPagina, String titulo, List estado, String fechaPublicacion, List creador);
 
     Page<OfertaDto> listarOfertasLanding(Integer numPagina, Integer tamPagina);
-
+    List<OfertaEntity> listarOfertasFiltro(Integer estado, String descripcion, Date fechaPublicacion);
 
     Mensaje registrarOferta(OfertaDto ofertaDto, Authentication auth);
 

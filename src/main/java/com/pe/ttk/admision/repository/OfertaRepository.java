@@ -3,13 +3,12 @@ package com.pe.ttk.admision.repository;
 import com.pe.ttk.admision.dto.entity.master.Encargado;
 import com.pe.ttk.admision.dto.entity.master.Estado;
 import com.pe.ttk.admision.dto.entity.admision.OfertaEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,5 +26,8 @@ public interface OfertaRepository extends PagingAndSortingRepository<OfertaEntit
     List<OfertaEntity> findByfechaPublicacion(Date fechaPublicacion);
 
     Optional<OfertaEntity> findByIdAndEstado(Long id, Integer estado);
+    @Query("SELECT o FROM OfertaEntity o WHERE (:estado is null or o.estado = :estado) and (:descripcion is null or o.descripcion = :descripcion)"
+            + " and (:fechaPublicacion is null or date(o.fechaPublicacion) = date(:fechaPublicacion) )")
+    List<OfertaEntity> findAllByEstadoOrDescripcionLikeIgnoreCaseOrFechaPublicacion(Integer estado, String descripcion, Date fechaPublicacion);
 
 }

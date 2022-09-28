@@ -19,7 +19,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -75,6 +75,11 @@ public class OfertaServiceImpl implements OfertaService {
         }
 
         return null;
+    }
+
+    @Override
+    public List<OfertaEntity> listarOfertasFiltro(Integer estado, String descripcion,Date fechaPublicacion) {
+        return ofertaRepository.findAllByEstadoOrDescripcionLikeIgnoreCaseOrFechaPublicacion(estado, descripcion,fechaPublicacion);
     }
 
 

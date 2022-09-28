@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,4 +29,5 @@ public interface PostulanteService {
     Optional<PostulanteEntity> getOne(int id);
 
     Page<PostulanteDto> listarPostulantes(Integer numPagina, Integer tamPagina);
+    List<PostulanteEntity> listarPostulanteFiltro(Integer estado, Date fechaPostulacion, String dni);
 }

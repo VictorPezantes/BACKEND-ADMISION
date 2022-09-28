@@ -265,6 +265,11 @@ public class PostulanteServiceImpl implements PostulanteService {
         return null;
     }
 
+    @Override
+    public List<PostulanteEntity> listarPostulanteFiltro(Integer estado, java.util.Date fechaPostulacion, String dni) {
+        return postulanteRepository.findByEstadoAndFechaPostulacionAndDni(estado,fechaPostulacion,dni);
+    }
+
     private void registrarHistorial(PostulanteEntity postulanteEntity, Integer edad, String mensaje){
         HistorialEntity historialEntity = new HistorialEntity();
         historialEntity.setIdPostulante(postulanteEntity.getId());

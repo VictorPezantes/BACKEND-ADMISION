@@ -29,5 +29,5 @@ public class OfertaDto {
     private Date fechaActualizacion;
     @JsonFormat(pattern = "dd/MM/yyyy")
     private Date fechaDesactivado;
-    private int estado;
+    private Integer estado;
 }

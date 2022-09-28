@@ -48,6 +48,16 @@ public class OfertaController {
                 fechaPublicacion, creador));
     }
 
+    @ApiOperation("Listar las ofertas mediante filtros")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/listar-filtro")
+    public ResponseEntity<?> listarOfertasFiltro(@RequestBody OfertaDto oferta) {
+        try{
+            return ResponseEntity.ok(ofertaService.listarOfertasFiltro(oferta.getEstado(), oferta.getDescripcion(), oferta.getFechaPublicacion()));}
+        catch(Exception e){
+            return null;
+        }
+    }
     @ApiOperation("Listar las ofertas activadas para landing")
     @GetMapping("/listar-landing")
     public ResponseEntity<?> listarOfertasLanding(@RequestParam(defaultValue = "0") Integer numPagina,

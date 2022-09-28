@@ -83,52 +83,79 @@ public class PostulanteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotEmpty
+    @Column(name = "primer_nombre")
     private String primerNombre;
+    @Column(name = "segundo_nombre")
     private String segundoNombre;
     @NotEmpty
+    @Column(name = "apellido_paterno")
     private String apellidoPaterno;
     @NotEmpty
+    @Column(name = "apellido_materno")
     private String apellidoMaterno;
     @NotEmpty
+    @Column(name = "id_estado_civil")
     private Long idEstadoCivil;
     @NotEmpty
     private String dni;
     @NotEmpty
+    @Column(name = "fecha_nacimiento")
     private Date fechaNacimiento;
     @NotEmpty
     private String direccion;
     @NotEmpty
+    @Column(name = "id_distrito")
     private Long idDistrito;
     @NotEmpty
+    @Column(name = "id_provincia")
     private Long idProvincia;
     @NotEmpty
+    @Column(name = "id_departamento")
     private Long idDepartamento;
     @NotEmpty
     private String celular;
+    @Column(name = "celular_familiar")
     private String celularFamiliar;
+    @Column(name = "telefono_fijo")
     private String telefonoFijo;
     @NotEmpty
     @Email
     private String email;
+    @Column(name = "email_secundario")
     private String emailSecundario;
     private String profesion;
+    @Column(name = "lugar_estudios")
     private String lugarEstudios;
+    @Column(name = "ultimo_curso_realizado")
     private String ultimoCursoRealizado;
+    @Column(name = "empresa_curso")
     private String empresaCurso;
+    @Column(name = "trabajo_reciente")
     private String trabajoReciente;
+    @Column(name = "fecha_ingreso_trabajo_reciente")
     private Date fechaIngresoTrabajoReciente;
+    @Column(name = "fecha_salida_trabajo_reciente")
     private Date fechaSalidaTrabajoReciente;
+    @Column(name = "empresa_trabajo_reciente")
     private String empresaTrabajoReciente;
+    @Column(name = "motivo_salida_trabajo_reciente")
     private String motivoSalidaTrabajoReciente;
+    @Column(name = "disponibilidad_viajar")
     private Integer disponibilidadViajar;
+    @Column(name = "experiencia_rubro")
     private Integer experienciaRubro;
+    @Column(name = "estado_postulacion")
     private Integer estadoPostulacion;
+    @Column(name = "fecha_postulacion")
     private Date fechaPostulacion;
     private String procedencia;
     private Long idOferta;
+    @Column(name = "oferta_postulada")
     private String ofertaPostulada;
     private String curriculum;
+    @Column(name = "dni_frontal")
     private String dniFrontal;
+    @Column(name = "dni_posterior")
     private String dniPosterior;
     private String foto;
     private Integer estado;
