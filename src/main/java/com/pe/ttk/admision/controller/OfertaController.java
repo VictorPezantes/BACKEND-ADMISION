@@ -53,7 +53,9 @@ public class OfertaController {
     @PostMapping("/listar-filtro")
     public ResponseEntity<?> listarOfertasFiltro(@RequestBody OfertaDto oferta) {
         try{
-            return ResponseEntity.ok(ofertaService.listarOfertasFiltro(oferta.getEstado(), oferta.getDescripcion(), oferta.getFechaPublicacion()));}
+            Long idCreadorOferta = null;
+            if(oferta.getCreadorOferta()!= null){ idCreadorOferta = oferta.getCreadorOferta().getId(); }
+            return ResponseEntity.ok(ofertaService.listarOfertasFiltro(oferta.getEstado(), oferta.getDescripcion(), oferta.getFechaPublicacion(),idCreadorOferta));}
         catch(Exception e){
             return null;
         }

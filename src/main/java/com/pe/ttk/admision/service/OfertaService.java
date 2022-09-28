@@ -19,7 +19,7 @@ public interface OfertaService {
     Page<OfertaDto> listarOfertas(Integer numPagina, Integer tamPagina, String titulo, List estado, String fechaPublicacion, List creador);
 
     Page<OfertaDto> listarOfertasLanding(Integer numPagina, Integer tamPagina);
-    List<OfertaEntity> listarOfertasFiltro(Integer estado, String descripcion, Date fechaPublicacion);
+    List<OfertaEntity> listarOfertasFiltro(Integer estado, String descripcion, Date fechaPublicacion, Long idCreadorOferta);
 
     Mensaje registrarOferta(OfertaDto ofertaDto, Authentication auth);
 

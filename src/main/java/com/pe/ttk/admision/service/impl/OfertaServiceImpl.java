@@ -78,8 +78,8 @@ public class OfertaServiceImpl implements OfertaService {
     }
 
     @Override
-    public List<OfertaEntity> listarOfertasFiltro(Integer estado, String descripcion,Date fechaPublicacion) {
-        return ofertaRepository.findAllByEstadoOrDescripcionLikeIgnoreCaseOrFechaPublicacion(estado, descripcion,fechaPublicacion);
+    public List<OfertaEntity> listarOfertasFiltro(Integer estado, String descripcion,Date fechaPublicacion, Long idCreadorOferta) {
+        return ofertaRepository.findAllByEstadoOrDescripcionLikeIgnoreCaseOrFechaPublicacion(estado, descripcion,fechaPublicacion,idCreadorOferta);
     }
 
 
