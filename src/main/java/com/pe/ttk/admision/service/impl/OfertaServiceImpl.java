@@ -77,12 +77,6 @@ public class OfertaServiceImpl implements OfertaService {
         return null;
     }
 
-    @Override
-    public List<OfertaEntity> listarOfertasFiltro(Integer estado, String descripcion,Date fechaPublicacion, Long idCreadorOferta) {
-        return ofertaRepository.findAllByEstadoOrDescripcionLikeIgnoreCaseOrFechaPublicacion(estado, descripcion,fechaPublicacion,idCreadorOferta);
-    }
-
-
     public Mensaje registrarOferta(OfertaDto ofertaDto, Authentication auth) {
 
         UsuarioPrincipal usuario = (UsuarioPrincipal) auth.getPrincipal();

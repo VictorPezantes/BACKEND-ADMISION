@@ -26,11 +26,11 @@ public interface OfertaRepository extends PagingAndSortingRepository<OfertaEntit
     List<OfertaEntity> findByfechaPublicacion(Date fechaPublicacion);
 
     Optional<OfertaEntity> findByIdAndEstado(Long id, Integer estado);
-    @Query("SELECT o FROM OfertaEntity o"
+/*    @Query("SELECT o FROM OfertaEntity o"
             + " WHERE (:estado is null or o.estado = :estado) and (:descripcion is null or o.descripcion = :descripcion)"
             + " and (:fechaPublicacion is null or date(o.fechaPublicacion) = date(:fechaPublicacion) )"
             + " and (:fechaPublicacion is null or date(o.fechaPublicacion) = date(:fechaPublicacion) )"
             + " and (:idCreadorOferta is null or o.creadorOferta.id = :idCreadorOferta)")
-    List<OfertaEntity> findAllByEstadoOrDescripcionLikeIgnoreCaseOrFechaPublicacion(Integer estado, String descripcion, Date fechaPublicacion, Long idCreadorOferta);
+    List<OfertaEntity> findAllByEstadoOrDescripcionLikeIgnoreCaseOrFechaPublicacion(Integer estado, String descripcion, Date fechaPublicacion, Long idCreadorOferta);*/
 
 }

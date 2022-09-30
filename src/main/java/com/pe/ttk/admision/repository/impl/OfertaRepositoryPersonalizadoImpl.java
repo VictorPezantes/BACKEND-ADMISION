@@ -37,6 +37,9 @@ public class OfertaRepositoryPersonalizadoImpl implements OfertaRepositoryPerson
         if(!estado.isEmpty()){
             condiciones.add(cb.and(t.get("estadoOferta").get("id").in(estado)));
         }
+        if(!creador.isEmpty()){
+            condiciones.add(cb.and(t.get("creadorOferta").get("id").in(creador)));
+        }
 
         query.select(t)
                 .where(cb.equal(t.get("estado"), estadoActivo),
