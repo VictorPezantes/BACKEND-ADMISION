@@ -3,7 +3,6 @@ package com.pe.ttk.admision.controller;
 import com.pe.ttk.admision.dto.Mensaje;
 import com.pe.ttk.admision.dto.entity.master.Cargo;
 import com.pe.ttk.admision.service.CargoService;
-import com.pe.ttk.admision.service.impl.CargoServieImpl;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

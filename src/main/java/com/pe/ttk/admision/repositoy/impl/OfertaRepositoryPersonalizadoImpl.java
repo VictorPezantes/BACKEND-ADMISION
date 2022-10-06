@@ -1,9 +1,8 @@
-package com.pe.ttk.admision.repository.impl;
+package com.pe.ttk.admision.repositoy.impl;
 
 import com.pe.ttk.admision.dto.entity.admision.OfertaEntity;
-import com.pe.ttk.admision.repository.OfertaRepositoryPersonalizado;
+import com.pe.ttk.admision.repositoy.OfertaRepositoryPersonalizado;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -12,7 +11,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class OfertaRepositoryPersonalizadoImpl implements OfertaRepositoryPersonalizado {

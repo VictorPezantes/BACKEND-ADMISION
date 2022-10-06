@@ -1,4 +1,4 @@
-package com.pe.ttk.admision.repository;
+package com.pe.ttk.admision.repositoy;
 
 import com.pe.ttk.admision.dto.entity.admision.PostulanteEntity;
 import com.pe.ttk.admision.dto.entity.admision.PostulanteMapping;

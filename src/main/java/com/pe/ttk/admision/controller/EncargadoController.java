@@ -2,7 +2,7 @@ package com.pe.ttk.admision.controller;
 
 import com.pe.ttk.admision.dto.Mensaje;
 import com.pe.ttk.admision.dto.entity.master.Encargado;
-import com.pe.ttk.admision.service.impl.EncargadoServieImp;
+import com.pe.ttk.admision.service.impl.EncargadoServiceImp;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,13 +19,13 @@ import java.util.List;
 public class EncargadoController {
 
     @Autowired
-    EncargadoServieImp encargadoServieImp;
+    EncargadoServiceImp encargadoServiceImp;
 
     @ApiOperation("Lista todos los encargados registrado y paginacion")
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/lista")
     public ResponseEntity<?>   listarEncargado() {
-        List<Encargado> listaEncargados = encargadoServieImp.listaEncargados();
+        List<Encargado> listaEncargados = encargadoServiceImp.listaEncargados();
 
         return ResponseEntity.ok(listaEncargados);
 
@@ -38,9 +38,9 @@ public class EncargadoController {
             if (bindingResult.hasErrors())
                 return ResponseEntity.badRequest().body(new Mensaje("campos mal puestos o email inválido"));
 
-            boolean  ok = encargadoServieImp.existsByEmail(encargado.getEmail());
+            boolean  ok = encargadoServiceImp.existsByEmail(encargado.getEmail());
             if (ok) return ResponseEntity.badRequest().body(new Mensaje("El email ya existe"));
-            encargadoServieImp.registrarEncargado(encargado);
+            encargadoServiceImp.registrarEncargado(encargado);
             return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("Encargado registrado correctamente"));
         }
 
@@ -49,7 +49,7 @@ public class EncargadoController {
     @DeleteMapping("/eliminar")
     public ResponseEntity<?> eliminarEncargado(@RequestParam("id") Long id) {
 
-        encargadoServieImp.eliminarEncargado(id);
+        encargadoServiceImp.eliminarEncargado(id);
         return ResponseEntity.ok(new Mensaje("Encargado eliminado"));
     }
 
@@ -58,7 +58,7 @@ public class EncargadoController {
     @PatchMapping("/actualizar/{id}")
     public ResponseEntity<?> actualizarEncargado(@PathVariable("id") Long id,
                                                  @RequestBody Encargado encargado) {
-        encargadoServieImp.actualizarEncargado(id, encargado);
+        encargadoServiceImp.actualizarEncargado(id, encargado);
         return ResponseEntity.accepted().body(new Mensaje("encargado actualizado"));
     }
     }

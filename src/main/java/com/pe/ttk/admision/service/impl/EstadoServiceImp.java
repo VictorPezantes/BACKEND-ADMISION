@@ -1,7 +1,7 @@
 package com.pe.ttk.admision.service.impl;
 
 import com.pe.ttk.admision.dto.entity.master.Estado;
-import com.pe.ttk.admision.repository.EstadoRepository;
+import com.pe.ttk.admision.repositoy.EstadoRepository;
 import com.pe.ttk.admision.service.EstadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

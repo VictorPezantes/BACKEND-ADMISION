@@ -1,12 +1,15 @@
 package com.pe.ttk.admision.service.impl;
 
+import com.pe.ttk.admision.repositoy.CargoRepository;
+import com.pe.ttk.admision.repositoy.EncargadoRepository;
+import com.pe.ttk.admision.repositoy.EstadoRepository;
+import com.pe.ttk.admision.repositoy.OfertaRepository;
 import com.pe.ttk.admision.dto.Mensaje;
 import com.pe.ttk.admision.dto.OfertaDto;
 import com.pe.ttk.admision.dto.entity.master.Cargo;
 import com.pe.ttk.admision.dto.entity.master.Encargado;
 import com.pe.ttk.admision.dto.entity.master.Estado;
 import com.pe.ttk.admision.dto.entity.admision.OfertaEntity;
-import com.pe.ttk.admision.repository.*;
 import com.pe.ttk.admision.security.entity.UsuarioPrincipal;
 import com.pe.ttk.admision.security.repository.UsuarioRepository;
 import com.pe.ttk.admision.service.OfertaService;
