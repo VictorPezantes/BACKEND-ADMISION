@@ -1,6 +1,6 @@
 package com.pe.ttk.admision.repositoy;
 
-import com.pe.ttk.admision.dto.entity.master.Departamento;
+import com.pe.ttk.admision.entity.master.Departamento;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

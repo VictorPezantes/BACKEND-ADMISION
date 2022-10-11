@@ -44,7 +44,7 @@ public class EmailController {
 
 		Optional<Usuario> usuarioOpt = usuarioService.getByNombreUsuarioOrEmail(dto.getMailTo());
 		if (usuarioOpt.isEmpty())
-			return ResponseEntity.badRequest().body(new Mensaje("No existe ningún usuario con esas credenciales"));
+			return ResponseEntity.badRequest().body(new Mensaje("No existe ningún usuario con esas credenciales",false));
 
 		Usuario usuario = usuarioOpt.get();
 
@@ -58,21 +58,21 @@ public class EmailController {
 		usuario.setTokenPassword(tokenPassword);
 		usuarioService.save(usuario);
 		emailServiceImpl.sendMailTemplate(dto);
-		return ResponseEntity.ok(new Mensaje("correo para recuperar contraseña enviado correctamente"));
+		return ResponseEntity.ok(new Mensaje("correo para recuperar contraseña enviado correctamente",true));
 	}
 
 	@PostMapping("/cambiar-password")
 	public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePasswordDto dto, BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors())
-			return ResponseEntity.badRequest().body(new Mensaje("Campos mal ingresados"));
+			return ResponseEntity.badRequest().body(new Mensaje("Campos mal ingresados",false));
 
 		if (!dto.getPassword().equals(dto.getConfirmPassword()))
-			return ResponseEntity.badRequest().body(new Mensaje("Las Contraseñas no coinciden"));
+			return ResponseEntity.badRequest().body(new Mensaje("Las Contraseñas no coinciden",false));
 
 		Optional<Usuario> usuarioOpt = usuarioService.getByTokenPassword(dto.getTokenPassword());
 		if (usuarioOpt.isEmpty())
-			return ResponseEntity.badRequest().body(new Mensaje("No existe usuario para recuperar contraseña"));
+			return ResponseEntity.badRequest().body(new Mensaje("No existe usuario para recuperar contraseña",false));
 
 		Usuario usuario = usuarioOpt.get();
 
@@ -81,7 +81,7 @@ public class EmailController {
 		usuario.setTokenPassword(null);
 		usuarioService.save(usuario);
 
-		return ResponseEntity.ok(new Mensaje("Contraseña actualizada correctamente"));
+		return ResponseEntity.ok(new Mensaje("Contraseña actualizada correctamente",false));
 
 	}
 

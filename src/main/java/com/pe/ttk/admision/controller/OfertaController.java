@@ -2,9 +2,9 @@ package com.pe.ttk.admision.controller;
 
 import com.pe.ttk.admision.dto.Mensaje;
 import com.pe.ttk.admision.dto.OfertaDto;
-import com.pe.ttk.admision.dto.entity.master.Encargado;
-import com.pe.ttk.admision.dto.entity.master.Estado;
-import com.pe.ttk.admision.dto.entity.admision.OfertaEntity;
+import com.pe.ttk.admision.entity.master.Encargado;
+import com.pe.ttk.admision.entity.master.Estado;
+import com.pe.ttk.admision.entity.admision.OfertaEntity;
 import com.pe.ttk.admision.exceptions.TTKDataException;
 import com.pe.ttk.admision.service.impl.OfertaServiceImpl;
 import com.pe.ttk.admision.util.FilterParam;
@@ -13,7 +13,6 @@ import com.pe.ttk.admision.util.SearchCriteria;
 import com.pe.ttk.admision.util.input.data.OfertaFindInputData;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -61,7 +60,7 @@ public class OfertaController {
     @GetMapping("/obtener/{id}")
     public ResponseEntity<?> obtenerOferta(@PathVariable Long id, Authentication auth) {
         if(!auth.isAuthenticated()){
-            return ResponseEntity.badRequest().body(new Mensaje("No está logueado en el sistema"));
+            return ResponseEntity.badRequest().body(new Mensaje("No está logueado en el sistema",false));
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(ofertaService.obtenerOferta(id));
     }
@@ -71,7 +70,7 @@ public class OfertaController {
     @PutMapping("/registrar")
     public ResponseEntity<?> registrarOferta(@RequestBody OfertaDto ofertaDto, Authentication auth) {
         if(!auth.isAuthenticated()){
-           return ResponseEntity.badRequest().body(new Mensaje("No está logueado en el sistema"));
+           return ResponseEntity.badRequest().body(new Mensaje("No está logueado en el sistema",false));
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(ofertaService.registrarOferta(ofertaDto, auth));
     }

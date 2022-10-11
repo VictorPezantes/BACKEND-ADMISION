@@ -1,6 +1,6 @@
 package com.pe.ttk.admision.service;
 
-import com.pe.ttk.admision.dto.entity.master.Estado;
+import com.pe.ttk.admision.entity.master.Estado;
 
 import java.util.List;
 import java.util.Optional;

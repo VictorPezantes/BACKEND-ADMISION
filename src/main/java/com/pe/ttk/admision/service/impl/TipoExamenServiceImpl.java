@@ -1,7 +1,7 @@
 package com.pe.ttk.admision.service.impl;
 
 import com.pe.ttk.admision.repositoy.TipoExamenRepository;
-import com.pe.ttk.admision.dto.entity.master.TipoExamen;
+import com.pe.ttk.admision.entity.master.TipoExamen;
 import com.pe.ttk.admision.enums.TipoExamenNombre;
 import com.pe.ttk.admision.service.TipoExamenService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,8 +2,8 @@ package com.pe.ttk.admision.service;
 
 import com.pe.ttk.admision.dto.Mensaje;
 import com.pe.ttk.admision.dto.OfertaDto;
-import com.pe.ttk.admision.dto.entity.master.Encargado;
-import com.pe.ttk.admision.dto.entity.admision.OfertaEntity;
+import com.pe.ttk.admision.entity.master.Encargado;
+import com.pe.ttk.admision.entity.admision.OfertaEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;

@@ -1,36 +1,21 @@
 package com.pe.ttk.admision.controller;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import com.pe.ttk.admision.dto.Mensaje;
 import com.pe.ttk.admision.dto.PostulanteDto;
-import com.pe.ttk.admision.dto.entity.admision.PostulanteEntity;
+import com.pe.ttk.admision.entity.admision.PostulanteEntity;
 import com.pe.ttk.admision.exceptions.TTKDataException;
 import com.pe.ttk.admision.service.PostulanteService;
-import com.pe.ttk.admision.service.impl.PostulanteServiceImpl;
-import com.pe.ttk.admision.util.FilterParam;
-import com.pe.ttk.admision.util.PaginationUtils;
-import com.pe.ttk.admision.util.SearchCriteria;
-import com.pe.ttk.admision.util.input.data.PostulanteFindInputData;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 
@@ -183,7 +168,7 @@ public class PostulanteController {
         PostulanteEntity postulanteEntity = postulanteService.getOne(id).get();
         postulanteService.UpdatePostulante(postulanteEntity, postulanteDto, dnifrontal, dniposterior, foto);
 
-        return new ResponseEntity(new Mensaje("Datos del postulante actualizados correctamente"), HttpStatus.ACCEPTED);
+        return new ResponseEntity(new Mensaje("Datos del postulante actualizados correctamente",true), HttpStatus.ACCEPTED);
     }
 
 

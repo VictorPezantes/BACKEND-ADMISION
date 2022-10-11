@@ -1,6 +1,6 @@
 package com.pe.ttk.admision.service.impl;
 
-import com.pe.ttk.admision.dto.entity.master.Encargado;
+import com.pe.ttk.admision.entity.master.Encargado;
 import com.pe.ttk.admision.repositoy.EncargadoRepository;
 import com.pe.ttk.admision.service.EncargadoService;
 import org.springframework.beans.factory.annotation.Autowired;

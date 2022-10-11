@@ -1,7 +1,7 @@
 package com.pe.ttk.admision.controller;
 
 import com.pe.ttk.admision.dto.Mensaje;
-import com.pe.ttk.admision.dto.entity.master.Cargo;
+import com.pe.ttk.admision.entity.master.Cargo;
 import com.pe.ttk.admision.service.CargoService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class CargoController {
     public ResponseEntity<?> registrarCargo(@RequestBody Cargo cargo) {
 
         cargoService.registrarCargo(cargo);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("Se ha registrado el cargo correctamente"));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("Se ha registrado el cargo correctamente",true));
     }
 
     @ApiOperation("Eliminar un cargo por id")
@@ -41,7 +41,7 @@ public class CargoController {
     public ResponseEntity<?> eliminarCargo(@RequestParam("id") Long id) {
 
         cargoService.eliminarCargo(id);
-        return ResponseEntity.ok(new Mensaje("Cargo eliminado"));
+        return ResponseEntity.ok(new Mensaje("Cargo eliminado",true));
     }
 
     @ApiOperation("Actualizar distintos campos de un cargo")
@@ -50,7 +50,7 @@ public class CargoController {
     public ResponseEntity<?> actualizarCargo(@PathVariable("id") Long id, @RequestBody Cargo cargo) {
 
         cargoService.actualizarCargo(id, cargo);
-        return ResponseEntity.accepted().body(new Mensaje("cargo actualizado"));
+        return ResponseEntity.accepted().body(new Mensaje("cargo actualizado",true));
     }
 
 }

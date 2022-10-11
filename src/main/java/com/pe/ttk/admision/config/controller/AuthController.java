@@ -97,10 +97,10 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginUsuario loginUsuario, BindingResult bindingResult) {
         if (bindingResult.hasErrors()){
-            return ResponseEntity.badRequest().body(new Mensaje("campos mal puestos"));
+            return ResponseEntity.badRequest().body(new Mensaje("campos mal puestos",false));
         }
         if(!usuarioService.existeEmailUsuarioActivo(loginUsuario.getEmail())){
-            return ResponseEntity.badRequest().body(new Mensaje("El correo electronico o usuario no existe"));
+            return ResponseEntity.badRequest().body(new Mensaje("El correo electronico o usuario no existe",false));
         }
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginUsuario.getEmail(), loginUsuario.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -142,7 +142,7 @@ public class AuthController {
     public ResponseEntity<?> eliminarUsuario(@RequestBody UsuarioDto usuario) {
 
         usuarioService.eliminarUsuario(usuario.getId());
-        return ResponseEntity.ok(new Mensaje("Usuario eliminado"));
+        return ResponseEntity.ok(new Mensaje("Usuario eliminado",true));
     }
 }
 

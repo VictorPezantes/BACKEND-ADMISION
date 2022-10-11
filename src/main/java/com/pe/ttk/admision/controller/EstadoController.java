@@ -1,7 +1,7 @@
 package com.pe.ttk.admision.controller;
 
 import com.pe.ttk.admision.dto.Mensaje;
-import com.pe.ttk.admision.dto.entity.master.Estado;
+import com.pe.ttk.admision.entity.master.Estado;
 import com.pe.ttk.admision.service.impl.EstadoServiceImp;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/estado")
@@ -35,7 +33,7 @@ public class EstadoController {
     public ResponseEntity<?> registrarEstado(@RequestBody Estado estado) {
 
         estadoServiceImp.registrarEstado(estado);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("estado registrado correctamente"));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("estado registrado correctamente",true));
     }
 
     @ApiOperation("Eliminar un estado por id")
@@ -44,7 +42,7 @@ public class EstadoController {
     public ResponseEntity<?> eliminarEstado(@RequestParam("id") Long id) {
 
         estadoServiceImp.eliminarEstado(id);
-        return ResponseEntity.ok(new Mensaje("Estado eliminado"));
+        return ResponseEntity.ok(new Mensaje("Estado eliminado",true));
     }
 
     @ApiOperation("Actualizar distintos campos de un estado")
@@ -53,7 +51,7 @@ public class EstadoController {
     public ResponseEntity<?> actualizarEstado(@PathVariable("id") Long id, @RequestBody Estado estado) {
 
         estadoServiceImp.actualizarEstado(id, estado);
-        return ResponseEntity.accepted().body(new Mensaje("estado actualizado"));
+        return ResponseEntity.accepted().body(new Mensaje("estado actualizado",true));
     }
 }
 

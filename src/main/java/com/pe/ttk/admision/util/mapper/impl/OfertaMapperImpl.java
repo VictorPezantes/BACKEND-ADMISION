@@ -1,15 +1,9 @@
 package com.pe.ttk.admision.util.mapper.impl;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pe.ttk.admision.dto.OfertaDto;
-import com.pe.ttk.admision.dto.entity.admision.OfertaEntity;
-import com.pe.ttk.admision.dto.entity.master.Cargo;
-import com.pe.ttk.admision.dto.entity.master.Encargado;
-import com.pe.ttk.admision.dto.entity.master.Estado;
+import com.pe.ttk.admision.entity.admision.OfertaEntity;
 import com.pe.ttk.admision.util.mapper.OfertaMapper;
 import org.springframework.stereotype.Component;
-
-import java.util.Date;
 
 @Component
 public class OfertaMapperImpl implements OfertaMapper {

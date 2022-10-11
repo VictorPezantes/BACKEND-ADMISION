@@ -1,7 +1,7 @@
 package com.pe.ttk.admision.repositoy.impl;
 
 import com.pe.ttk.admision.repositoy.ExamenRepositoryPersonalizado;
-import com.pe.ttk.admision.dto.entity.admision.ExamenEntity;
+import com.pe.ttk.admision.entity.admision.ExamenEntity;
 import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityManager;

@@ -1,6 +1,6 @@
 package com.pe.ttk.admision.service.impl;
 
-import com.pe.ttk.admision.dto.entity.master.Cargo;
+import com.pe.ttk.admision.entity.master.Cargo;
 import com.pe.ttk.admision.repositoy.CargoRepository;
 import com.pe.ttk.admision.service.CargoService;
 import com.pe.ttk.admision.util.Constantes;

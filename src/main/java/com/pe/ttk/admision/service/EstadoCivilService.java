@@ -1,7 +1,6 @@
 package com.pe.ttk.admision.service;
 
-import com.pe.ttk.admision.dto.entity.master.EstadoCivil;
-import org.springframework.stereotype.Service;
+import com.pe.ttk.admision.entity.master.EstadoCivil;
 
 import java.util.List;
 

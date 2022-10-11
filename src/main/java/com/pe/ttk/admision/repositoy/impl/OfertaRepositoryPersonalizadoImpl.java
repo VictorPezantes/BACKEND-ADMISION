@@ -1,6 +1,6 @@
 package com.pe.ttk.admision.repositoy.impl;
 
-import com.pe.ttk.admision.dto.entity.admision.OfertaEntity;
+import com.pe.ttk.admision.entity.admision.OfertaEntity;
 import com.pe.ttk.admision.repositoy.OfertaRepositoryPersonalizado;
 import org.springframework.data.domain.Pageable;
 

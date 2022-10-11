@@ -1,7 +1,7 @@
 package com.pe.ttk.admision.service.impl;
 
 import com.pe.ttk.admision.repositoy.SubEstadoRepository;
-import com.pe.ttk.admision.dto.entity.master.SubEstado;
+import com.pe.ttk.admision.entity.master.SubEstado;
 import com.pe.ttk.admision.enums.SubEstadoNombre;
 import com.pe.ttk.admision.service.SubEstadoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class SubEstadoServiceImpl implements SubEstadoService {
     SubEstadoRepository subEstadoRepository;
 
     @Override
-    public Optional<SubEstado> findBySubEstadoNombre(SubEstadoNombre subEstadoNombre) {
+    public Optional<SubEstadoNombre> findBySubEstadoNombre(SubEstadoNombre subEstadoNombre) {
         return subEstadoRepository.findBySubEstadoNombre(subEstadoNombre);
     }
 

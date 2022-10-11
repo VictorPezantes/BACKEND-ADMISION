@@ -6,10 +6,10 @@ import com.pe.ttk.admision.repositoy.EstadoRepository;
 import com.pe.ttk.admision.repositoy.OfertaRepository;
 import com.pe.ttk.admision.dto.Mensaje;
 import com.pe.ttk.admision.dto.OfertaDto;
-import com.pe.ttk.admision.dto.entity.master.Cargo;
-import com.pe.ttk.admision.dto.entity.master.Encargado;
-import com.pe.ttk.admision.dto.entity.master.Estado;
-import com.pe.ttk.admision.dto.entity.admision.OfertaEntity;
+import com.pe.ttk.admision.entity.master.Cargo;
+import com.pe.ttk.admision.entity.master.Encargado;
+import com.pe.ttk.admision.entity.master.Estado;
+import com.pe.ttk.admision.entity.admision.OfertaEntity;
 import com.pe.ttk.admision.security.entity.UsuarioPrincipal;
 import com.pe.ttk.admision.security.repository.UsuarioRepository;
 import com.pe.ttk.admision.service.OfertaService;
@@ -90,7 +90,7 @@ public class OfertaServiceImpl implements OfertaService {
 
         Optional<Encargado> encargadoOp = encargadoRepository.findByEmail(emailEncargado);
         if(encargadoOp.isEmpty()){
-            return new Mensaje(("No existe el encargado"));
+            return new Mensaje("No existe el encargado",false);
         }
         Encargado encargadoDb = encargadoOp.get();
 
@@ -113,7 +113,7 @@ public class OfertaServiceImpl implements OfertaService {
         ofertaEntity.setEstado(Constantes.ESTADO_ACTIVO);
         ofertaRepository.save(ofertaEntity);
 
-        return new Mensaje(("Oferta creada correctamente"));
+        return new Mensaje("Oferta creada correctamente",true);
     }
 
     public Mensaje actualizarOferta(OfertaDto ofertaDto) {
@@ -123,7 +123,7 @@ public class OfertaServiceImpl implements OfertaService {
             Long idCargo = ofertaDto.getCargoOferta().getId();
             Optional<Cargo> cargoOp = cargoRepository.findByIdAndEstado(idCargo, Constantes.ESTADO_ACTIVO);
             if(cargoOp.isEmpty()){
-                return new Mensaje("El cargo no existe");
+                return new Mensaje("El cargo no existe",false);
             }
 
             OfertaEntity ofertaDb = ofertaOp.get();
@@ -136,10 +136,10 @@ public class OfertaServiceImpl implements OfertaService {
             ofertaDb.setFechaActualizacion(convertirFechas.stringToDateSql());
             ofertaRepository.save(ofertaDb);
 
-            return new Mensaje("Oferta actualizada correctamente");
+            return new Mensaje("Oferta actualizada correctamente",true);
         }
 
-        return new Mensaje("La oferta no existe");
+        return new Mensaje("La oferta no existe",false);
 
     }
 
@@ -153,7 +153,7 @@ public class OfertaServiceImpl implements OfertaService {
             Long idEstado = ofertaDto.getEstadoOferta().getId();
             Optional<Estado> estadoOp = estadoRepository.findById(idEstado);
             if(estadoOp.isEmpty()){
-                return new Mensaje("No existe el estado");
+                return new Mensaje("No existe el estado",false);
             }
             Estado estadoDb = estadoOp.get();
             if(Objects.equals(estadoDb.getId(), Constantes.ESTADO_ACTIVADA)){
@@ -166,10 +166,10 @@ public class OfertaServiceImpl implements OfertaService {
                 ofertaDb.setEstadoOferta(estadoDb);
                 ofertaRepository.save(ofertaDb);
             }
-            return  new Mensaje("Estado de la oferta actualizado correctamente");
+            return  new Mensaje("Estado de la oferta actualizado correctamente",true);
         }
 
-        return new Mensaje("No existe la oferta");
+        return new Mensaje("No existe la oferta",false);
     }
 
     public void delete(Long id) {
@@ -223,9 +223,9 @@ public class OfertaServiceImpl implements OfertaService {
             ofertaDb.setEstado(Constantes.ESTADO_INACTIVO);
             ofertaRepository.save(ofertaDb);
 
-            return  new Mensaje("Oferta eliminada correctamente");
+            return  new Mensaje("Oferta eliminada correctamente",true);
         }
 
-        return new Mensaje("No existe la oferta");
+        return new Mensaje("No existe la oferta",false);
     }
 }

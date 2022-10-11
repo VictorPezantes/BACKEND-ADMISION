@@ -1,9 +1,9 @@
 package com.pe.ttk.admision.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.pe.ttk.admision.dto.entity.master.Cargo;
-import com.pe.ttk.admision.dto.entity.master.Encargado;
-import com.pe.ttk.admision.dto.entity.master.Estado;
+import com.pe.ttk.admision.entity.master.Cargo;
+import com.pe.ttk.admision.entity.master.Encargado;
+import com.pe.ttk.admision.entity.master.Estado;
 import lombok.*;
 
 import java.util.Date;

@@ -1,6 +1,6 @@
 package com.pe.ttk.admision.service.impl;
 
-import com.pe.ttk.admision.dto.entity.master.EstadoCivil;
+import com.pe.ttk.admision.entity.master.EstadoCivil;
 import com.pe.ttk.admision.repositoy.EstadoCivilRepository;
 import com.pe.ttk.admision.service.EstadoCivilService;
 import com.pe.ttk.admision.util.Constantes;

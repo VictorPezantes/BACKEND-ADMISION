@@ -1,7 +1,7 @@
 package com.pe.ttk.admision.controller;
 
 import com.pe.ttk.admision.dto.Mensaje;
-import com.pe.ttk.admision.dto.entity.master.Encargado;
+import com.pe.ttk.admision.entity.master.Encargado;
 import com.pe.ttk.admision.service.impl.EncargadoServiceImp;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,12 +36,12 @@ public class EncargadoController {
         public ResponseEntity<?>  registrarEncargado(@RequestBody Encargado encargado,
                                                      BindingResult bindingResult){
             if (bindingResult.hasErrors())
-                return ResponseEntity.badRequest().body(new Mensaje("campos mal puestos o email inválido"));
+                return ResponseEntity.badRequest().body(new Mensaje("campos mal puestos o email inválido",false));
 
             boolean  ok = encargadoServiceImp.existsByEmail(encargado.getEmail());
-            if (ok) return ResponseEntity.badRequest().body(new Mensaje("El email ya existe"));
+            if (ok) return ResponseEntity.badRequest().body(new Mensaje("El email ya existe",false));
             encargadoServiceImp.registrarEncargado(encargado);
-            return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("Encargado registrado correctamente"));
+            return ResponseEntity.status(HttpStatus.CREATED).body(new Mensaje("Encargado registrado correctamente",true));
         }
 
     @ApiOperation("Eliminar un encargado por id")
@@ -50,7 +50,7 @@ public class EncargadoController {
     public ResponseEntity<?> eliminarEncargado(@RequestParam("id") Long id) {
 
         encargadoServiceImp.eliminarEncargado(id);
-        return ResponseEntity.ok(new Mensaje("Encargado eliminado"));
+        return ResponseEntity.ok(new Mensaje("Encargado eliminado",true));
     }
 
     @ApiOperation("Actualizar distintos campos de un encargado")
@@ -59,7 +59,7 @@ public class EncargadoController {
     public ResponseEntity<?> actualizarEncargado(@PathVariable("id") Long id,
                                                  @RequestBody Encargado encargado) {
         encargadoServiceImp.actualizarEncargado(id, encargado);
-        return ResponseEntity.accepted().body(new Mensaje("encargado actualizado"));
+        return ResponseEntity.accepted().body(new Mensaje("encargado actualizado",true));
     }
     }
 

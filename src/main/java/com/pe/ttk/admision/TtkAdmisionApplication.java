@@ -10,7 +10,7 @@ import java.util.TimeZone;
 public class TtkAdmisionApplication {
 
 	public static void main(String[] args) {
-		TimeZone.setDefault(TimeZone.getTimeZone("UTC-5"));
+		TimeZone.setDefault(TimeZone.getTimeZone("America/Lima"));
 		SpringApplication.run(TtkAdmisionApplication.class, args);
 	}
 

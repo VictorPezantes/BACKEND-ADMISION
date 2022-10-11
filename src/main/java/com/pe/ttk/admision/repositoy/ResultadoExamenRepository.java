@@ -1,10 +1,12 @@
 package com.pe.ttk.admision.repositoy;
 
-import com.pe.ttk.admision.dto.entity.master.ResultadoExamen;
+import com.pe.ttk.admision.entity.master.EstadoResultadoExamen;
 import com.pe.ttk.admision.enums.ResultadoExamenNombre;
 import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.Optional;
+import org.springframework.stereotype.Repository;
 
-public interface ResultadoExamenRepository extends JpaRepository<ResultadoExamen, Integer> {
-    Optional<ResultadoExamen> findByResultadoExamenNombre(ResultadoExamenNombre resultadoExamenNombre);
+import java.util.Optional;
+@Repository
+public interface ResultadoExamenRepository extends JpaRepository<EstadoResultadoExamen, Integer> {
+    Optional<ResultadoExamenNombre> findByResultadoExamenNombre(ResultadoExamenNombre resultadoExamenNombre);
 }

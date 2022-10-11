@@ -2,9 +2,9 @@ package com.pe.ttk.admision.service.impl;
 
 import com.pe.ttk.admision.dto.Mensaje;
 import com.pe.ttk.admision.dto.PostulanteDto;
-import com.pe.ttk.admision.dto.entity.admision.OfertaEntity;
-import com.pe.ttk.admision.dto.entity.admision.PostulanteEntity;
-import com.pe.ttk.admision.dto.entity.master.HistorialEntity;
+import com.pe.ttk.admision.entity.admision.OfertaEntity;
+import com.pe.ttk.admision.entity.admision.PostulanteEntity;
+import com.pe.ttk.admision.entity.master.HistorialEntity;
 import com.pe.ttk.admision.repositoy.HistorialRepository;
 import com.pe.ttk.admision.repositoy.OfertaRepository;
 import com.pe.ttk.admision.repositoy.PostulanteRepository;
@@ -133,7 +133,7 @@ public class PostulanteServiceImpl implements PostulanteService {
         String dni = postulanteDto.getDni();
 
         if(postulanteRepository.existsByDniAndEstado(dni, Constantes.ESTADO_ACTIVO)){
-            return new Mensaje("Ya existe una postulación, solo puede postular una sola vez");
+            return new Mensaje("Ya existe una postulación, solo puede postular una sola vez",false);
         }
 
         String nombreCurriculum = "";
@@ -166,7 +166,7 @@ public class PostulanteServiceImpl implements PostulanteService {
 
         Optional<OfertaEntity> ofertaOp = ofertaRepository.findByIdAndEstado(postulanteDto.getIdOferta(), Constantes.ESTADO_ACTIVO);
         if(ofertaOp.isEmpty()){
-            return new Mensaje("No existe la oferta");
+            return new Mensaje("No existe la oferta",false);
         }
         OfertaEntity ofertaDb = ofertaOp.get();
         ofertaDb.setCantidadPostulantes(ofertaDb.getCantidadPostulantes() + 1);
@@ -218,7 +218,7 @@ public class PostulanteServiceImpl implements PostulanteService {
         registrarHistorial(postulanteEntity, edad, mensaje);
 
         emailService.enviarEmailPostulante(postulanteDto.getEmail(), mensaje, asunto, postulanteDto.getPrimerNombre());
-        return new Mensaje("Postulante registrado correctamente");
+        return new Mensaje("Postulante registrado correctamente",false);
     }
 
     @Override
@@ -246,11 +246,11 @@ public class PostulanteServiceImpl implements PostulanteService {
     }
 
     public void delete(int id) {
-        postulanteRepository.deleteById(id);
+        postulanteRepository.deleteById((long)id);
     }
 
     public Optional<PostulanteEntity> getOne(int id) {
-        return postulanteRepository.findById(id);
+        return postulanteRepository.findById((long)id);
     }
 
     @Override

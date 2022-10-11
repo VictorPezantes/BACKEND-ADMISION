@@ -1,7 +1,7 @@
 package com.pe.ttk.admision.service;
 
 
-import com.pe.ttk.admision.dto.entity.master.Encargado;
+import com.pe.ttk.admision.entity.master.Encargado;
 
 import java.util.List;
 import java.util.Optional;

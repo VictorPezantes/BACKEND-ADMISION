@@ -1,9 +1,7 @@
 package com.pe.ttk.admision.util.mapper;
 
-import com.pe.ttk.admision.dto.DepartamentoDto;
 import com.pe.ttk.admision.dto.ProvinciaDto;
-import com.pe.ttk.admision.dto.entity.master.Departamento;
-import com.pe.ttk.admision.dto.entity.master.Provincia;
+import com.pe.ttk.admision.entity.master.Provincia;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

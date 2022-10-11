@@ -123,24 +123,24 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Override
 	public Mensaje registrarUsuario(NuevoUsuario nuevoUsuario, boolean isAdmin, MultipartFile foto) {
 		if (existeEmailActivo(nuevoUsuario.getEmail())){
-			return new Mensaje("El correo electrónico ingresado ya existe");
+			return new Mensaje("El correo electrónico ingresado ya existe",false);
 		}
 
 		if (existeNombreUsuarioActivo(nuevoUsuario.getNombreUsuario())){
-			return new Mensaje("El usuario ingresado ya existe");
+			return new Mensaje("El usuario ingresado ya existe",false);
 		}
 
 		Set<Rol> roles = new HashSet<>();
 		Optional<Rol> rolOp = rolService.getByRolNombre(RolNombre.ROLE_USER);
 		if (rolOp.isEmpty()){
-			return new Mensaje("No existe el rol");
+			return new Mensaje("No existe el rol",false);
 		}
 		roles.add(rolOp.get());
 
 		if(isAdmin){
 			rolOp = rolService.getByRolNombre(RolNombre.ROLE_ADMIN);
 			if (rolOp.isEmpty()){
-				return new Mensaje("No existe el rol");
+				return new Mensaje("No existe el rol",false);
 			}
 			roles.add(rolOp.get());
 		}
@@ -162,7 +162,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 		usuarioRepository.save(usuario);
 
-		return new Mensaje("Usuario registrado correctamente");
+		return new Mensaje("Usuario registrado correctamente",false);
 	}
 
 }

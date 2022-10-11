@@ -1,19 +1,17 @@
 package com.pe.ttk.admision.repositoy;
 
-import com.pe.ttk.admision.dto.entity.admision.PostulanteEntity;
-import com.pe.ttk.admision.dto.entity.admision.PostulanteMapping;
+import com.pe.ttk.admision.entity.admision.PostulanteEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface PostulanteRepository extends JpaRepository<PostulanteEntity,Integer> {
+public interface PostulanteRepository extends JpaRepository<PostulanteEntity,Long> {
 
 
     List<PostulanteEntity> findAll();

@@ -1,7 +1,7 @@
 package com.pe.ttk.admision.util.mapper;
 
 import com.pe.ttk.admision.dto.OfertaDto;
-import com.pe.ttk.admision.dto.entity.admision.OfertaEntity;
+import com.pe.ttk.admision.entity.admision.OfertaEntity;
 
 public interface OfertaMapper {
 

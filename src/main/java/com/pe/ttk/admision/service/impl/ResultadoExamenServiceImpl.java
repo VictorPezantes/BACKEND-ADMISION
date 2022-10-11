@@ -1,7 +1,7 @@
 package com.pe.ttk.admision.service.impl;
 
 import com.pe.ttk.admision.repositoy.ResultadoExamenRepository;
-import com.pe.ttk.admision.dto.entity.master.ResultadoExamen;
+import com.pe.ttk.admision.entity.master.EstadoResultadoExamen;
 import com.pe.ttk.admision.enums.ResultadoExamenNombre;
 import com.pe.ttk.admision.service.ResultadoExamenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +17,12 @@ public class ResultadoExamenServiceImpl implements ResultadoExamenService {
     ResultadoExamenRepository resultadoExamenRepository;
 
     @Override
-    public Optional<ResultadoExamen> findByResultadoExamenNombre(ResultadoExamenNombre resultadoExamenNombre) {
+    public Optional<ResultadoExamenNombre> findByResultadoExamenNombre(ResultadoExamenNombre resultadoExamenNombre) {
         return resultadoExamenRepository.findByResultadoExamenNombre(resultadoExamenNombre);
     }
 
     @Override
-    public void save(ResultadoExamen resultadoExamen) {
-        resultadoExamenRepository.save(resultadoExamen);
+    public void save(EstadoResultadoExamen estadoResultadoExamen) {
+        resultadoExamenRepository.save(estadoResultadoExamen);
     }
 }
