@@ -27,7 +27,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/oferta")
-@CrossOrigin(origins = "http://localhost:4200")
 public class OfertaController {
 
     @Autowired

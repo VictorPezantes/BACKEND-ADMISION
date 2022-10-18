@@ -13,7 +13,6 @@ import java.util.Date;
 
 @RestController
 @RequestMapping("/api/v1/examen")
-@CrossOrigin(origins = "http://localhost:4200")
 public class ExamenController {
     @Autowired
     ExamenServiceImpl examenService;

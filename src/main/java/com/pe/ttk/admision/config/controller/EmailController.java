@@ -25,7 +25,6 @@ import com.pe.ttk.admision.security.service.impl.EmailServiceImpl;
 
 @RestController
 @RequestMapping("/api/v1/email-service")
-@CrossOrigin(origins = "http://localhost:4200")
 public class EmailController {
 
 	@Autowired
