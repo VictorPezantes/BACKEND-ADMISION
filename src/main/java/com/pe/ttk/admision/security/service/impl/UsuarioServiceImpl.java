@@ -131,16 +131,17 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 
 		Set<Rol> roles = new HashSet<>();
-		Optional<Rol> rolOp = null;
+		Optional<Rol> rolOp = rolService.getByRolNombre(RolNombre.ROLE_USER);
 		if (rolOp.isEmpty()){
 			return new Mensaje("No existe el rol",false);
 		}
+		roles.add(rolOp.get());
 
 		if(isAdmin){
 			rolOp = rolService.getByRolNombre(RolNombre.ROLE_ADMIN);
-			roles.add(rolOp.get());
-		}else{
-			rolOp = rolService.getByRolNombre(RolNombre.ROLE_USER);
+			if (rolOp.isEmpty()){
+				return new Mensaje("No existe el rol",false);
+			}
 			roles.add(rolOp.get());
 		}
 
