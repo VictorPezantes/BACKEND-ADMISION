@@ -4,6 +4,7 @@ import com.pe.ttk.admision.dto.Mensaje;
 import com.pe.ttk.admision.dto.PostulanteDto;
 import com.pe.ttk.admision.entity.admision.OfertaEntity;
 import com.pe.ttk.admision.entity.admision.PostulanteEntity;
+import com.pe.ttk.admision.entity.admision.PostulanteEntityExt;
 import com.pe.ttk.admision.entity.master.HistorialEntity;
 import com.pe.ttk.admision.repositoy.HistorialRepository;
 import com.pe.ttk.admision.repositoy.OfertaRepository;
@@ -21,7 +22,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.sql.Date;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -266,8 +266,25 @@ public class PostulanteServiceImpl implements PostulanteService {
     }
 
     @Override
-    public List<PostulanteEntity> listarPostulanteFiltro(Integer estado, java.util.Date fechaPostulacion, String dni) {
-        return postulanteRepository.findByEstadoAndFechaPostulacionAndDni(estado,fechaPostulacion,dni);
+    public Page<PostulanteDto> listarPostulanteExamen(Integer numPagina, Integer tamPagina, Integer subEstadoExamen, Date fechaInformeMedico, Date fechaProgramada, String filtro) {
+        Pageable pageable = PageRequest.of(numPagina, tamPagina);
+        try{
+            List<PostulanteEntityExt> lista;
+            if(subEstadoExamen == null){
+                lista = postulanteRepository.findPostulanteExamen(null,null,null,null);
+            }
+            else{
+                lista = postulanteRepository.findPostulanteExamen(subEstadoExamen,fechaInformeMedico,fechaProgramada,filtro);
+            }
+            List<PostulanteDto> listaPostulante = lista.stream().map(PostulanteMapper.INSTANCE::toPostulante).collect(Collectors.toList());
+            if(!lista.isEmpty()){
+                return new PageImpl<>(listaPostulante, pageable, lista.size());
+            }
+        }catch(Exception ex){
+            System.out.println(ex);
+        }
+
+        return null;
     }
 
     private void registrarHistorial(PostulanteEntity postulanteEntity, Integer edad, String mensaje){

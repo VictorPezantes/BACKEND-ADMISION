@@ -1,12 +1,25 @@
 package com.pe.ttk.admision.enums;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum TipoExamenNombre {
-    GENERAL;
-    private static TipoExamenNombre[] values = null;
-    public static TipoExamenNombre fromInt(int i) {
-        if(TipoExamenNombre.values == null) {
-            TipoExamenNombre.values = TipoExamenNombre.values();
+    GENERAL(1);
+    private final int value;
+    private static Map map = new HashMap<>();
+    private TipoExamenNombre(int value) {
+        this.value = value;
+    }
+    static {
+        for (TipoExamenNombre tipoExamenNombre : TipoExamenNombre.values()) {
+            map.put(tipoExamenNombre.value, tipoExamenNombre);
         }
-        return TipoExamenNombre.values[i-1];
+    }
+
+    public static TipoExamenNombre valueOf(int tipoExamenNombre) {
+        return (TipoExamenNombre) map.get(tipoExamenNombre);
+    }
+    public int getValue() {
+        return value;
     }
 }

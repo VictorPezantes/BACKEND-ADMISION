@@ -43,18 +43,6 @@ public class ExamenMapperImpl  implements ExamenMapper {
         examenEntity.setFechaProgramada(examenDto.getFechaProgramada());
         examenEntity.setFechaInformeMedico(examenDto.getFechaInformeMedico());
         examenEntity.setObservacion(examenDto.getObservacion());
-        examenEntity.setTipoExamen(new TipoExamen(TipoExamenNombre.fromInt(examenDto.getTipoExamenId())));
-        examenEntity.getTipoExamen().setEstado(null);
-        examenEntity.getTipoExamen().setTipoExamenNombre(null);
-        examenEntity.setCentroMedico(new CentroMedico(CentroMedicoNombre.fromInt(examenDto.getCentroMedicoId())));
-        examenEntity.getCentroMedico().setEstado(null);
-        examenEntity.getCentroMedico().setCentroMedicoNombre(null);
-        PostulanteEntity postulanteEntity = new PostulanteEntity();
-        postulanteEntity.setId(examenDto.getPostulanteId());
-        examenEntity.setPostulante(postulanteEntity);
-        examenEntity.setSubEstado(new SubEstado(SubEstadoNombre.fromInt(examenDto.getSubEstadoId())));
-        examenEntity.getSubEstado().setEstado(null);
-        examenEntity.getSubEstado().setSubEstadoNombre(null);
         return examenEntity;
     }
 }

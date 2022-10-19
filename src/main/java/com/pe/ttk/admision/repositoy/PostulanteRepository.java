@@ -1,6 +1,7 @@
 package com.pe.ttk.admision.repositoy;
 
 import com.pe.ttk.admision.entity.admision.PostulanteEntity;
+import com.pe.ttk.admision.entity.admision.PostulanteEntityExt;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -22,10 +23,15 @@ public interface PostulanteRepository extends JpaRepository<PostulanteEntity,Lon
     List<PostulanteEntity> findByEstado(Integer estado, Pageable pageable);
 
     boolean existsByDniAndEstado(String dni, Integer estado);
-    @Query(value = "select * from Postulante "
-            + "where (:estado is null or estado = :estado)  "
-            + "and (:fechaPostulacion is null or DATE(fecha_postulacion) = DATE(:fechaPostulacion) ) "
-            + "and (:dni is null or dni = :dni)",
-            nativeQuery = true)
-    List<PostulanteEntity> findByEstadoAndFechaPostulacionAndDni(Integer estado, Date fechaPostulacion, String dni);
+    @Query(value = "SELECT NEW com.pe.ttk.admision.entity.admision.PostulanteEntityExt(p,e.subEstado.id) FROM PostulanteEntity p "
+            + "LEFT JOIN ExamenEntity e " +
+            " ON p.id = e.postulante.id " +
+            " WHERE ((e.id is null AND :estadoExamen is null) OR (e.subEstado.id =:estadoExamen)) " +
+            " AND (DATE(e.fechaInformeMedico)=DATE(:fechaInformeMedico) OR :fechaInformeMedico is null)" +
+            " AND (DATE(e.fechaProgramada)=DATE(:fechaProgramada) OR :fechaProgramada is null)" +
+            " AND ((p.apellidoPaterno LIKE %:filtro% or p.apellidoMaterno LIKE %:filtro% or p.primerNombre LIKE %:filtro% or p.segundoNombre LIKE %:filtro%) OR :filtro is null )")
+    List<PostulanteEntityExt> findPostulanteExamen(@Param("estadoExamen")Integer estadoExamen,
+                                                   @Param("fechaInformeMedico") Date fechaInformeMedico,
+                                                   @Param("fechaProgramada") Date fechaProgramada,
+                                                   @Param("filtro") String filtro);
 }

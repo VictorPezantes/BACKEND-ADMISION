@@ -17,6 +17,8 @@ public class CentroMedico {
     @Enumerated(EnumType.STRING)
     private CentroMedicoNombre  centroMedicoNombre;
     private Integer estado;
+    private String Direccion;
+    private String email;
     public CentroMedico(){super();}
     public CentroMedico(@NotNull CentroMedicoNombre centroMedicoNombre) {
         super();

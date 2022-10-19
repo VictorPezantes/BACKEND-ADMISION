@@ -66,11 +66,6 @@ public class CreateMasters implements CommandLineRunner {
             tipoExamenService.save(tipoExamenGeneral);
         }
         //SubEstado
-        Optional<SubEstadoNombre> subEstadoNombreGeneral = subEstadoService.findBySubEstadoNombre(SubEstadoNombre.PENDIENTE);
-        if (subEstadoNombreGeneral.isEmpty()){
-            SubEstado subEstadoGeneral = new SubEstado(SubEstadoNombre.PENDIENTE);
-            subEstadoService.save(subEstadoGeneral);
-        }
         Optional<SubEstadoNombre> subEstadoNombreProgramado = subEstadoService.findBySubEstadoNombre(SubEstadoNombre.PROGRAMADO);
         if (subEstadoNombreProgramado.isEmpty()){
             SubEstado subEstadoProgramado = new SubEstado(SubEstadoNombre.PROGRAMADO);

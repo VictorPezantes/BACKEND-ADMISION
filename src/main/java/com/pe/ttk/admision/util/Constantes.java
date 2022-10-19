@@ -4,6 +4,7 @@ public class Constantes {
 
     public static final Integer ESTADO_ACTIVO = 1;
     public static final Integer ESTADO_INACTIVO = 0;
+    public static final Integer ESTADO_FUERA_DEL_PROCESO = 4;
     public static final Long ESTADO_CREADA = 1L;
     public static final Long ESTADO_ACTIVADA = 2L;
     public static final Long ESTADO_DESACTIVADA = 3L;
@@ -26,4 +27,5 @@ public class Constantes {
     public static final String MENSAJE_NO_CUMPLE_EDAD = "Technotankers le agradece su postulación, lamentablemente le comunicamos que " +
             "no cumple con uno de los requisitos indispensables para la oferta postulada.";
     public static final Integer LONGITUD_CELULAR_MINIMA = 9;
+    public static final Integer DIAS_CANCELACION = 7;
 }

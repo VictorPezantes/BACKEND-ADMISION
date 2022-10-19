@@ -32,17 +32,19 @@ public class PostulanteController {
     @GetMapping("/listar")
     public ResponseEntity<?> listarPostulantes(@RequestParam(defaultValue = "0") Integer numPagina,
                                                @RequestParam(defaultValue = "10") Integer tamPagina) {
-
         return ResponseEntity.ok(postulanteService.listarPostulantes(numPagina, tamPagina));
     }
-    @ApiOperation("Lista todos los postulantes")
+    @ApiOperation("Lista todos los postulantes que tienen no tienen examen")
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/listarFiltro")
-    public ResponseEntity<?> listarPostulanteFiltro(@RequestParam(required = false) Integer estado,
-                                                    @RequestParam(required = false) @DateTimeFormat(pattern = "dd/MM/yyyy" ) Date fechaPostulacion,
-                                                    @RequestParam(required = false) String dni) {
+    @GetMapping("/listarExamen")
+    public ResponseEntity<?> listarPostulanteExamen(@RequestParam(defaultValue = "0") Integer numPagina,
+                                                    @RequestParam(defaultValue = "10") Integer tamPagina,
+                                                    @RequestParam(required = false) Integer subEstadoExamen,
+                                                    @RequestParam(required = false) Date fechaInformeMedico,
+                                                    @RequestParam(required = false) Date fechaProgramada,
+                                                    @RequestParam(required = false) String filtro) {
         try {
-            return ResponseEntity.ok(postulanteService.listarPostulanteFiltro(estado, fechaPostulacion,dni));
+            return ResponseEntity.ok(postulanteService.listarPostulanteExamen(numPagina, tamPagina,subEstadoExamen,fechaInformeMedico,fechaProgramada,filtro));
         }
         catch (Exception e) {
             e.printStackTrace();

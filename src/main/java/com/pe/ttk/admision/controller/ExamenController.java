@@ -1,5 +1,6 @@
 package com.pe.ttk.admision.controller;
 
+import com.pe.ttk.admision.dto.ExamenActDto;
 import com.pe.ttk.admision.dto.ExamenDto;
 import com.pe.ttk.admision.service.impl.ExamenServiceImpl;
 import io.swagger.annotations.ApiOperation;
@@ -9,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.util.Date;
 
 @RestController
@@ -21,8 +23,26 @@ public class ExamenController {
     @ApiOperation("Registrar examen")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/registrar")
-    public ResponseEntity<?> registrar(@RequestBody ExamenDto examen){
+    public ResponseEntity<?> registrar(@RequestBody @Valid ExamenDto examen){
         examen.setFecha(new Date(System.currentTimeMillis()));
         return ResponseEntity.ok(examenService.registrarExamen(examen));
+    }
+    @ApiOperation("Reprogramar un examen")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/reprogramar")
+    public ResponseEntity<?> reprogramar(@RequestBody @Valid ExamenActDto examen){
+        return ResponseEntity.ok(examenService.reprogramarExamen(examen));
+    }
+    @ApiOperation("Cancelar un examen")
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/cancelar")
+    public ResponseEntity<?> cancelar(@RequestParam Long examenId,boolean solicitudPostulante){
+        return ResponseEntity.ok(examenService.cancelarExamen(examenId,solicitudPostulante));
+    }
+    @ApiOperation("registra el resultado de un examen")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/registrarResultado")
+    public ResponseEntity<?> cancelar(@RequestParam Long examenId,@RequestParam Integer estadoResultadoExamenId,@RequestParam MultipartFile resultadoExamen){
+        return ResponseEntity.ok(examenService.registrarResultadoExamen(examenId,estadoResultadoExamenId,resultadoExamen));
     }
 }

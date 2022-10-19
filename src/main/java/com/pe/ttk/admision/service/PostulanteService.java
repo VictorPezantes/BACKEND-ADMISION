@@ -29,5 +29,5 @@ public interface PostulanteService {
     Optional<PostulanteEntity> getOne(int id);
 
     Page<PostulanteDto> listarPostulantes(Integer numPagina, Integer tamPagina);
-    List<PostulanteEntity> listarPostulanteFiltro(Integer estado, Date fechaPostulacion, String dni);
+    Page<PostulanteDto> listarPostulanteExamen(Integer numPagina, Integer tamPagina, Integer subEstadoExamen, Date fechaInformeMedico, Date fechaProgramada, String filtro);
 }

@@ -1,14 +1,27 @@
 package com.pe.ttk.admision.enums;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum ResultadoExamenNombre {
-    APROBADO,
-    DESAPROBADO,
-    OBSERVADO;
-    private static ResultadoExamenNombre[] values = null;
-    public static ResultadoExamenNombre fromInt(int i) {
-        if(ResultadoExamenNombre.values == null) {
-            ResultadoExamenNombre.values = ResultadoExamenNombre.values();
+    APROBADO(1),
+    DESAPROBADO(2),
+    OBSERVADO(3);
+    private final int value;
+    private static Map map = new HashMap<>();
+    private ResultadoExamenNombre(int value) {
+        this.value = value;
+    }
+    static {
+        for (ResultadoExamenNombre resultadoExamenNombre : ResultadoExamenNombre.values()) {
+            map.put(resultadoExamenNombre.value, resultadoExamenNombre);
         }
-        return ResultadoExamenNombre.values[i-1];
+    }
+
+    public static ResultadoExamenNombre valueOf(int resultadoExamenNombre) {
+        return (ResultadoExamenNombre) map.get(resultadoExamenNombre);
+    }
+    public int getValue() {
+        return value;
     }
 }

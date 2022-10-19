@@ -84,7 +84,29 @@ public class EmailServiceImpl implements EmailService {
 		}
 
 	}
-	
-	
+
+	@Override
+	public void enviarEmailExamen(String toEmail, String mensaje, String asunto, String nombre) {
+		MimeMessage message = javaMailSender.createMimeMessage();
+
+		try {
+			MimeMessageHelper helper = new MimeMessageHelper(message,true);
+			Context context = new Context();
+			Map<String,Object> model = new HashMap<>();
+			model.put("nombre", nombre);
+			model.put("mensaje", mensaje);
+			context.setVariables(model);
+			String htmlText = templateEngine.process("email-examen", context);
+			helper.setFrom(fromEmail);
+			helper.setTo(toEmail);
+			helper.setSubject(asunto);
+			helper.setText(htmlText,true);
+			javaMailSender.send(message);
+
+		} catch (MessagingException e) {
+			logger.error(e.getMessage());
+		}
+	}
+
 
 }

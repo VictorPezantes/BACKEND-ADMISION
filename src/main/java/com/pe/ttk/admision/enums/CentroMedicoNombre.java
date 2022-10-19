@@ -1,12 +1,25 @@
 package com.pe.ttk.admision.enums;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum CentroMedicoNombre {
-    CENTRO_MEDICO_TEST;
-    private static CentroMedicoNombre[] values = null;
-    public static CentroMedicoNombre fromInt(int i) {
-        if(CentroMedicoNombre.values == null) {
-            CentroMedicoNombre.values = CentroMedicoNombre.values();
+    CENTRO_MEDICO_TEST(1);
+    private final int value;
+    private static Map map = new HashMap<>();
+    private CentroMedicoNombre(int value) {
+        this.value = value;
+    }
+    static {
+        for (CentroMedicoNombre centroMedicoNombre : CentroMedicoNombre.values()) {
+            map.put(centroMedicoNombre.value, centroMedicoNombre);
         }
-        return CentroMedicoNombre.values[i-1];
+    }
+
+    public static CentroMedicoNombre valueOf(int centroMedicoNombre) {
+        return (CentroMedicoNombre) map.get(centroMedicoNombre);
+    }
+    public int getValue() {
+        return value;
     }
 }

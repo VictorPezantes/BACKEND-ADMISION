@@ -55,6 +55,7 @@ public class PostulanteDto {
     private String urlDniPosterior;
     private String urlFotografia;
     private Integer estado;
+    private Integer subEstadoExamen;
     public List<String> Validar()
     {
         List<String> validaciones = new ArrayList<String>();
