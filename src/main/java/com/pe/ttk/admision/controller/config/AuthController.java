@@ -46,8 +46,7 @@ public class AuthController {
                                                   @RequestParam String email,
                                                   @RequestParam String password,
                                                   @RequestParam String nombreUsuario,
-                                                  @RequestParam String fotografia,
-                                                 @RequestParam Set<String> roles) throws JsonProcessingException {
+                                                  @RequestParam String fotografia) throws JsonProcessingException {
         NuevoUsuario nuevoUsuario = new NuevoUsuario();
         nuevoUsuario.setNombre(nombre);
         nuevoUsuario.setApellidos(apellidos);
@@ -55,7 +54,6 @@ public class AuthController {
         nuevoUsuario.setPassword(password);
         nuevoUsuario.setNombreUsuario(nombreUsuario);
         nuevoUsuario.setFotografia(fotografia);
-        nuevoUsuario.setRoles(roles);
 
         /*if (bindingResult.hasErrors())
             return ResponseEntity.badRequest().body(new Mensaje("Por favor ingrese los campos correctamente"));*/
