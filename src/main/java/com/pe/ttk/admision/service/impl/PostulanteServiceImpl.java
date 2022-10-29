@@ -9,7 +9,7 @@ import com.pe.ttk.admision.entity.master.HistorialEntity;
 import com.pe.ttk.admision.repositoy.HistorialRepository;
 import com.pe.ttk.admision.repositoy.OfertaRepository;
 import com.pe.ttk.admision.repositoy.PostulanteRepository;
-import com.pe.ttk.admision.security.service.EmailService;
+import com.pe.ttk.admision.service.security.EmailService;
 import com.pe.ttk.admision.service.PostulanteService;
 import com.pe.ttk.admision.util.Constantes;
 import com.pe.ttk.admision.util.ConvertirFechas;
@@ -256,7 +256,7 @@ public class PostulanteServiceImpl implements PostulanteService {
     @Override
     public Page<PostulanteDto> listarPostulantes(Integer numPagina, Integer tamPagina) {
         Pageable pageable = PageRequest.of(numPagina, tamPagina);
-        List<PostulanteEntity> lista = postulanteRepository.findByEstado(Constantes.ESTADO_ACTIVO, pageable);
+        List<PostulanteEntityExt> lista = postulanteRepository.findByEstado(Constantes.ESTADO_ACTIVO, pageable);
         List<PostulanteDto> listaPostulante = lista.stream().map(PostulanteMapper.INSTANCE::toPostulante).collect(Collectors.toList());
         if(!listaPostulante.isEmpty()){
             return new PageImpl<>(listaPostulante, pageable, lista.size());

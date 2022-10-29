@@ -1,9 +1,9 @@
-package com.pe.ttk.admision.security.entity;
+package com.pe.ttk.admision.entity.security;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-import com.pe.ttk.admision.security.enums.RolNombre;
+import com.pe.ttk.admision.enums.security.RolNombre;
 import lombok.Data;
 
 @Entity

@@ -1,6 +1,6 @@
-package com.pe.ttk.admision.security.dto;
+package com.pe.ttk.admision.dto.security;
 
-import com.pe.ttk.admision.security.entity.Rol;
+import com.pe.ttk.admision.entity.security.Rol;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

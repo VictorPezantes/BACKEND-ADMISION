@@ -24,8 +24,11 @@ public class PostulanteDto {
     private Date fechaNacimiento;
     private String direccion;
     private Long idDistrito;
+    private String DistritoDescripcion;
     private Long idProvincia;
+    private String ProvinciaDescripcion;
     private Long idDepartamento;
+    private String DepartamentoDescripcion;
     private String celular;
     private String celularFamiliar;
     private String telefonoFijo;

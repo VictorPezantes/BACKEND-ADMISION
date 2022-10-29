@@ -1,4 +1,4 @@
-package com.pe.ttk.admision.security.dto;
+package com.pe.ttk.admision.dto.security;
 
 import java.util.Collection;
 

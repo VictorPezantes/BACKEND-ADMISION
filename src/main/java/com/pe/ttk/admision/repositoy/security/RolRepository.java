@@ -1,9 +1,9 @@
-package com.pe.ttk.admision.security.repository;
+package com.pe.ttk.admision.repositoy.security;
 
 import java.util.Optional;
 
-import com.pe.ttk.admision.security.entity.Rol;
-import com.pe.ttk.admision.security.enums.RolNombre;
+import com.pe.ttk.admision.entity.security.Rol;
+import com.pe.ttk.admision.enums.security.RolNombre;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

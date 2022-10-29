@@ -5,8 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.pe.ttk.admision.security.dto.JwtDto;
-import com.pe.ttk.admision.security.entity.UsuarioPrincipal;
+import com.pe.ttk.admision.dto.security.JwtDto;
+import com.pe.ttk.admision.entity.security.UsuarioPrincipal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

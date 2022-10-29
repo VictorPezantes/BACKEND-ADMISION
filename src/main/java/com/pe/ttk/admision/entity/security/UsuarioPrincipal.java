@@ -1,4 +1,4 @@
-package com.pe.ttk.admision.security.entity;
+package com.pe.ttk.admision.entity.security;
 
 import java.util.Collection;
 import java.util.List;

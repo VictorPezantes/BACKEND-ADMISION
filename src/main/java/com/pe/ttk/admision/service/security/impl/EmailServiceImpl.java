@@ -1,4 +1,4 @@
-package com.pe.ttk.admision.security.service.impl;
+package com.pe.ttk.admision.service.security.impl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,8 +6,8 @@ import java.util.Map;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-import com.pe.ttk.admision.security.dto.EmailValuesDto;
-import com.pe.ttk.admision.security.service.EmailService;
+import com.pe.ttk.admision.dto.security.EmailValuesDto;
+import com.pe.ttk.admision.service.security.EmailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

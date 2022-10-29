@@ -1,11 +1,11 @@
-package com.pe.ttk.admision.security.service.impl;
+package com.pe.ttk.admision.service.security.impl;
 
 import java.util.Optional;
 
-import com.pe.ttk.admision.security.entity.Rol;
-import com.pe.ttk.admision.security.enums.RolNombre;
-import com.pe.ttk.admision.security.repository.RolRepository;
-import com.pe.ttk.admision.security.service.RolService;
+import com.pe.ttk.admision.entity.security.Rol;
+import com.pe.ttk.admision.enums.security.RolNombre;
+import com.pe.ttk.admision.repositoy.security.RolRepository;
+import com.pe.ttk.admision.service.security.RolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

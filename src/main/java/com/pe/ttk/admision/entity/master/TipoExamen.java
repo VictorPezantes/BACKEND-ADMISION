@@ -1,7 +1,6 @@
 package com.pe.ttk.admision.entity.master;
 
 import com.pe.ttk.admision.enums.TipoExamenNombre;
-import com.pe.ttk.admision.security.enums.RolNombre;
 import lombok.Data;
 
 import javax.persistence.*;

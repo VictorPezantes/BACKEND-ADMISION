@@ -1,15 +1,14 @@
-package com.pe.ttk.admision.config.controller;
+package com.pe.ttk.admision.controller.config;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pe.ttk.admision.dto.Mensaje;
-import com.pe.ttk.admision.security.dto.JwtDto;
-import com.pe.ttk.admision.security.dto.LoginUsuario;
-import com.pe.ttk.admision.security.dto.NuevoUsuario;
-import com.pe.ttk.admision.security.dto.UsuarioDto;
-import com.pe.ttk.admision.security.entity.UsuarioPrincipal;
+import com.pe.ttk.admision.dto.security.JwtDto;
+import com.pe.ttk.admision.dto.security.LoginUsuario;
+import com.pe.ttk.admision.dto.security.NuevoUsuario;
+import com.pe.ttk.admision.dto.security.UsuarioDto;
+import com.pe.ttk.admision.entity.security.UsuarioPrincipal;
 import com.pe.ttk.admision.security.jwt.JwtProvider;
-import com.pe.ttk.admision.security.service.UsuarioService;
+import com.pe.ttk.admision.service.security.UsuarioService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -75,8 +74,7 @@ public class AuthController {
                                                    @RequestParam String email,
                                                    @RequestParam String password,
                                                    @RequestParam String nombreUsuario,
-                                                   @RequestParam String fotografia,
-                                                   @RequestParam Set<String> roles) throws JsonProcessingException {
+                                                   @RequestParam String fotografia) throws JsonProcessingException {
 
         NuevoUsuario nuevoUsuario = new NuevoUsuario();
         nuevoUsuario.setNombre(nombre);
@@ -85,7 +83,6 @@ public class AuthController {
         nuevoUsuario.setPassword(password);
         nuevoUsuario.setNombreUsuario(nombreUsuario);
         nuevoUsuario.setFotografia(fotografia);
-        nuevoUsuario.setRoles(roles);
 
         /*if (bindingResult.hasErrors())
             return ResponseEntity.badRequest().body(new Mensaje("Por favor ingrese los campos correctamente"));*/

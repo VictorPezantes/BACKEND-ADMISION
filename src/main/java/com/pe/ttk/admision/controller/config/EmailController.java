@@ -1,4 +1,4 @@
-package com.pe.ttk.admision.config.controller;
+package com.pe.ttk.admision.controller.config;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -6,10 +6,10 @@ import java.util.UUID;
 import javax.validation.Valid;
 
 import com.pe.ttk.admision.dto.Mensaje;
-import com.pe.ttk.admision.security.dto.ChangePasswordDto;
-import com.pe.ttk.admision.security.dto.EmailValuesDto;
-import com.pe.ttk.admision.security.entity.Usuario;
-import com.pe.ttk.admision.security.service.UsuarioService;
+import com.pe.ttk.admision.dto.security.ChangePasswordDto;
+import com.pe.ttk.admision.dto.security.EmailValuesDto;
+import com.pe.ttk.admision.entity.security.Usuario;
+import com.pe.ttk.admision.service.security.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pe.ttk.admision.security.service.impl.EmailServiceImpl;
+import com.pe.ttk.admision.service.security.impl.EmailServiceImpl;
 
 @RestController
 @RequestMapping("/api/v1/email-service")

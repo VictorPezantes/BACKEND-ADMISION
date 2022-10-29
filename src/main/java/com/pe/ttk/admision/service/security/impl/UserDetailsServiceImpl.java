@@ -1,8 +1,8 @@
-package com.pe.ttk.admision.security.service.impl;
+package com.pe.ttk.admision.service.security.impl;
 
-import com.pe.ttk.admision.security.entity.Usuario;
-import com.pe.ttk.admision.security.entity.UsuarioPrincipal;
-import com.pe.ttk.admision.security.service.UsuarioService;
+import com.pe.ttk.admision.entity.security.Usuario;
+import com.pe.ttk.admision.entity.security.UsuarioPrincipal;
+import com.pe.ttk.admision.service.security.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

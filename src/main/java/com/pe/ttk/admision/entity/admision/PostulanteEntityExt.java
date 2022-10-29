@@ -1,12 +1,15 @@
 package com.pe.ttk.admision.entity.admision;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
+@NoArgsConstructor
 @Data
 public class PostulanteEntityExt {
 
@@ -37,12 +40,15 @@ public class PostulanteEntityExt {
     @NotEmpty
     @Column(name = "id_distrito")
     private Long idDistrito;
+    private String distritoDescripcion;
     @NotEmpty
     @Column(name = "id_provincia")
     private Long idProvincia;
+    private String provinciaDescripcion;
     @NotEmpty
     @Column(name = "id_departamento")
     private Long idDepartamento;
+    private String departamentoDescripcion;
     @NotEmpty
     private String celular;
     @Column(name = "celular_familiar")
@@ -126,6 +132,43 @@ public class PostulanteEntityExt {
         idOferta=postulanteEntity.getIdOferta();
         ofertaPostulada=postulanteEntity.getOfertaPostulada();
         subEstadoExamen=idEstado;
-
+    }
+    public PostulanteEntityExt(PostulanteEntity postulanteEntity, String distrito,String provincia, String departamento) {
+        id = postulanteEntity.getId();
+        primerNombre = postulanteEntity.getPrimerNombre();
+        segundoNombre = postulanteEntity.getSegundoNombre();
+        apellidoPaterno=postulanteEntity.getApellidoPaterno();
+        apellidoMaterno=postulanteEntity.getApellidoMaterno();
+        idEstadoCivil=postulanteEntity.getIdEstadoCivil();
+        dni=postulanteEntity.getDni();
+        fechaNacimiento=postulanteEntity.getFechaNacimiento();
+        direccion=postulanteEntity.getDireccion();
+        idDistrito=postulanteEntity.getIdDistrito();
+        idProvincia=postulanteEntity.getIdProvincia();
+        idDepartamento=postulanteEntity.getIdDepartamento();
+        celular=postulanteEntity.getCelular();
+        celularFamiliar=postulanteEntity.getCelularFamiliar();
+        telefonoFijo=postulanteEntity.getTelefonoFijo();
+        email=postulanteEntity.getEmail();
+        emailSecundario=postulanteEntity.getEmailSecundario();
+        profesion=postulanteEntity.getProfesion();
+        lugarEstudios=postulanteEntity.getLugarEstudios();
+        ultimoCursoRealizado=postulanteEntity.getUltimoCursoRealizado();
+        empresaCurso=postulanteEntity.getEmpresaCurso();
+        trabajoReciente=postulanteEntity.getTrabajoReciente();
+        fechaIngresoTrabajoReciente=postulanteEntity.getFechaIngresoTrabajoReciente();
+        fechaSalidaTrabajoReciente=postulanteEntity.getFechaSalidaTrabajoReciente();
+        empresaTrabajoReciente=postulanteEntity.getEmpresaTrabajoReciente();
+        motivoSalidaTrabajoReciente=postulanteEntity.getMotivoSalidaTrabajoReciente();
+        disponibilidadViajar=postulanteEntity.getDisponibilidadViajar();
+        experienciaRubro=postulanteEntity.getExperienciaRubro();
+        estadoPostulacion=postulanteEntity.getEstadoPostulacion();
+        fechaPostulacion=postulanteEntity.getFechaPostulacion();
+        procedencia=postulanteEntity.getProcedencia();
+        idOferta=postulanteEntity.getIdOferta();
+        ofertaPostulada=postulanteEntity.getOfertaPostulada();
+        distritoDescripcion =distrito;
+        provinciaDescripcion =provincia;
+        departamentoDescripcion=departamento;
     }
 }

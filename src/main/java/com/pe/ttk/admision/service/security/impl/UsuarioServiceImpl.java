@@ -1,21 +1,20 @@
-package com.pe.ttk.admision.security.service.impl;
+package com.pe.ttk.admision.service.security.impl;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import com.pe.ttk.admision.dto.Mensaje;
-import com.pe.ttk.admision.security.dto.NuevoUsuario;
-import com.pe.ttk.admision.security.dto.UsuarioDto;
-import com.pe.ttk.admision.security.entity.Rol;
-import com.pe.ttk.admision.security.entity.Usuario;
-import com.pe.ttk.admision.security.entity.UsuarioPrincipal;
-import com.pe.ttk.admision.security.enums.RolNombre;
-import com.pe.ttk.admision.security.repository.UsuarioRepository;
-import com.pe.ttk.admision.security.service.RolService;
-import com.pe.ttk.admision.security.service.UsuarioService;
+import com.pe.ttk.admision.dto.security.NuevoUsuario;
+import com.pe.ttk.admision.dto.security.UsuarioDto;
+import com.pe.ttk.admision.entity.security.Rol;
+import com.pe.ttk.admision.entity.security.Usuario;
+import com.pe.ttk.admision.entity.security.UsuarioPrincipal;
+import com.pe.ttk.admision.enums.security.RolNombre;
+import com.pe.ttk.admision.repositoy.security.UsuarioRepository;
+import com.pe.ttk.admision.service.security.RolService;
+import com.pe.ttk.admision.service.security.UsuarioService;
 import com.pe.ttk.admision.util.Constantes;
 import com.pe.ttk.admision.util.GuardarArchivos;
 import com.pe.ttk.admision.util.mapper.UsuarioMapper;
@@ -131,19 +130,28 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 
 		Set<Rol> roles = new HashSet<>();
-		Optional<Rol> rolOp = rolService.getByRolNombre(RolNombre.ROLE_USER);
+		Optional<Rol> rolOp;
+		if (isAdmin){
+			rolOp = rolService.getByRolNombre(RolNombre.ROLE_ADMIN);
+		}
+		else {
+			rolOp = rolService.getByRolNombre(RolNombre.ROLE_USER);
+		}
+
 		if (rolOp.isEmpty()){
 			return new Mensaje("No existe el rol",false);
 		}
-		roles.add(rolOp.get());
+		else{
+			roles.add(rolOp.get());
+		}
 
-		if(isAdmin){
+		/*if(isAdmin){
 			rolOp = rolService.getByRolNombre(RolNombre.ROLE_ADMIN);
 			if (rolOp.isEmpty()){
 				return new Mensaje("No existe el rol",false);
 			}
 			roles.add(rolOp.get());
-		}
+		}*/
 
 		Usuario usuario = new Usuario();
 		usuario.setNombre(nuevoUsuario.getNombre());

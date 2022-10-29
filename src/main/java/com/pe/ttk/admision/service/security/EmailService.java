@@ -1,4 +1,4 @@
-package com.pe.ttk.admision.security.service;
+package com.pe.ttk.admision.service.security;
 
 public interface EmailService {
 

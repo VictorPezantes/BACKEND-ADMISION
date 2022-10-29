@@ -1,7 +1,5 @@
-package com.pe.ttk.admision.security.entity;
+package com.pe.ttk.admision.entity.security;
 
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import com.pe.ttk.admision.security.dto.UsuarioDto;
 import lombok.Data;
 
 import java.util.HashSet;

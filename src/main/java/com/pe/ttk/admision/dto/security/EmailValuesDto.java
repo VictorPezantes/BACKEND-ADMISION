@@ -1,4 +1,4 @@
-package com.pe.ttk.admision.security.dto;
+package com.pe.ttk.admision.dto.security;
 
 public class EmailValuesDto {
 	private String mailFrom;

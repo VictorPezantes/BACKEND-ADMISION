@@ -1,9 +1,9 @@
-package com.pe.ttk.admision.security.service;
+package com.pe.ttk.admision.service.security;
 
 import com.pe.ttk.admision.dto.Mensaje;
-import com.pe.ttk.admision.security.dto.NuevoUsuario;
-import com.pe.ttk.admision.security.dto.UsuarioDto;
-import com.pe.ttk.admision.security.entity.Usuario;
+import com.pe.ttk.admision.dto.security.NuevoUsuario;
+import com.pe.ttk.admision.dto.security.UsuarioDto;
+import com.pe.ttk.admision.entity.security.Usuario;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.multipart.MultipartFile;
 

@@ -1,6 +1,6 @@
-package com.pe.ttk.admision.security;
+package com.pe.ttk.admision.service.security;
 
-import com.pe.ttk.admision.security.service.impl.UserDetailsServiceImpl;
+import com.pe.ttk.admision.service.security.impl.UserDetailsServiceImpl;
 import com.pe.ttk.admision.security.jwt.JwtEntryPoint;
 import com.pe.ttk.admision.security.jwt.JwtTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,13 +76,6 @@ public class MainSecurity extends WebSecurityConfigurerAdapter{
 		
 		http.addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
-		CorsConfiguration corsConfiguration = new CorsConfiguration();
-		corsConfiguration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
-		corsConfiguration.setAllowedOrigins(List.of("*"));
-		corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PUT","OPTIONS","PATCH", "DELETE"));
-		corsConfiguration.setAllowCredentials(true);
-		corsConfiguration.setExposedHeaders(List.of("Authorization"));
-		http.cors().configurationSource(request -> corsConfiguration);
 	}
 	
 

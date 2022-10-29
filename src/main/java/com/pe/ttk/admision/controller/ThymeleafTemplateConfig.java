@@ -1,4 +1,4 @@
-package com.pe.ttk.admision.config;
+package com.pe.ttk.admision.controller;
 
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
