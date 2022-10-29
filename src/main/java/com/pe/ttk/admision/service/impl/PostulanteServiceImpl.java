@@ -256,7 +256,7 @@ public class PostulanteServiceImpl implements PostulanteService {
     @Override
     public Page<PostulanteDto> listarPostulantes(Integer numPagina, Integer tamPagina) {
         Pageable pageable = PageRequest.of(numPagina, tamPagina);
-        List<PostulanteEntityExt> lista = postulanteRepository.findByEstado(Constantes.ESTADO_ACTIVO, pageable);
+        List<PostulanteEntityExt> lista = postulanteRepository.findByEstado(null, pageable);
         List<PostulanteDto> listaPostulante = lista.stream().map(PostulanteMapper.INSTANCE::toPostulante).collect(Collectors.toList());
         if(!listaPostulante.isEmpty()){
             return new PageImpl<>(listaPostulante, pageable, lista.size());
@@ -266,16 +266,17 @@ public class PostulanteServiceImpl implements PostulanteService {
     }
 
     @Override
-    public Page<PostulanteDto> listarPostulanteExamen(Integer numPagina, Integer tamPagina, Integer subEstadoExamen, Date fechaInformeMedico, Date fechaProgramada, String filtro) {
+    public Page<PostulanteDto> listarPostulanteFiltro(Integer numPagina, Integer tamPagina, Integer estado, Integer subEstadoExamen, Date fechaInformeMedico, Date fechaProgramada, String filtro) {
         Pageable pageable = PageRequest.of(numPagina, tamPagina);
         try{
             List<PostulanteEntityExt> lista;
-            if(subEstadoExamen == null){
-                lista = postulanteRepository.findPostulanteExamen(null,null,null,null);
+            /*if(subEstadoExamen == null){
+                lista = postulanteRepository.findPostulanteExamen(null,null,null,null,estado);
             }
             else{
-                lista = postulanteRepository.findPostulanteExamen(subEstadoExamen,fechaInformeMedico,fechaProgramada,filtro);
-            }
+                lista = postulanteRepository.findPostulanteExamen(subEstadoExamen,fechaInformeMedico,fechaProgramada,filtro,estado);
+            }*/
+            lista = postulanteRepository.findPostulanteFiltro(subEstadoExamen,fechaInformeMedico,fechaProgramada,filtro,estado);
             List<PostulanteDto> listaPostulante = lista.stream().map(PostulanteMapper.INSTANCE::toPostulante).collect(Collectors.toList());
             if(!lista.isEmpty()){
                 return new PageImpl<>(listaPostulante, pageable, lista.size());

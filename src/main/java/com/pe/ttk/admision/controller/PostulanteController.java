@@ -35,35 +35,21 @@ public class PostulanteController {
     }
     @ApiOperation("Lista todos los postulantes que tienen no tienen examen")
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/listarExamen")
+    @GetMapping("/listarFiltro")
     public ResponseEntity<?> listarPostulanteExamen(@RequestParam(defaultValue = "0") Integer numPagina,
                                                     @RequestParam(defaultValue = "10") Integer tamPagina,
+                                                    @RequestParam(required = false) Integer estado,
                                                     @RequestParam(required = false) Integer subEstadoExamen,
                                                     @RequestParam(required = false) Date fechaInformeMedico,
                                                     @RequestParam(required = false) Date fechaProgramada,
                                                     @RequestParam(required = false) String filtro) {
         try {
-            return ResponseEntity.ok(postulanteService.listarPostulanteExamen(numPagina, tamPagina,subEstadoExamen,fechaInformeMedico,fechaProgramada,filtro));
+            return ResponseEntity.ok(postulanteService.listarPostulanteFiltro(numPagina, tamPagina,estado,subEstadoExamen,fechaInformeMedico,fechaProgramada,filtro));
         }
         catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.ok(e);
         }
-    }
-    @ApiOperation("Lista filtrada por datos del postulante")
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/lista/filtrada")
-    public String obtenerOfertaPorEstado(@RequestParam(value = "search") String query,
-                                         @RequestParam(value = "numpagina") Integer page,
-                                         @RequestParam(value = "size") Integer size,
-                                         Model model) throws TTKDataException {
-        /*List<SearchCriteria> params = FilterParam.filter(query);
-        PostulanteFindInputData input = new PostulanteFindInputData();
-        input.fillData(params);
-        List<PostulanteDto> listaPostulanteDto = postulanteService.findByQueryString(input.getEstadoPostulacion(), input.getDistrito(), input.getProvincia(), input.getDepartamento(), input.getProfesion(),
-                input.getResponsableAsignado(), input.getProcedencia(), input.getApellidoPaterno());
-        return PaginationUtils.getPaginationedResults(listaPostulanteDto, page, size, model);*/
-        return "";
     }
 
     @ApiOperation("Registrar un nuevo postulante")

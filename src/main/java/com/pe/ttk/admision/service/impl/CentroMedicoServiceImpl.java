@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,5 +31,10 @@ public class CentroMedicoServiceImpl implements CentroMedicoService {
     @Override
     public Optional<CentroMedico> findById(Integer id) {
         return centroMedicoRepository.findById(id);
+    }
+
+    @Override
+    public List<CentroMedico> listar() {
+        return centroMedicoRepository.findAll();
     }
 }
