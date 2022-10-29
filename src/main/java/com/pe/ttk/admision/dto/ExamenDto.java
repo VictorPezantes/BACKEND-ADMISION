@@ -21,6 +21,7 @@ public class ExamenDto {
     private Date fechaProgramada;
     @Null
     private String observacion;
+    @Null
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd/MM/yyyy HH:mm:ss", timezone = "America/Lima")
     private Date fechaResultado;
     @NotNull

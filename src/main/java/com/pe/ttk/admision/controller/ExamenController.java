@@ -41,7 +41,7 @@ public class ExamenController {
     @ApiOperation("registra el resultado de un examen")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/registrarResultado")
-    public ResponseEntity<?> cancelar(@RequestParam Long examenId,@RequestParam Integer estadoResultadoExamenId,@RequestParam MultipartFile resultadoExamen){
-        return ResponseEntity.ok(examenService.registrarResultadoExamen(examenId,estadoResultadoExamenId,resultadoExamen));
+    public ResponseEntity<?> cancelar(@RequestParam Long examenId,@RequestParam Integer estadoResultadoExamenId,@RequestParam MultipartFile resultadoExamen,@RequestParam Date fechaResultado){
+        return ResponseEntity.ok(examenService.registrarResultadoExamen(examenId,estadoResultadoExamenId,resultadoExamen,fechaResultado));
     }
 }

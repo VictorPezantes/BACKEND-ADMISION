@@ -211,7 +211,7 @@ public class ExamenServiceImpl implements ExamenService {
     }
 
     @Override
-    public Mensaje registrarResultadoExamen(Long examenId,Integer estadoResultadoExamenId, MultipartFile resultadoExamen) {
+    public Mensaje registrarResultadoExamen(Long examenId,Integer estadoResultadoExamenId, MultipartFile resultadoExamen,Date fechaResultado) {
 
         Optional<ExamenEntity> examenEntityDb = examenRepository.findById(examenId);
         if(examenEntityDb.isEmpty()){
@@ -227,6 +227,7 @@ public class ExamenServiceImpl implements ExamenService {
         guardarArchivos.guardarArchivo(resultadoExamen, nombreResultadoExamen, "archivos/Examen");
         examenEntityDb.get().setResultadoExamen(nombreResultadoExamen);
         examenEntityDb.get().setEstadoResultadoExamen(estadoResultadoExamenDb.get());
+        examenEntityDb.get().setFechaResultado(fechaResultado);
         return new Mensaje("Resultado se guardó de manera correcta",true);
     }
 }

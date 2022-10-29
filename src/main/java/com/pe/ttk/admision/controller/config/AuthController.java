@@ -39,8 +39,7 @@ public class AuthController {
 
     @ApiOperation("Registrar un usuario final")
     @PostMapping("/registrar-usuario")
-    public ResponseEntity<?> registrarUsuario(@RequestParam(name = "foto", required = false),
-                                              @RequestParam String nombre,
+    public ResponseEntity<?> registrarUsuario(@RequestParam String nombre,
                                                   @RequestParam String apellidos,
                                                   @RequestParam String email,
                                                   @RequestParam String password,
@@ -55,14 +54,13 @@ public class AuthController {
         /*if (bindingResult.hasErrors())
             return ResponseEntity.badRequest().body(new Mensaje("Por favor ingrese los campos correctamente"));*/
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.registrarUsuario(nuevoUsuario, false, foto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.registrarUsuario(nuevoUsuario, false, null));
     }
 
     @ApiOperation("Registrar un usuario administrador")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/registrar-admin")
-    public ResponseEntity<?> registrarUsuarioAdmin(@RequestParam(name = "foto", required = false),
-                                                   @RequestParam String nombre,
+    public ResponseEntity<?> registrarUsuarioAdmin(@RequestParam String nombre,
                                                    @RequestParam String apellidos,
                                                    @RequestParam String email,
                                                    @RequestParam String password,
@@ -78,7 +76,7 @@ public class AuthController {
         /*if (bindingResult.hasErrors())
             return ResponseEntity.badRequest().body(new Mensaje("Por favor ingrese los campos correctamente"));*/
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.registrarUsuario(nuevoUsuario, true, foto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.registrarUsuario(nuevoUsuario, true, null));
     }
 
     @ApiOperation("Login del sistema")
