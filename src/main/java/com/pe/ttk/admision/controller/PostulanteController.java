@@ -21,7 +21,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/postulante")
-@CrossOrigin(origins = "http://localhost:4200")
 public class PostulanteController {
 
     @Autowired
