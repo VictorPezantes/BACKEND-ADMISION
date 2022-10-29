@@ -39,21 +39,18 @@ public class AuthController {
 
     @ApiOperation("Registrar un usuario final")
     @PostMapping("/registrar-usuario")
-    public ResponseEntity<?> registrarUsuario(@RequestParam(name = "foto", required = false)
-                                              MultipartFile foto,
+    public ResponseEntity<?> registrarUsuario(@RequestParam(name = "foto", required = false),
                                               @RequestParam String nombre,
                                                   @RequestParam String apellidos,
                                                   @RequestParam String email,
                                                   @RequestParam String password,
-                                                  @RequestParam String nombreUsuario,
-                                                  @RequestParam String fotografia) throws JsonProcessingException {
+                                                  @RequestParam String nombreUsuario) throws JsonProcessingException {
         NuevoUsuario nuevoUsuario = new NuevoUsuario();
         nuevoUsuario.setNombre(nombre);
         nuevoUsuario.setApellidos(apellidos);
         nuevoUsuario.setEmail(email);
         nuevoUsuario.setPassword(password);
         nuevoUsuario.setNombreUsuario(nombreUsuario);
-        nuevoUsuario.setFotografia(fotografia);
 
         /*if (bindingResult.hasErrors())
             return ResponseEntity.badRequest().body(new Mensaje("Por favor ingrese los campos correctamente"));*/
@@ -64,14 +61,12 @@ public class AuthController {
     @ApiOperation("Registrar un usuario administrador")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/registrar-admin")
-    public ResponseEntity<?> registrarUsuarioAdmin(@RequestParam(name = "foto", required = false)
-                                                       MultipartFile foto,
+    public ResponseEntity<?> registrarUsuarioAdmin(@RequestParam(name = "foto", required = false),
                                                    @RequestParam String nombre,
                                                    @RequestParam String apellidos,
                                                    @RequestParam String email,
                                                    @RequestParam String password,
-                                                   @RequestParam String nombreUsuario,
-                                                   @RequestParam String fotografia) throws JsonProcessingException {
+                                                   @RequestParam String nombreUsuario) throws JsonProcessingException {
 
         NuevoUsuario nuevoUsuario = new NuevoUsuario();
         nuevoUsuario.setNombre(nombre);
@@ -79,7 +74,6 @@ public class AuthController {
         nuevoUsuario.setEmail(email);
         nuevoUsuario.setPassword(password);
         nuevoUsuario.setNombreUsuario(nombreUsuario);
-        nuevoUsuario.setFotografia(fotografia);
 
         /*if (bindingResult.hasErrors())
             return ResponseEntity.badRequest().body(new Mensaje("Por favor ingrese los campos correctamente"));*/
