@@ -1,13 +1,18 @@
 package com.pe.ttk.admision.util;
 
+import com.pe.ttk.admision.dto.MensajeData;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.*;
+import java.util.Base64;
 
 public class GuardarArchivos {
 
@@ -74,7 +79,29 @@ public class GuardarArchivos {
         }
 
     }
-
+    public MensajeData<String> obtenerArchivo(String directorio, String nombreArchivo){
+        MensajeData<String> respuesta = new MensajeData<String>();
+        try {
+            File archivo = new File(directorio+nombreArchivo);
+            if(archivo == null)
+            {
+                respuesta.setExito(false);
+                respuesta.setMensaje("no se encontró el archivo");
+            }
+            InputStream in = new FileInputStream(archivo);
+            if(in == null)
+            {
+                respuesta.setExito(false);
+                respuesta.setMensaje("error al leer el archivo");
+            }
+            respuesta.setExito(true);
+            respuesta.setMensaje("El archivo se obtuvo con éxito");
+            respuesta.setData(Base64.getEncoder().encodeToString(IOUtils.toByteArray(in)));
+        }catch(IOException e){
+            logger.error(e.getMessage());
+        }
+        return respuesta;
+    }
     public void actualizarArchivo( MultipartFile dnifrontal, MultipartFile dniposterior, MultipartFile foto){
 
         try {
