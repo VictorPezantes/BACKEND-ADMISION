@@ -72,64 +72,65 @@ public class ExamenServiceImpl implements ExamenService {
             if (tipoExamenDb.isEmpty()){
                 return new Mensaje("tipo de examen no existe",false);
             }
-            else if(examenDto.getPostulanteId() == null){
-                return new Mensaje("se necesita postulanteId",false);
-            }
-            else if(examenDto.getPostulanteId() == 0){
-                return new Mensaje("el id no puede ser 0",false);
-            }
-            Optional<PostulanteEntity> postulanteEntityDb = postulanteRepository.findById(examenDto.getPostulanteId());
-            if (postulanteEntityDb.isEmpty()){
-                return new Mensaje("postulante no existe",false);
-            }
-
             Optional<SubEstado> subEstadoDb = subEstadoRepository.findById(SubEstadoNombre.PROGRAMADO.getValue());
             if (subEstadoDb.isEmpty()){
                 return new Mensaje("Error al obtener el subEstado",false);
             }
-            ExamenEntity examenEntity = examenMapper.toExamenEntity(examenDto);
-            examenEntity.setCentroMedico(centroMedicoDb.get());
-            examenEntity.setTipoExamen(tipoExamenDb.get());
-            examenEntity.setPostulante(postulanteEntityDb.get());
-            examenEntity.setSubEstado(subEstadoDb.get());
-            examenRepository.save(examenEntity);
-            StringBuilder mensaje1 = new StringBuilder(1000);
-            String asunto = "Examen programado";
-            mensaje1.append("Fecha y Hora: ").append(examenEntity.getFechaProgramada().toString()).append("\n");
-            mensaje1.append("TipoExamen: ").append(tipoExamenDb.get().getTipoExamenNombre().toString()).append("\n");
-            mensaje1.append("Centro Médico: ").append(centroMedicoDb.get().getCentroMedicoNombre().toString()).append("\n");
-            mensaje1.append("Dirección: ").append(centroMedicoDb.get().getDireccion()).append("\n");
-            mensaje1.append("Indicaciones: ").append("\n");
-            mensaje1.append("\t").append("Ir en ayunas").append("\n");
-            mensaje1.append("\t").append("No haber ingerido bebidas alcoholicas 24 horas antes del examen").append("\n");
-            mensaje1.append("\t").append("No haber consumido estupefacientes").append("\n");
 
-            emailService.enviarEmailExamen(postulanteEntityDb.get().getEmail(), mensaje1.toString(), asunto, postulanteEntityDb.get().getPrimerNombre());
 
-            StringBuilder mensaje2 = new StringBuilder(1000);
-            mensaje2.append("Nombre postulante: ").append(postulanteEntityDb.get().getApellidoPaterno()).append(" ").append(postulanteEntityDb.get().getPrimerNombre()).append("\n");
-            mensaje2.append("Fecha y Hora: ").append(examenEntity.getFechaProgramada().toString()).append("\n");
-            mensaje2.append("TipoExamen: ").append(tipoExamenDb.get().getTipoExamenNombre().toString()).append("\n");
+            for (Long id : examenDto.getListaPostulante()){
 
-            //emailService.enviarEmailExamen(centroMedicoDb.get().getEmail(), mensaje2.toString(), asunto, postulanteEntityDb.get().getPrimerNombre());
-            emailService.enviarEmailExamen("jhankarlo.smcv@gmail.com", mensaje2.toString(), asunto, postulanteEntityDb.get().getPrimerNombre());
-            ExamenHistorialEntity examenHistorialEntity = new ExamenHistorialEntity();
-            examenHistorialEntity.setEstadoResultadoExamen(examenEntity.getEstadoResultadoExamen());
-            examenHistorialEntity.setDni(postulanteEntityDb.get().getDni());
-            examenHistorialEntity.setCentroMedico(centroMedicoDb.get());
-            examenHistorialEntity.setPrimerNombre(postulanteEntityDb.get().getPrimerNombre());
-            examenHistorialEntity.setSegundoNombre(postulanteEntityDb.get().getSegundoNombre());
-            examenHistorialEntity.setApellidoPaterno(postulanteEntityDb.get().getApellidoPaterno());
-            examenHistorialEntity.setApellidoMaterno(postulanteEntityDb.get().getPrimerNombre());
-            examenHistorialEntity.setEmailNotificacionCentroMedico(centroMedicoDb.get().getEmail());
-            examenHistorialEntity.setEmailNotificacionPostulante(postulanteEntityDb.get().getEmail());
-            examenHistorialEntity.setObservacion(examenEntity.getObservacion());
-            examenHistorialEntity.setTipoExamen(tipoExamenDb.get());
-            examenHistorialEntity.setFechaProgramada(examenEntity.getFechaProgramada());
-            examenHistorialEntity.setFechaNotificacion(examenEntity.getFecha());
-            examenHistorialEntity.setFechaInformeMedico(examenEntity.getFechaInformeMedico());
-            examenHistorialEntity.setSubEstado(subEstadoDb.get());
-            examenHistorialRepository.save(examenHistorialEntity);
+                ExamenEntity examenEntity = examenMapper.toExamenEntity(examenDto);
+                examenEntity.setCentroMedico(centroMedicoDb.get());
+                examenEntity.setTipoExamen(tipoExamenDb.get());
+                examenEntity.setSubEstado(subEstadoDb.get());
+
+                Optional<PostulanteEntity> postulanteEntityDb = postulanteRepository.findById(id);
+                if (postulanteEntityDb.isEmpty()){
+                    return new Mensaje("postulante no existe",false);
+                }
+
+                examenEntity.setPostulante(postulanteEntityDb.get());
+
+                examenRepository.save(examenEntity);
+                StringBuilder mensaje1 = new StringBuilder(1000);
+                String asunto = "Examen programado";
+                mensaje1.append("Fecha y Hora: ").append(examenEntity.getFechaProgramada().toString()).append("\n");
+                mensaje1.append("TipoExamen: ").append(tipoExamenDb.get().getTipoExamenNombre().toString()).append("\n");
+                mensaje1.append("Centro Médico: ").append(centroMedicoDb.get().getCentroMedicoNombre().toString()).append("\n");
+                mensaje1.append("Dirección: ").append(centroMedicoDb.get().getDireccion()).append("\n");
+                mensaje1.append("Indicaciones: ").append("\n");
+                mensaje1.append("\t").append("Ir en ayunas").append("\n");
+                mensaje1.append("\t").append("No haber ingerido bebidas alcoholicas 24 horas antes del examen").append("\n");
+                mensaje1.append("\t").append("No haber consumido estupefacientes").append("\n");
+
+                emailService.enviarEmailExamen(postulanteEntityDb.get().getEmail(), mensaje1.toString(), asunto, postulanteEntityDb.get().getPrimerNombre());
+
+                StringBuilder mensaje2 = new StringBuilder(1000);
+                mensaje2.append("Nombre postulante: ").append(postulanteEntityDb.get().getApellidoPaterno()).append(" ").append(postulanteEntityDb.get().getPrimerNombre()).append("\n");
+                mensaje2.append("Fecha y Hora: ").append(examenEntity.getFechaProgramada().toString()).append("\n");
+                mensaje2.append("TipoExamen: ").append(tipoExamenDb.get().getTipoExamenNombre().toString()).append("\n");
+
+                //emailService.enviarEmailExamen(centroMedicoDb.get().getEmail(), mensaje2.toString(), asunto, postulanteEntityDb.get().getPrimerNombre());
+                emailService.enviarEmailExamen("jhankarlo.smc@gmail.com", mensaje2.toString(), asunto, postulanteEntityDb.get().getPrimerNombre());
+                ExamenHistorialEntity examenHistorialEntity = new ExamenHistorialEntity();
+                examenHistorialEntity.setEstadoResultadoExamen(examenEntity.getEstadoResultadoExamen());
+                examenHistorialEntity.setDni(postulanteEntityDb.get().getDni());
+                examenHistorialEntity.setCentroMedico(centroMedicoDb.get());
+                examenHistorialEntity.setPrimerNombre(postulanteEntityDb.get().getPrimerNombre());
+                examenHistorialEntity.setSegundoNombre(postulanteEntityDb.get().getSegundoNombre());
+                examenHistorialEntity.setApellidoPaterno(postulanteEntityDb.get().getApellidoPaterno());
+                examenHistorialEntity.setApellidoMaterno(postulanteEntityDb.get().getPrimerNombre());
+                examenHistorialEntity.setEmailNotificacionCentroMedico(centroMedicoDb.get().getEmail());
+                examenHistorialEntity.setEmailNotificacionPostulante(postulanteEntityDb.get().getEmail());
+                examenHistorialEntity.setObservacion(examenEntity.getObservacion());
+                examenHistorialEntity.setTipoExamen(tipoExamenDb.get());
+                examenHistorialEntity.setFechaProgramada(examenEntity.getFechaProgramada());
+                examenHistorialEntity.setFechaNotificacion(examenEntity.getFecha());
+                examenHistorialEntity.setFechaInformeMedico(examenEntity.getFechaInformeMedico());
+                examenHistorialEntity.setSubEstado(subEstadoDb.get());
+                examenHistorialRepository.save(examenHistorialEntity);
+            }
 
         }catch(Exception ex){
             System.err.println(ex);

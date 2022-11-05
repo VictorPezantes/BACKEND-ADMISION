@@ -6,6 +6,8 @@ import lombok.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.util.Date;
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -29,7 +31,7 @@ public class ExamenDto {
     @NotNull
     private Integer tipoExamenId;
     @NotNull
-    private Long postulanteId;
+    private List<Long> listaPostulante;
     @Null
     private Integer subEstadoId;
     @Null
