@@ -30,6 +30,8 @@ public class ExamenDto {
     private Integer centroMedicoId;
     @NotNull
     private Integer tipoExamenId;
+    @Null
+    private Long postulanteId;
     @NotNull
     private List<Long> listaPostulante;
     @Null
