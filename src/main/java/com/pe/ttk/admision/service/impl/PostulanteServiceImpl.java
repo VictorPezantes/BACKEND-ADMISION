@@ -269,14 +269,7 @@ public class PostulanteServiceImpl implements PostulanteService {
     public Page<PostulanteDto> listarPostulanteFiltro(Integer numPagina, Integer tamPagina, Integer estado, Integer subEstadoExamen, Date fechaInformeMedico, Date fechaProgramada, String filtro) {
         Pageable pageable = PageRequest.of(numPagina, tamPagina);
         try{
-            List<PostulanteEntityExt> lista;
-            /*if(subEstadoExamen == null){
-                lista = postulanteRepository.findPostulanteExamen(null,null,null,null,estado);
-            }
-            else{
-                lista = postulanteRepository.findPostulanteExamen(subEstadoExamen,fechaInformeMedico,fechaProgramada,filtro,estado);
-            }*/
-            lista = postulanteRepository.findPostulanteFiltro(subEstadoExamen,fechaInformeMedico,fechaProgramada,filtro,estado);
+            List<PostulanteEntityExt> lista = postulanteRepository.findPostulanteFiltro(subEstadoExamen,fechaInformeMedico,fechaProgramada,filtro,estado,pageable);
             List<PostulanteDto> listaPostulante = lista.stream().map(PostulanteMapper.INSTANCE::toPostulante).collect(Collectors.toList());
             if(!lista.isEmpty()){
                 return new PageImpl<>(listaPostulante, pageable, lista.size());

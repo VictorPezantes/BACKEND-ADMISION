@@ -59,6 +59,9 @@ public class PostulanteDto {
     private String urlFotografia;
     private Integer estado;
     private Integer subEstadoExamen;
+    private Long examenId;
+    private int centroMedicoId;
+    private Date fechaRegistroExamen;
     public List<String> Validar()
     {
         List<String> validaciones = new ArrayList<String>();

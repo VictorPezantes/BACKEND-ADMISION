@@ -96,7 +96,9 @@ public class PostulanteEntityExt {
     private String dniPosterior;
     private String foto;
     private Integer subEstadoExamen;
-
+    private Long examenId;
+    private int centroMedicoId;
+    private Date fechaRegistroExamen;
     public PostulanteEntityExt(PostulanteEntity postulanteEntity, Integer idEstado) {
         id = postulanteEntity.getId();
         primerNombre = postulanteEntity.getPrimerNombre();
@@ -133,7 +135,7 @@ public class PostulanteEntityExt {
         ofertaPostulada=postulanteEntity.getOfertaPostulada();
         subEstadoExamen=idEstado;
     }
-    public PostulanteEntityExt(PostulanteEntity postulanteEntity, Integer idEstado, String distrito,String provincia, String departamento) {
+    public PostulanteEntityExt(PostulanteEntity postulanteEntity, Integer idEstado, String distrito,String provincia, String departamento, ExamenEntity examen) {
         id = postulanteEntity.getId();
         primerNombre = postulanteEntity.getPrimerNombre();
         segundoNombre = postulanteEntity.getSegundoNombre();
@@ -171,6 +173,11 @@ public class PostulanteEntityExt {
         distritoDescripcion =distrito;
         provinciaDescripcion =provincia;
         departamentoDescripcion=departamento;
+        if(examen != null){
+            examenId=examen.getId();
+            centroMedicoId=examen.getCentroMedico().getId();
+            fechaRegistroExamen=examen.getFecha();
+        }
     }
     public PostulanteEntityExt(PostulanteEntity postulanteEntity, String distrito,String provincia, String departamento) {
         id = postulanteEntity.getId();
