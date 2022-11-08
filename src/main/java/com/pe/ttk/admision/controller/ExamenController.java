@@ -44,4 +44,10 @@ public class ExamenController {
     public ResponseEntity<?> cancelar(@RequestParam Long examenId,@RequestParam Integer estadoResultadoExamenId,@RequestParam MultipartFile resultadoExamen,@RequestParam Date fechaResultado){
         return ResponseEntity.ok(examenService.registrarResultadoExamen(examenId,estadoResultadoExamenId,resultadoExamen,fechaResultado));
     }
+    @ApiOperation("actualiza sub estado de examen")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/actualizar-subestado")
+    public ResponseEntity<?> actualizarSubEstado(@RequestParam Long examenId,Integer subEstadoId){
+        return ResponseEntity.ok(examenService.actualizarSubEstadoExamen(examenId,subEstadoId));
+    }
 }

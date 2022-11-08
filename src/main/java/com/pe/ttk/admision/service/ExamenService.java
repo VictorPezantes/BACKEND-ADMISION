@@ -15,4 +15,5 @@ public interface ExamenService {
     Mensaje reprogramarExamen(ExamenActDto examenActDto);
     Mensaje cancelarExamen(Long examenId, boolean solicitudPostulante);
     Mensaje registrarResultadoExamen(Long examenId, Integer estadoResultadoExamenId, MultipartFile resultadoExamen, Date fechaResultado);
+    Mensaje actualizarSubEstadoExamen(Long examenId, Integer estado);
 }

@@ -231,4 +231,24 @@ public class ExamenServiceImpl implements ExamenService {
         examenEntityDb.get().setFechaResultado(fechaResultado);
         return new Mensaje("Resultado se guardó de manera correcta",true);
     }
+
+    @Override
+    public Mensaje actualizarSubEstadoExamen(Long examenId, Integer estado) {
+        if(examenId == null){
+            return new Mensaje("ExamenId null",false);
+        }
+        if(estado == null){
+            return new Mensaje("estado null",false);
+        }
+        Optional<ExamenEntity> examenEntityDb = examenRepository.findById(examenId);
+        if(examenEntityDb.isEmpty()){
+            return new Mensaje("El examen no existe",false);
+        }
+        Optional<SubEstado> subEstadoDb = subEstadoRepository.findById(SubEstadoNombre.REPROGRAMADO.getValue());
+        if (subEstadoDb.isEmpty()){
+            return new Mensaje("Sub estado no existe",false);
+        }
+        examenEntityDb.get().setSubEstado(subEstadoDb.get());
+        return new Mensaje("Estado actualizado exitosamente",true);
+    }
 }
