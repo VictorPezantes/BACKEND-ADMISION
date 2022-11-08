@@ -1,6 +1,8 @@
 package com.pe.ttk.admision.service;
 
 
+import com.pe.ttk.admision.dto.EncargadoDto;
+import com.pe.ttk.admision.dto.Mensaje;
 import com.pe.ttk.admision.entity.master.Encargado;
 
 import java.util.List;
@@ -19,4 +21,5 @@ public interface EncargadoService {
     Optional<Encargado> getOne(Long id);
 
     boolean existsByEmail(String email);
+    Mensaje registrarEncargadoPostulante(EncargadoDto encargadoDto);
 }

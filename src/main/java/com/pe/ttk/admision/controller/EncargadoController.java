@@ -1,5 +1,6 @@
 package com.pe.ttk.admision.controller;
 
+import com.pe.ttk.admision.dto.EncargadoDto;
 import com.pe.ttk.admision.dto.Mensaje;
 import com.pe.ttk.admision.entity.master.Encargado;
 import com.pe.ttk.admision.service.impl.EncargadoServiceImp;
@@ -60,7 +61,20 @@ public class EncargadoController {
         encargadoServiceImp.actualizarEncargado(id, encargado);
         return ResponseEntity.accepted().body(new Mensaje("encargado actualizado",true));
     }
+    //registrarEncargadoPostulante
+    @ApiOperation("asigna postulantes a un encargado")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/asignarPostulante")
+    public ResponseEntity<?> registrarEncargadoPostulante(@RequestBody EncargadoDto encargadoDto) {
+        Mensaje retorno = encargadoServiceImp.registrarEncargadoPostulante(encargadoDto);
+        if(retorno.isExito()){
+            return ResponseEntity.accepted().body(retorno);
+        }
+        else {
+            return ResponseEntity.badRequest().body(retorno);
+        }
     }
+}
 
 
 

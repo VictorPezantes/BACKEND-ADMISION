@@ -31,11 +31,10 @@ public interface PostulanteRepository extends JpaRepository<PostulanteEntity,Lon
     boolean existsByDniAndEstado(String dni, Integer estado);
     @Query(value = "SELECT NEW com.pe.ttk.admision.entity.admision.PostulanteEntityExt(p,e.subEstado.id, d.nombre ,pr.nombre ,de.nombre,e) " +
             "FROM PostulanteEntity p " +
+            "LEFT JOIN ExamenEntity e  ON p.id = e.postulante.id " +
             "LEFT join Distrito d on p.idDistrito=d.id " +
             "LEFT join Provincia pr on p.idProvincia=pr.id " +
             "LEFT join Departamento de on p.idDepartamento=de.id " +
-            "LEFT JOIN ExamenEntity e " +
-            " ON p.id = e.postulante.id" +
             " WHERE " +
             "(:fechaInformeMedico is null OR (DATE(e.fechaInformeMedico)=DATE(:fechaInformeMedico))) AND" +
             " (:fechaProgramada is null OR (DATE(e.fechaProgramada)=DATE(:fechaProgramada))) AND" +
