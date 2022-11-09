@@ -65,6 +65,8 @@ public class PostulanteDto {
     private Date fechaRegistroExamen;
     private Long encargadoId;
     private String encargadoNombre;
+    private String encargadoEmail;
+    private String encargadoTelefono;
     private Date fechaProgramadaExamen;
     private Integer tipoExamenId;
     private String tipoExamenNombre;

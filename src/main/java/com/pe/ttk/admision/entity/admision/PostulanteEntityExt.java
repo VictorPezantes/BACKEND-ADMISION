@@ -1,7 +1,6 @@
 package com.pe.ttk.admision.entity.admision;
 
 import com.pe.ttk.admision.entity.master.Encargado;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -103,6 +102,8 @@ public class PostulanteEntityExt {
     private Date fechaRegistroExamen;
     private Long encargadoId;
     private String encargadoNombre;
+    private String encargadoEmail;
+    private String encargadoTelefono;
     private Date fechaProgramadaExamen;
     private Integer tipoExamenId;
     private String tipoExamenNombre;
@@ -156,6 +157,8 @@ public class PostulanteEntityExt {
         if(encargadoBd != null){
             encargadoId = encargadoBd.getId();
             encargadoNombre=encargadoBd.getNombre()+ " "+encargadoBd.getApellido();
+            encargadoTelefono = encargadoBd.getTelefono();
+            encargadoEmail = encargadoBd.getEmail();
         }
     }
     public PostulanteEntityExt(PostulanteEntity postulanteEntity, String distrito,String provincia, String departamento) {

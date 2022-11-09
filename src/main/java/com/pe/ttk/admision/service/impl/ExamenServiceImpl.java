@@ -4,7 +4,7 @@ import com.pe.ttk.admision.dto.ExamenActDto;
 import com.pe.ttk.admision.dto.ExamenDto;
 import com.pe.ttk.admision.dto.Mensaje;
 import com.pe.ttk.admision.entity.admision.ExamenEntity;
-import com.pe.ttk.admision.entity.admision.ExamenHistorialEntity;
+import com.pe.ttk.admision.entity.admision.HistorialExamen;
 import com.pe.ttk.admision.entity.admision.PostulanteEntity;
 import com.pe.ttk.admision.entity.master.CentroMedico;
 import com.pe.ttk.admision.entity.master.EstadoResultadoExamen;
@@ -55,7 +55,7 @@ public class ExamenServiceImpl implements ExamenService {
     private EmailService emailService;
 
     @Autowired
-    ExamenHistorialRepository examenHistorialRepository;
+    HistorialExamenRepository historialExamenRepository;
 
     @Autowired
     ResultadoExamenRepository resultadoExamenRepository;
@@ -103,7 +103,7 @@ public class ExamenServiceImpl implements ExamenService {
                 mensaje1.append("\t").append("Ir en ayunas").append("\n");
                 mensaje1.append("\t").append("No haber ingerido bebidas alcoholicas 24 horas antes del examen").append("\n");
                 mensaje1.append("\t").append("No haber consumido estupefacientes").append("\n");
-
+                Date fechaEnvioEmail = new Date(System.currentTimeMillis());
                 emailService.enviarEmailExamen(postulanteEntityDb.get().getEmail(), mensaje1.toString(), asunto, postulanteEntityDb.get().getPrimerNombre());
 
                 StringBuilder mensaje2 = new StringBuilder(1000);
@@ -113,23 +113,19 @@ public class ExamenServiceImpl implements ExamenService {
 
                 //emailService.enviarEmailExamen(centroMedicoDb.get().getEmail(), mensaje2.toString(), asunto, postulanteEntityDb.get().getPrimerNombre());
                 emailService.enviarEmailExamen("jhankarlo.smc@gmail.com", mensaje2.toString(), asunto, postulanteEntityDb.get().getPrimerNombre());
-                ExamenHistorialEntity examenHistorialEntity = new ExamenHistorialEntity();
-                examenHistorialEntity.setEstadoResultadoExamen(examenEntity.getEstadoResultadoExamen());
-                examenHistorialEntity.setDni(postulanteEntityDb.get().getDni());
-                examenHistorialEntity.setCentroMedico(centroMedicoDb.get());
-                examenHistorialEntity.setPrimerNombre(postulanteEntityDb.get().getPrimerNombre());
-                examenHistorialEntity.setSegundoNombre(postulanteEntityDb.get().getSegundoNombre());
-                examenHistorialEntity.setApellidoPaterno(postulanteEntityDb.get().getApellidoPaterno());
-                examenHistorialEntity.setApellidoMaterno(postulanteEntityDb.get().getPrimerNombre());
-                examenHistorialEntity.setEmailNotificacionCentroMedico(centroMedicoDb.get().getEmail());
-                examenHistorialEntity.setEmailNotificacionPostulante(postulanteEntityDb.get().getEmail());
-                examenHistorialEntity.setObservacion(examenEntity.getObservacion());
-                examenHistorialEntity.setTipoExamen(tipoExamenDb.get());
-                examenHistorialEntity.setFechaProgramada(examenEntity.getFechaProgramada());
-                examenHistorialEntity.setFechaNotificacion(examenEntity.getFecha());
-                examenHistorialEntity.setFechaInformeMedico(examenEntity.getFechaInformeMedico());
-                examenHistorialEntity.setSubEstado(subEstadoDb.get());
-                examenHistorialRepository.save(examenHistorialEntity);
+                HistorialExamen historialExamen = new HistorialExamen();
+                historialExamen.setExamen(examenEntity);
+                historialExamen.setPostulante(postulanteEntityDb.get());
+                historialExamen.setFechaProgramada(examenEntity.getFechaProgramada());
+                historialExamen.setSubEstado(subEstadoDb.get());
+                historialExamen.setFechaInformeMedico(examenEntity.getFechaInformeMedico());
+                historialExamen.setTipoExamen(tipoExamenDb.get());
+                historialExamen.setObservaciones(examenEntity.getObservacion());
+                historialExamen.setEmailNotificacion(postulanteEntityDb.get().getEmail());
+                historialExamen.setFechaNotificacion(fechaEnvioEmail);
+                historialExamen.setCentroMedico(centroMedicoDb.get());
+                historialExamen.setFechaCambioEstado(new Date(System.currentTimeMillis()));
+                historialExamenRepository.save(historialExamen);
             }
 
         }catch(Exception ex){
@@ -145,110 +141,142 @@ public class ExamenServiceImpl implements ExamenService {
     }
 
     @Override
-    public Mensaje reprogramarExamen(ExamenActDto examenActDto) {
+    public Mensaje actualizarExamen(ExamenActDto examenActDto) {
 
         Optional<ExamenEntity> examenEntityDb = examenRepository.findById(examenActDto.getId());
-        //validación de proceso reprogramar
+
         if(examenEntityDb.isEmpty()){
             return new Mensaje("El examen no existe",false);
         }
+
         ExamenEntity examenEntity = examenEntityDb.get();
-        if(examenActDto.getSubEstadoId() == null){
-            return new Mensaje("Sub estado vacío",false);
-        }
-        Optional<SubEstado> subEstadoActDb = subEstadoRepository.findById(examenActDto.getSubEstadoId());
-        if (subEstadoActDb.isEmpty()){
-            return new Mensaje("Sub estado a actualizar no existe",false);
-        }
-        if((examenEntity.getSubEstado().getSubEstadoNombre() != SubEstadoNombre.PROGRAMADO
-                && examenEntity.getSubEstado().getSubEstadoNombre() != SubEstadoNombre.OBSERVADO)
-                && subEstadoActDb.get().getSubEstadoNombre() == SubEstadoNombre.REPROGRAMADO
-                && examenActDto.getFechaProgramada() != null){
-            return new Mensaje("Para poder reprogramar el estado del examen tiene que estar en programado o observado",false);
+        HistorialExamen historialExamen = new HistorialExamen();
+        if(examenActDto.getFechaProgramada() != null){
+            examenEntity.setFechaProgramada(examenActDto.getFechaProgramada());
+            historialExamen.setExamen(examenEntity);
+            historialExamen.setFechaProgramada(examenActDto.getFechaProgramada());
         }
 
-        Optional<SubEstado> subEstadoDb = subEstadoRepository.findById(SubEstadoNombre.REPROGRAMADO.getValue());
-        if (subEstadoDb.isEmpty()){
-            return new Mensaje("Sub estado no existe",false);
+        if(examenActDto.getSubEstadoId() != null){
+
+            Optional<SubEstado> subEstadoActDb = subEstadoRepository.findById(examenActDto.getSubEstadoId());
+            if (subEstadoActDb.isEmpty()){
+                return new Mensaje("Sub estado a actualizar no existe",false);
+            }
+            //validación reprogramar
+            if(subEstadoActDb.get().getSubEstadoNombre() == SubEstadoNombre.REPROGRAMADO){
+                if((examenEntity.getSubEstado().getSubEstadoNombre() != SubEstadoNombre.PROGRAMADO
+                        && examenEntity.getSubEstado().getSubEstadoNombre() != SubEstadoNombre.OBSERVADO)
+                        && subEstadoActDb.get().getSubEstadoNombre() == SubEstadoNombre.REPROGRAMADO
+                        && examenActDto.getFechaProgramada() != null){
+                    return new Mensaje("Para poder reprogramar el estado del examen tiene que estar en programado o observado",false);
+                }
+            }
+
+            if(subEstadoActDb.get().getSubEstadoNombre() == SubEstadoNombre.CANCELADO) {
+                Date hoy = new Date(System.currentTimeMillis());
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(examenEntity.getFechaProgramada());
+                cal.add(Calendar.DATE, Constantes.DIAS_CANCELACION);
+                Date fechaVencimiento = cal.getTime();
+                if(fechaVencimiento.getTime() > hoy.getTime() && !examenActDto.getSolicitudPostulante()){
+                    return new Mensaje("El examen no se puede cancelar aún",false);
+                }
+                if(examenEntity.getResultadoExamen()!= null && !examenActDto.getSolicitudPostulante()){
+                    return new Mensaje("El examen con resultado no puede eliminarse",false);
+                }
+
+                examenEntity.setSubEstado(subEstadoActDb.get());
+                historialExamen.setExamen(examenEntity);
+                historialExamen.setSubEstado(subEstadoActDb.get());
+            }
+            examenEntity.setSubEstado(subEstadoActDb.get());
+            historialExamen.setExamen(examenEntity);
+            historialExamen.setSubEstado(subEstadoActDb.get());
         }
-        Optional<CentroMedico> centroMedicoDb = centroMedicoRepository.findById(examenActDto.getCentroMedicoId());
-        if (centroMedicoDb.isEmpty()){
-            return new Mensaje("centro médico no existe",false);
+
+        if(examenActDto.getFechaInformeMedico() != null){
+            examenEntity.setFechaInformeMedico(examenActDto.getFechaInformeMedico());
+            historialExamen.setExamen(examenEntity);
+            historialExamen.setFechaInformeMedico(examenActDto.getFechaInformeMedico());
         }
-        if(subEstadoDb.get().getSubEstadoNombre() == SubEstadoNombre.DESAPROBADO){
-            //Optional<PostulanteEntity> postulanteEntityDb = postulanteRepository.findById(examenEntity.getPostulante().getId());
-            //postulanteEntityDb.get().setEstado(Constantes.ESTADO_FUERA_DEL_PROCESO);
+
+        if(examenActDto.getTipoExamenId() != null){
+            Optional<TipoExamen> tipoExamenDb = tipoExamenRepository.findById(examenActDto.getTipoExamenId());
+            if (tipoExamenDb.isEmpty()){
+                return new Mensaje("Tipo examen no existe",false);
+            }
+            examenEntity.setTipoExamen(tipoExamenDb.get());
+            historialExamen.setExamen(examenEntity);
+            historialExamen.setTipoExamen(tipoExamenDb.get());
         }
-        examenEntity.setCentroMedico(centroMedicoDb.get());
-        examenEntity.setSubEstado(subEstadoDb.get());
-        examenEntity.setFechaProgramada(examenActDto.getFechaProgramada());
+
+        if(examenActDto.getObservaciones() != null){
+            examenEntity.setObservacion(examenActDto.getObservaciones());
+            historialExamen.setExamen(examenEntity);
+            historialExamen.setObservaciones(examenActDto.getObservaciones());
+        }
+
+        if(examenActDto.getCentroMedicoId() != null){
+            Optional<CentroMedico> centroMedicoDb = centroMedicoRepository.findById(examenActDto.getCentroMedicoId());
+            if (centroMedicoDb.isEmpty()){
+                return new Mensaje("centro médico no existe",false);
+            }
+            examenEntity.setCentroMedico(centroMedicoDb.get());
+            historialExamen.setExamen(examenEntity);
+            historialExamen.setCentroMedico(centroMedicoDb.get());
+        }
+
+        if(examenActDto.getAutorizoGerencia() != null)
+        {
+            historialExamen.setExamen(examenEntity);
+            historialExamen.setAutorizoGerencia(examenActDto.getAutorizoGerencia());
+        }
+        //registrar resultado
+
+        if(examenActDto.getEstadoResultadoExamenId() != null && examenActDto.getResultadoExamen() != null && examenActDto.getFechaResultado() != null){
+            Optional<EstadoResultadoExamen> estadoResultadoExamenDb = resultadoExamenRepository.findById(examenActDto.getEstadoResultadoExamenId());
+            if (estadoResultadoExamenDb.isEmpty()){
+                return new Mensaje("Estado de resultado no existe",false);
+            }
+
+            historialExamen.setExamen(examenEntity);
+            examenEntity.setEstadoResultadoExamen(estadoResultadoExamenDb.get());
+
+            Optional<PostulanteEntity> postulanteEntityDb = postulanteRepository.findById(examenEntity.getPostulante().getId());
+            String nombreResultadoExamen = postulanteEntityDb.get().getDni()+"_"+examenActDto.getId()+"."+ FilenameUtils.getExtension(examenActDto.getResultadoExamen().getOriginalFilename());
+
+            guardarArchivos.guardarArchivo(examenActDto.getResultadoExamen(), nombreResultadoExamen, "archivos/Examen");
+            examenEntity.setResultadoExamen(nombreResultadoExamen);
+            examenEntity.setFechaResultado(examenActDto.getFechaResultado());
+        }
+        else{
+            return new Mensaje("Para actualizar el resultado del examen los datos de resultadoExamenId, resultadoExamen, fechaResultado no pueden estar vacíos",false);
+        }
+
+        if(historialExamen.getExamen()!= null){
+            historialExamen.setFechaCambioEstado(new Date(System.currentTimeMillis()));
+            historialExamenRepository.save(historialExamen);
+        }
+        if(examenEntity.getSubEstado().getSubEstadoNombre() == SubEstadoNombre.CANCELADO){
+            return new Mensaje("Examen cancelado exitosamente",true);
+        }
         return new Mensaje("Se actualizó de manera correcta",true);
     }
 
     @Override
-    public Mensaje cancelarExamen(Long examenId, boolean solicitudPostulante) {
-
-        Optional<ExamenEntity> examenEntityDb = examenRepository.findById(examenId);
-
-        if(examenEntityDb.isEmpty()){
-            return new Mensaje("El examen no existe",false);
-        }
-        ExamenEntity examenEntity = examenEntityDb.get();
-        Date hoy = new Date(System.currentTimeMillis());
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(examenEntity.getFechaProgramada());
-        cal.add(Calendar.DATE, Constantes.DIAS_CANCELACION);
-        Date fechaVencimiento = cal.getTime();
-        if(fechaVencimiento.getTime() > hoy.getTime() && !solicitudPostulante){
-            return new Mensaje("El examen no se puede cancelar aún",false);
-        }
-        if(examenEntity.getResultadoExamen()!= null && !solicitudPostulante){
-            return new Mensaje("El examen con resultado no puede eliminarse",false);
-        }
-
-        Optional<SubEstado> subEstadoDb = subEstadoRepository.findById(SubEstadoNombre.CANCELADO.getValue());
-        examenEntity.setSubEstado(subEstadoDb.get());
-        return new Mensaje("Examen cancelado exitosamente",true);
-    }
-
-    @Override
     public Mensaje registrarResultadoExamen(Long examenId,Integer estadoResultadoExamenId, MultipartFile resultadoExamen,Date fechaResultado) {
-
-        Optional<ExamenEntity> examenEntityDb = examenRepository.findById(examenId);
-        if(examenEntityDb.isEmpty()){
-            return new Mensaje("El examen no existe",false);
+        ExamenActDto examenActDto = new ExamenActDto();
+        examenActDto.setId(examenId);
+        examenActDto.setEstadoResultadoExamenId(estadoResultadoExamenId);
+        examenActDto.setResultadoExamen(resultadoExamen);
+        examenActDto.setFechaResultado(fechaResultado);
+        Mensaje resultado = actualizarExamen(examenActDto);
+        if(resultado.isExito()){
+            return new Mensaje("Resultado se guardó de manera correcta",true);
         }
-        Optional<EstadoResultadoExamen> estadoResultadoExamenDb = resultadoExamenRepository.findById(estadoResultadoExamenId);
-        if(estadoResultadoExamenDb.isEmpty()){
-            return new Mensaje("El sub estado de resultado no existe",false);
-        }
-        Optional<PostulanteEntity> postulanteEntityDb = postulanteRepository.findById(examenEntityDb.get().getPostulante().getId());
-        String nombreResultadoExamen = postulanteEntityDb.get().getDni()+"_"+examenId+"."+ FilenameUtils.getExtension(resultadoExamen.getOriginalFilename());
-
-        guardarArchivos.guardarArchivo(resultadoExamen, nombreResultadoExamen, "archivos/Examen");
-        examenEntityDb.get().setResultadoExamen(nombreResultadoExamen);
-        examenEntityDb.get().setEstadoResultadoExamen(estadoResultadoExamenDb.get());
-        examenEntityDb.get().setFechaResultado(fechaResultado);
-        return new Mensaje("Resultado se guardó de manera correcta",true);
+        return resultado;
     }
 
-    @Override
-    public Mensaje actualizarSubEstadoExamen(Long examenId, Integer estado) {
-        if(examenId == null){
-            return new Mensaje("ExamenId null",false);
-        }
-        if(estado == null){
-            return new Mensaje("estado null",false);
-        }
-        Optional<ExamenEntity> examenEntityDb = examenRepository.findById(examenId);
-        if(examenEntityDb.isEmpty()){
-            return new Mensaje("El examen no existe",false);
-        }
-        Optional<SubEstado> subEstadoDb = subEstadoRepository.findById(SubEstadoNombre.REPROGRAMADO.getValue());
-        if (subEstadoDb.isEmpty()){
-            return new Mensaje("Sub estado no existe",false);
-        }
-        examenEntityDb.get().setSubEstado(subEstadoDb.get());
-        return new Mensaje("Estado actualizado exitosamente",true);
-    }
+
 }

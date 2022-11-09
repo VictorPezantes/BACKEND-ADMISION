@@ -5,7 +5,7 @@ import com.pe.ttk.admision.entity.master.EstadoResultadoExamen;
 import com.pe.ttk.admision.entity.master.SubEstado;
 import com.pe.ttk.admision.entity.master.TipoExamen;
 import com.pe.ttk.admision.enums.CentroMedicoNombre;
-import com.pe.ttk.admision.enums.ResultadoExamenNombre;
+import com.pe.ttk.admision.enums.EstadoResultadoExamenNombre;
 import com.pe.ttk.admision.enums.SubEstadoNombre;
 import com.pe.ttk.admision.enums.TipoExamenNombre;
 import com.pe.ttk.admision.entity.security.Rol;
@@ -97,19 +97,19 @@ public class CreateMasters implements CommandLineRunner {
             subEstadoService.save(subEstadoReprogramado);
         }
         //Resultado
-        Optional<ResultadoExamenNombre> resultadoExamenNombreAprobado = resultadoExamenService.findByResultadoExamenNombre(ResultadoExamenNombre.APROBADO);
+        Optional<EstadoResultadoExamenNombre> resultadoExamenNombreAprobado = resultadoExamenService.findByResultadoExamenNombre(EstadoResultadoExamenNombre.APROBADO);
         if (resultadoExamenNombreAprobado.isEmpty()){
-            EstadoResultadoExamen estadoResultadoExamenAprobado = new EstadoResultadoExamen(ResultadoExamenNombre.APROBADO);
+            EstadoResultadoExamen estadoResultadoExamenAprobado = new EstadoResultadoExamen(EstadoResultadoExamenNombre.APROBADO);
             resultadoExamenService.save(estadoResultadoExamenAprobado);
         }
-        Optional<ResultadoExamenNombre> resultadoExamenNombreDesaprobado = resultadoExamenService.findByResultadoExamenNombre(ResultadoExamenNombre.DESAPROBADO);
+        Optional<EstadoResultadoExamenNombre> resultadoExamenNombreDesaprobado = resultadoExamenService.findByResultadoExamenNombre(EstadoResultadoExamenNombre.DESAPROBADO);
         if (resultadoExamenNombreDesaprobado.isEmpty()){
-            EstadoResultadoExamen estadoResultadoExamenDesaprobado = new EstadoResultadoExamen(ResultadoExamenNombre.DESAPROBADO);
+            EstadoResultadoExamen estadoResultadoExamenDesaprobado = new EstadoResultadoExamen(EstadoResultadoExamenNombre.DESAPROBADO);
             resultadoExamenService.save(estadoResultadoExamenDesaprobado);
         }
-        Optional<ResultadoExamenNombre> resultadoExamenNombreObservado = resultadoExamenService.findByResultadoExamenNombre(ResultadoExamenNombre.OBSERVADO);
+        Optional<EstadoResultadoExamenNombre> resultadoExamenNombreObservado = resultadoExamenService.findByResultadoExamenNombre(EstadoResultadoExamenNombre.OBSERVADO);
         if (resultadoExamenNombreObservado.isEmpty()){
-            EstadoResultadoExamen estadoResultadoExamenObservado = new EstadoResultadoExamen(ResultadoExamenNombre.OBSERVADO);
+            EstadoResultadoExamen estadoResultadoExamenObservado = new EstadoResultadoExamen(EstadoResultadoExamenNombre.OBSERVADO);
             resultadoExamenService.save(estadoResultadoExamenObservado);
         }
         Optional<CentroMedicoNombre> centroMedicoNombre = centroMedicoService.findAllByCentroMedicoNombre(CentroMedicoNombre.CENTRO_MEDICO_TEST);

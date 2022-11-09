@@ -1,10 +1,10 @@
 package com.pe.ttk.admision.service;
 
 import com.pe.ttk.admision.entity.master.EstadoResultadoExamen;
-import com.pe.ttk.admision.enums.ResultadoExamenNombre;
+import com.pe.ttk.admision.enums.EstadoResultadoExamenNombre;
 import java.util.Optional;
 
 public interface ResultadoExamenService {
-    Optional<ResultadoExamenNombre> findByResultadoExamenNombre(ResultadoExamenNombre resultadoExamenNombre);
+    Optional<EstadoResultadoExamenNombre> findByResultadoExamenNombre(EstadoResultadoExamenNombre resultadoExamenNombre);
     void save(EstadoResultadoExamen estadoResultadoExamen);
 }

@@ -1,7 +1,6 @@
 package com.pe.ttk.admision.entity.master;
 
 import com.pe.ttk.admision.enums.CentroMedicoNombre;
-import com.pe.ttk.admision.enums.ResultadoExamenNombre;
 import lombok.Data;
 
 import javax.persistence.*;

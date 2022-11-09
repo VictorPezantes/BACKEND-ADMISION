@@ -1,6 +1,6 @@
 package com.pe.ttk.admision.entity.master;
 
-import com.pe.ttk.admision.enums.ResultadoExamenNombre;
+import com.pe.ttk.admision.enums.EstadoResultadoExamenNombre;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -14,10 +14,10 @@ public class EstadoResultadoExamen {
     private int id;
     @NotNull
     @Enumerated(EnumType.STRING)
-    private ResultadoExamenNombre resultadoExamenNombre;
+    private EstadoResultadoExamenNombre resultadoExamenNombre;
     private Integer estado;
     public EstadoResultadoExamen(){super();}
-    public EstadoResultadoExamen(@NotNull ResultadoExamenNombre resultadoExamenNombre) {
+    public EstadoResultadoExamen(@NotNull EstadoResultadoExamenNombre resultadoExamenNombre) {
         super();
         this.resultadoExamenNombre = resultadoExamenNombre;
         this.estado = 1;

@@ -12,8 +12,7 @@ import java.util.List;
 public interface ExamenService {
     Mensaje registrarExamen(ExamenDto examenDto);
     Page<ExamenDto> listarExamenes(Integer numPagina, Integer tamPagina, String buscador, List subEstado, String fechaInformeMedico, String fechaProgramada);
-    Mensaje reprogramarExamen(ExamenActDto examenActDto);
-    Mensaje cancelarExamen(Long examenId, boolean solicitudPostulante);
-    Mensaje registrarResultadoExamen(Long examenId, Integer estadoResultadoExamenId, MultipartFile resultadoExamen, Date fechaResultado);
-    Mensaje actualizarSubEstadoExamen(Long examenId, Integer estado);
+    Mensaje actualizarExamen(ExamenActDto examenActDto);
+    Mensaje registrarResultadoExamen(Long examenId,Integer estadoResultadoExamenId, MultipartFile resultadoExamen,Date fechaResultado);
+    
 }
