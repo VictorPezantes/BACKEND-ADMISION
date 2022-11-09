@@ -103,6 +103,9 @@ public class PostulanteEntityExt {
     private Date fechaRegistroExamen;
     private Long encargadoId;
     private String encargadoNombre;
+    private Date fechaProgramadaExamen;
+    private Integer tipoExamenId;
+    private String tipoExamenNombre;
     public PostulanteEntityExt(PostulanteEntity postulanteEntity, String distrito,String provincia, String departamento, ExamenEntity examen,Encargado encargadoBd) {
         id = postulanteEntity.getId();
         primerNombre = postulanteEntity.getPrimerNombre();
@@ -146,6 +149,9 @@ public class PostulanteEntityExt {
             centroMedicoNombre= String.valueOf(examen.getCentroMedico().getCentroMedicoNombre());
             fechaRegistroExamen=examen.getFecha();
             subEstadoExamen=examen.getSubEstado().getId();
+            fechaProgramadaExamen=examen.getFechaProgramada();
+            tipoExamenId = examen.getTipoExamen().getId();
+            tipoExamenNombre = String.valueOf(examen.getTipoExamen().getTipoExamenNombre());
         }
         if(encargadoBd != null){
             encargadoId = encargadoBd.getId();

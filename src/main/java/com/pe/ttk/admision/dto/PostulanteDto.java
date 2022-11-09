@@ -65,6 +65,9 @@ public class PostulanteDto {
     private Date fechaRegistroExamen;
     private Long encargadoId;
     private String encargadoNombre;
+    private Date fechaProgramadaExamen;
+    private Integer tipoExamenId;
+    private String tipoExamenNombre;
     public List<String> Validar()
     {
         List<String> validaciones = new ArrayList<String>();

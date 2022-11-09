@@ -104,7 +104,9 @@ public class PostulanteMapperImpl implements PostulanteMapper {
         postulanteDto.setFechaRegistroExamen( postulanteEntityExt.getFechaRegistroExamen() );
         postulanteDto.setEncargadoId( postulanteEntityExt.getEncargadoId() );
         postulanteDto.setEncargadoNombre( postulanteEntityExt.getEncargadoNombre() );
-
+        postulanteDto.setFechaProgramadaExamen( postulanteEntityExt.getFechaProgramadaExamen() );
+        postulanteDto.setExamenId( postulanteEntityExt.getExamenId());
+        postulanteDto.setTipoExamenNombre( postulanteEntityExt.getTipoExamenNombre());
         return postulanteDto;
     }
 
