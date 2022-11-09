@@ -11,8 +11,8 @@ public interface PostulanteMapper {
 
     PostulanteMapper INSTANCE = Mappers.getMapper(PostulanteMapper.class);
 
-    PostulanteDto toPostulante(PostulanteEntity postulanteEntity);
-    PostulanteDto toPostulante(PostulanteEntityExt postulanteEntityExt);
+    PostulanteDto toPostulanteFromEntity(PostulanteEntity postulanteEntity);
+    PostulanteDto toPostulanteFromExtityExt(PostulanteEntityExt postulanteEntityExt);
 
     PostulanteEntity toPostulanteEntity(PostulanteDto postulanteDto);
 

@@ -8,7 +8,7 @@ import com.pe.ttk.admision.util.mapper.PostulanteMapper;
 public class PostulanteMapperImpl implements PostulanteMapper {
 
     @Override
-    public PostulanteDto toPostulante(PostulanteEntity postulanteEntity) {
+    public PostulanteDto toPostulanteFromEntity(PostulanteEntity postulanteEntity) {
         if ( postulanteEntity == null ) {
             return null;
         }
@@ -54,7 +54,7 @@ public class PostulanteMapperImpl implements PostulanteMapper {
     }
 
     @Override
-    public PostulanteDto toPostulante(PostulanteEntityExt postulanteEntityExt) {
+    public PostulanteDto toPostulanteFromExtityExt(PostulanteEntityExt postulanteEntityExt) {
         if ( postulanteEntityExt == null ) {
             return null;
         }

@@ -14,7 +14,6 @@ import com.pe.ttk.admision.service.PostulanteService;
 import com.pe.ttk.admision.util.Constantes;
 import com.pe.ttk.admision.util.ConvertirFechas;
 import com.pe.ttk.admision.util.GuardarArchivos;
-import com.pe.ttk.admision.util.mapper.PostulanteMapper;
 import com.pe.ttk.admision.util.mapper.impl.PostulanteMapperImpl;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -158,7 +157,7 @@ public class PostulanteServiceImpl implements PostulanteService {
             guardarArchivos.guardarArchivo(foto, nombreFoto);
         }
 
-        PostulanteEntity postulanteEntity = PostulanteMapper.INSTANCE.toPostulanteEntity(postulanteDto);
+        PostulanteEntity postulanteEntity = PostulanteMapperImpl.INSTANCE.toPostulanteEntity(postulanteDto);
         postulanteEntity.setFechaPostulacion(ConvertirFechas.getInstance().obtenerFecha(new java.util.Date()));
         postulanteEntity.setCurriculum(nombreCurriculum);
         postulanteEntity.setDniFrontal(nombreDniFrontal);
@@ -258,7 +257,7 @@ public class PostulanteServiceImpl implements PostulanteService {
     public Page<PostulanteDto> listarPostulantes(Integer numPagina, Integer tamPagina) {
         Pageable pageable = PageRequest.of(numPagina, tamPagina);
         List<PostulanteEntityExt> lista = postulanteRepository.findByEstado(null, pageable);
-        List<PostulanteDto> listaPostulante = lista.stream().map(PostulanteMapper.INSTANCE::toPostulante).collect(Collectors.toList());
+        List<PostulanteDto> listaPostulante = lista.stream().map(PostulanteMapperImpl.INSTANCE::toPostulanteFromExtityExt).collect(Collectors.toList());
         if(!listaPostulante.isEmpty()){
             return new PageImpl<>(listaPostulante, pageable, lista.size());
         }
@@ -271,7 +270,7 @@ public class PostulanteServiceImpl implements PostulanteService {
         Pageable pageable = PageRequest.of(numPagina, tamPagina);
         try{
             List<PostulanteEntityExt> lista = postulanteRepository.findPostulanteFiltro(subEstadoExamen,fechaInformeMedico,fechaProgramada,filtro,estado,pageable);
-            List<PostulanteDto> listaPostulante = lista.stream().map(PostulanteMapperImpl.INSTANCE::toPostulante).collect(Collectors.toList());
+            List<PostulanteDto> listaPostulante = lista.stream().map(PostulanteMapperImpl.INSTANCE::toPostulanteFromExtityExt).collect(Collectors.toList());
             if(!lista.isEmpty()){
                 return new PageImpl<>(listaPostulante, pageable, lista.size());
             }
