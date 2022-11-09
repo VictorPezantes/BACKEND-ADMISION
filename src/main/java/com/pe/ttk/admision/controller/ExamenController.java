@@ -28,7 +28,7 @@ public class ExamenController {
     }
     @ApiOperation("actualizar datos de un examen")
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/reprogramar")
+    @PutMapping("/actualizar")
     public ResponseEntity<?> actualizar(@RequestBody @Valid ExamenActDto examen){
         return ResponseEntity.ok(examenService.actualizarExamen(examen));
     }
