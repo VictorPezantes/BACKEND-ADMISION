@@ -76,10 +76,8 @@ public class EncargadoServiceImp implements EncargadoService {
             if(postulanteEntityBd.isEmpty()){
                 return new Mensaje("El postulante no existe",false);
             }
-            postulanteEntityList.add(postulanteEntityBd.get());
+            postulanteEntityBd.get().setEncargado(encargadoBd.get());
         }
-
-        encargadoBd.get().getPostulantes().addAll(postulanteEntityList);
         return new Mensaje("Se asignó el/los postulante(s) con éxito",true);
     }
 }

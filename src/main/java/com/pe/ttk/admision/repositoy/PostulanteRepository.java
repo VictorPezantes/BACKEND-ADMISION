@@ -29,17 +29,18 @@ public interface PostulanteRepository extends JpaRepository<PostulanteEntity,Lon
     List<PostulanteEntityExt> findByEstado(@Param("estadoId") Integer estadoId, Pageable pageable);
 
     boolean existsByDniAndEstado(String dni, Integer estado);
-    @Query(value = "SELECT NEW com.pe.ttk.admision.entity.admision.PostulanteEntityExt(p,e.subEstado.id, d.nombre ,pr.nombre ,de.nombre,e) " +
-            "FROM PostulanteEntity p " +
-            "LEFT JOIN ExamenEntity e  ON p.id = e.postulante.id " +
-            "LEFT join Distrito d on p.idDistrito=d.id " +
-            "LEFT join Provincia pr on p.idProvincia=pr.id " +
-            "LEFT join Departamento de on p.idDepartamento=de.id " +
+    @Query(value = "SELECT NEW com.pe.ttk.admision.entity.admision.PostulanteEntityExt(po, di.nombre ,pr.nombre ,de.nombre, e, en) " +
+            "FROM PostulanteEntity po " +
+            "LEFT JOIN ExamenEntity e  ON po.id = e.postulante.id " +
+            "LEFT JOIN Encargado en ON en.id = po.encargado.id " +
+            "LEFT join Distrito di on po.idDistrito=di.id " +
+            "LEFT join Provincia pr on po.idProvincia=pr.id " +
+            "LEFT join Departamento de on po.idDepartamento=de.id " +
             " WHERE " +
             "(:fechaInformeMedico is null OR (DATE(e.fechaInformeMedico)=DATE(:fechaInformeMedico))) AND" +
             " (:fechaProgramada is null OR (DATE(e.fechaProgramada)=DATE(:fechaProgramada))) AND" +
-            " (:filtro is null or (p.apellidoPaterno LIKE %:filtro% or p.apellidoMaterno LIKE %:filtro% or p.primerNombre LIKE %:filtro% or p.segundoNombre LIKE %:filtro%) ) AND" +
-            " (:estadoId is null or (p.estado = :estadoId)) AND" +
+            " (:filtro is null or (po.apellidoPaterno LIKE %:filtro% or po.apellidoMaterno LIKE %:filtro% or po.primerNombre LIKE %:filtro% or po.segundoNombre LIKE %:filtro%) ) AND" +
+            " (:estadoId is null or (po.estado = :estadoId)) AND" +
             " (:estadoExamenId is null OR (e.subEstado.id = :estadoExamenId))")
     List<PostulanteEntityExt> findPostulanteFiltro(@Param("estadoExamenId")Integer estadoExamenId,
                                                    @Param("fechaInformeMedico") Date fechaInformeMedico,

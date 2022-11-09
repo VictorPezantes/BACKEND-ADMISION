@@ -29,8 +29,4 @@ public class Encargado  implements Serializable{
     private String email;
     @Column(nullable = true, length = 100)
     private String telefono;
-
-    @ManyToMany(fetch= FetchType.EAGER)
-    private Set<PostulanteEntity> postulantes;
-
 }

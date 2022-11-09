@@ -1,5 +1,6 @@
 package com.pe.ttk.admision.entity.admision;
 
+import com.pe.ttk.admision.entity.master.Encargado;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -98,8 +99,11 @@ public class PostulanteEntityExt {
     private Integer subEstadoExamen;
     private Long examenId;
     private int centroMedicoId;
+    private String centroMedicoNombre;
     private Date fechaRegistroExamen;
-    public PostulanteEntityExt(PostulanteEntity postulanteEntity, Integer idEstado) {
+    private Long encargadoId;
+    private String encargadoNombre;
+    public PostulanteEntityExt(PostulanteEntity postulanteEntity, String distrito,String provincia, String departamento, ExamenEntity examen,Encargado encargadoBd) {
         id = postulanteEntity.getId();
         primerNombre = postulanteEntity.getPrimerNombre();
         segundoNombre = postulanteEntity.getSegundoNombre();
@@ -133,50 +137,19 @@ public class PostulanteEntityExt {
         procedencia=postulanteEntity.getProcedencia();
         idOferta=postulanteEntity.getIdOferta();
         ofertaPostulada=postulanteEntity.getOfertaPostulada();
-        subEstadoExamen=idEstado;
-    }
-    public PostulanteEntityExt(PostulanteEntity postulanteEntity, Integer idEstado, String distrito,String provincia, String departamento, ExamenEntity examen) {
-        id = postulanteEntity.getId();
-        primerNombre = postulanteEntity.getPrimerNombre();
-        segundoNombre = postulanteEntity.getSegundoNombre();
-        apellidoPaterno=postulanteEntity.getApellidoPaterno();
-        apellidoMaterno=postulanteEntity.getApellidoMaterno();
-        idEstadoCivil=postulanteEntity.getIdEstadoCivil();
-        dni=postulanteEntity.getDni();
-        fechaNacimiento=postulanteEntity.getFechaNacimiento();
-        direccion=postulanteEntity.getDireccion();
-        idDistrito=postulanteEntity.getIdDistrito();
-        idProvincia=postulanteEntity.getIdProvincia();
-        idDepartamento=postulanteEntity.getIdDepartamento();
-        celular=postulanteEntity.getCelular();
-        celularFamiliar=postulanteEntity.getCelularFamiliar();
-        telefonoFijo=postulanteEntity.getTelefonoFijo();
-        email=postulanteEntity.getEmail();
-        emailSecundario=postulanteEntity.getEmailSecundario();
-        profesion=postulanteEntity.getProfesion();
-        lugarEstudios=postulanteEntity.getLugarEstudios();
-        ultimoCursoRealizado=postulanteEntity.getUltimoCursoRealizado();
-        empresaCurso=postulanteEntity.getEmpresaCurso();
-        trabajoReciente=postulanteEntity.getTrabajoReciente();
-        fechaIngresoTrabajoReciente=postulanteEntity.getFechaIngresoTrabajoReciente();
-        fechaSalidaTrabajoReciente=postulanteEntity.getFechaSalidaTrabajoReciente();
-        empresaTrabajoReciente=postulanteEntity.getEmpresaTrabajoReciente();
-        motivoSalidaTrabajoReciente=postulanteEntity.getMotivoSalidaTrabajoReciente();
-        disponibilidadViajar=postulanteEntity.getDisponibilidadViajar();
-        experienciaRubro=postulanteEntity.getExperienciaRubro();
-        estadoPostulacion=postulanteEntity.getEstadoPostulacion();
-        fechaPostulacion=postulanteEntity.getFechaPostulacion();
-        procedencia=postulanteEntity.getProcedencia();
-        idOferta=postulanteEntity.getIdOferta();
-        ofertaPostulada=postulanteEntity.getOfertaPostulada();
-        subEstadoExamen=idEstado;
         distritoDescripcion =distrito;
         provinciaDescripcion =provincia;
         departamentoDescripcion=departamento;
         if(examen != null){
             examenId=examen.getId();
             centroMedicoId=examen.getCentroMedico().getId();
+            centroMedicoNombre= String.valueOf(examen.getCentroMedico().getCentroMedicoNombre());
             fechaRegistroExamen=examen.getFecha();
+            subEstadoExamen=examen.getSubEstado().getId();
+        }
+        if(encargadoBd != null){
+            encargadoId = encargadoBd.getId();
+            encargadoNombre=encargadoBd.getNombre()+ " "+encargadoBd.getApellido();
         }
     }
     public PostulanteEntityExt(PostulanteEntity postulanteEntity, String distrito,String provincia, String departamento) {

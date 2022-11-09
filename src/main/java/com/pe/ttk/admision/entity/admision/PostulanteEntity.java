@@ -1,5 +1,6 @@
 package com.pe.ttk.admision.entity.admision;
 
+import com.pe.ttk.admision.entity.master.Encargado;
 import lombok.*;
 
 import javax.persistence.*;
@@ -159,5 +160,7 @@ public class PostulanteEntity {
     private String dniPosterior;
     private String foto;
     private Integer estado;
-
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "encargadoId", referencedColumnName = "id")
+    private Encargado encargado;
 }
