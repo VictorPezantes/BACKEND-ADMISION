@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum EstadoOfertaNombre {
-        PENDIENTE(1),
-        APROBADO(2),
-        RECHAZADO(3);
+        CREADO(1),
+        ACTIVADO(2),
+        DESACTIVADO(3);
         private final int value;
         private static Map map = new HashMap<>();
     private EstadoOfertaNombre(int value) {

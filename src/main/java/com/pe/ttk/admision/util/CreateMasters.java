@@ -171,22 +171,22 @@ public class CreateMasters implements CommandLineRunner {
         }
 
         //estado oferta
-        Optional<EstadoOfertaNombre> estadoOfertaNombrePendiente = estadoOfertaService.findAllByEstadoOfertaNombre(EstadoOfertaNombre.PENDIENTE);
-        if(estadoOfertaNombrePendiente.isEmpty()){
-            EstadoOferta estadoOfertaPendiente = new EstadoOferta(EstadoOfertaNombre.PENDIENTE);
-            estadoOfertaService.save(estadoOfertaPendiente);
+        Optional<EstadoOfertaNombre> estadoOfertaNombreCreado = estadoOfertaService.findAllByEstadoOfertaNombre(EstadoOfertaNombre.CREADO);
+        if(estadoOfertaNombreCreado.isEmpty()){
+            EstadoOferta estadoOfertaCreado = new EstadoOferta(EstadoOfertaNombre.CREADO);
+            estadoOfertaService.save(estadoOfertaCreado);
         }
 
-        Optional<EstadoOfertaNombre> estadoOfertaNombreAprobado = estadoOfertaService.findAllByEstadoOfertaNombre(EstadoOfertaNombre.APROBADO);
-        if(estadoOfertaNombreAprobado.isEmpty()){
-            EstadoOferta estadoOfertaAprobado = new EstadoOferta(EstadoOfertaNombre.APROBADO);
-            estadoOfertaService.save(estadoOfertaAprobado);
+        Optional<EstadoOfertaNombre> estadoOfertaNombreActivado = estadoOfertaService.findAllByEstadoOfertaNombre(EstadoOfertaNombre.ACTIVADO);
+        if(estadoOfertaNombreActivado.isEmpty()){
+            EstadoOferta estadoOfertaActivado = new EstadoOferta(EstadoOfertaNombre.ACTIVADO);
+            estadoOfertaService.save(estadoOfertaActivado);
         }
 
-        Optional<EstadoOfertaNombre> estadoOfertaNombreRechazado = estadoOfertaService.findAllByEstadoOfertaNombre(EstadoOfertaNombre.RECHAZADO);
-        if(estadoOfertaNombreRechazado.isEmpty()){
-            EstadoOferta estadoOfertaRechazado = new EstadoOferta(EstadoOfertaNombre.RECHAZADO);
-            estadoOfertaService.save(estadoOfertaRechazado);
+        Optional<EstadoOfertaNombre> estadoOfertaNombreDesactivado = estadoOfertaService.findAllByEstadoOfertaNombre(EstadoOfertaNombre.DESACTIVADO);
+        if(estadoOfertaNombreDesactivado.isEmpty()){
+            EstadoOferta estadoOfertaDesactivado = new EstadoOferta(EstadoOfertaNombre.DESACTIVADO);
+            estadoOfertaService.save(estadoOfertaDesactivado);
         }
 
     }

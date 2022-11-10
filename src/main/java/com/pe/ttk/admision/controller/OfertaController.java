@@ -78,8 +78,11 @@ public class OfertaController {
     @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/actualizar")
     public ResponseEntity<?> actualizarOferta(@RequestBody OfertaDto ofertaDto) {
-
-        return ResponseEntity.accepted().body(ofertaService.actualizarOferta(ofertaDto));
+        try {
+            return ResponseEntity.accepted().body(ofertaService.actualizarOferta(ofertaDto));
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(new Mensaje(e.getMessage(),false));
+        }
     }
 
     @ApiOperation("Actualizar estado de una oferta")

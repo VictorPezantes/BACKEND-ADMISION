@@ -96,7 +96,7 @@ public class OfertaServiceImpl implements OfertaService {
         Encargado encargadoDb = encargadoOp.get();
 
         EstadoOferta estadoOferta = new EstadoOferta();
-        estadoOferta.setId(EstadoOfertaNombre.PENDIENTE.getValue());
+        estadoOferta.setId(EstadoOfertaNombre.CREADO.getValue());
 
         OfertaEntity ofertaEntity = new OfertaEntity();
 
@@ -157,15 +157,18 @@ public class OfertaServiceImpl implements OfertaService {
                 return new Mensaje("No existe el estado",false);
             }
             EstadoOferta estadoOfertaDb = estadoOp.get();
-            if(Objects.equals(estadoOfertaDb.getId(), Constantes.ESTADO_ACTIVADA)){
+            if(Objects.equals(estadoOfertaDb.getEstadoOfertaNombre(), EstadoOfertaNombre.ACTIVADO)){
                 ofertaDb.setFechaPublicacion(convertirFechas.stringToDateSql());
                 ofertaDb.setEstadoOferta(estadoOfertaDb);
                 ofertaRepository.save(ofertaDb);
             }
-            if(Objects.equals(estadoOfertaDb.getId(), Constantes.ESTADO_DESACTIVADA)){
+            else if(Objects.equals(estadoOfertaDb.getEstadoOfertaNombre(), EstadoOfertaNombre.DESACTIVADO)){
                 ofertaDb.setFechaDesactivado(convertirFechas.stringToDateSql());
                 ofertaDb.setEstadoOferta(estadoOfertaDb);
                 ofertaRepository.save(ofertaDb);
+            }
+            else{
+                return  new Mensaje("No se actualizó oferta",false);
             }
             return  new Mensaje("Estado de la oferta actualizado correctamente",true);
         }
