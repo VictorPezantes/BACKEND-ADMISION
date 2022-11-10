@@ -26,7 +26,7 @@ public interface PostulanteRepository extends JpaRepository<PostulanteEntity,Lon
             "inner join Departamento de on p.idDepartamento=de.id ")
     List<PostulanteEntityExt> findByEstado(Integer estadoId, Pageable pageable);
 
-    boolean existsByDniAndEstadoPostulante(String dni, Integer estado);
+    boolean existsByDniAndActivo(String dni,boolean activo);
     @Query(value = "SELECT NEW com.pe.ttk.admision.entity.admision.PostulanteEntityExt(po, di.nombre ,pr.nombre ,de.nombre, e, en) " +
             "FROM PostulanteEntity po " +
             "LEFT JOIN ExamenEntity e  ON po.id = e.postulante.id " +

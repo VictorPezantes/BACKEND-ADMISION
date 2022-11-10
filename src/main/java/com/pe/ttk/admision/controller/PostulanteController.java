@@ -134,11 +134,15 @@ public class PostulanteController {
         List<String> validaciones = postulanteDto.Validar();
         /*if (bindingResult.hasErrors())
             return ResponseEntity.badRequest().body(new Mensaje("Por favor ingrese los campos correctamente"));*/
-        if(validaciones.size() > 0){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(validaciones);
+        try {
+            if(validaciones.size() > 0){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(validaciones);
+            }
+            return ResponseEntity.status(HttpStatus.CREATED).body(postulanteService.registrarPostulante(postulanteDto, curriculum,
+                    dniFrontal, dniPosterior, foto));
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(postulanteService.registrarPostulante(postulanteDto, curriculum,
-                dniFrontal, dniPosterior, foto));
     }
 
     @ApiOperation("Actualizar distintos campos de un postulante")

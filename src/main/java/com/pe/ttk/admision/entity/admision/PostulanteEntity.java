@@ -165,4 +165,6 @@ public class PostulanteEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "encargadoId", referencedColumnName = "id")
     private Encargado encargado;
+    @Column(columnDefinition = "bit default 1")
+    private boolean activo;
 }

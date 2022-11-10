@@ -87,7 +87,7 @@ public class PostulanteDto {
         LocalDate ahora = LocalDate.now();
 
         Period periodo = Period.between(fechaNac, ahora);
-        if(ofertaPostulada == null) {
+        if(idOferta == null) {
             validaciones.add("Error en ofertaPostulada");
         }
         if(periodo.getYears() < Constantes.EDAD_OPERARIO && Constantes.CARGO_OPERARIO.equalsIgnoreCase(ofertaPostulada)) {
@@ -116,8 +116,9 @@ public class PostulanteDto {
             if (!matcher.matches()) {
                 validaciones.add("Email Secundario no válido");
             }
-        }else {
-            validaciones.add("Email no ingresado");
+            else {
+                validaciones.add("Email no ingresado");
+            }
         }
         return validaciones;
     }

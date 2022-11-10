@@ -136,7 +136,7 @@ public class PostulanteServiceImpl implements PostulanteService {
 
         String dni = postulanteDto.getDni();
 
-        if(postulanteRepository.existsByDniAndEstadoPostulante(dni, EstadoPostulanteNombre.INGRESADO.getValue())){
+        if(postulanteRepository.existsByDniAndActivo(dni,true)){
             return new Mensaje("Ya existe una postulación, solo puede postular una sola vez",false);
         }
 
@@ -144,21 +144,29 @@ public class PostulanteServiceImpl implements PostulanteService {
         String nombreDniFrontal = "";
         String nombreDniPosterior = "";
         String nombreFoto = "";
-        if(!curriculum.isEmpty()){
-            nombreCurriculum = dni+Constantes.CURRICULUM+"."+FilenameUtils.getExtension(curriculum.getOriginalFilename());
-            guardarArchivos.guardarArchivo(curriculum, nombreCurriculum);
+        if(curriculum != null){
+            if(!curriculum.isEmpty()){
+                nombreCurriculum = dni+Constantes.CURRICULUM+"."+FilenameUtils.getExtension(curriculum.getOriginalFilename());
+                guardarArchivos.guardarArchivo(curriculum, nombreCurriculum);
+            }
         }
-        if(!dniFrontal.isEmpty()){
-            nombreDniFrontal = dni+Constantes.DNI_FRONTAL+"."+FilenameUtils.getExtension(dniFrontal.getOriginalFilename());
-            guardarArchivos.guardarArchivo(dniFrontal, nombreDniFrontal);
+        if(dniFrontal != null){
+            if(!dniFrontal.isEmpty()){
+                nombreDniFrontal = dni+Constantes.DNI_FRONTAL+"."+FilenameUtils.getExtension(dniFrontal.getOriginalFilename());
+                guardarArchivos.guardarArchivo(dniFrontal, nombreDniFrontal);
+            }
         }
-        if(!dniPosterior.isEmpty()){
-            nombreDniPosterior = dni+Constantes.DNI_POSTERIOR+"."+FilenameUtils.getExtension(dniPosterior.getOriginalFilename());
-            guardarArchivos.guardarArchivo(dniPosterior, nombreDniPosterior);
+        if(dniPosterior != null){
+            if(!dniPosterior.isEmpty()){
+                nombreDniPosterior = dni+Constantes.DNI_POSTERIOR+"."+FilenameUtils.getExtension(dniPosterior.getOriginalFilename());
+                guardarArchivos.guardarArchivo(dniPosterior, nombreDniPosterior);
+            }
         }
-        if(!foto.isEmpty()){
-            nombreFoto = dni+Constantes.FOTO+"."+FilenameUtils.getExtension(foto.getOriginalFilename());
-            guardarArchivos.guardarArchivo(foto, nombreFoto);
+        if(foto != null){
+            if(!foto.isEmpty()){
+                nombreFoto = dni+Constantes.FOTO+"."+FilenameUtils.getExtension(foto.getOriginalFilename());
+                guardarArchivos.guardarArchivo(foto, nombreFoto);
+            }
         }
 
         PostulanteEntity postulanteEntity = PostulanteMapperImpl.INSTANCE.toPostulanteEntity(postulanteDto);
@@ -218,6 +226,7 @@ public class PostulanteServiceImpl implements PostulanteService {
         postulanteEntity.setEstadoPostulante(estadoPostulante.get());
 
         ofertaRepository.save(ofertaDb);
+        postulanteEntity.setActivo(true);
         postulanteEntity = postulanteRepository.save(postulanteEntity);
         registrarHistorial(postulanteEntity, edad, mensaje);
 
