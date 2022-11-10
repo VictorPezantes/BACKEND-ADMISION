@@ -11,13 +11,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/estado")
+@RequestMapping("/api/v1/estadoOferta")
 public class EstadoOfertaController {
 
     @Autowired
     EstadoOfertaServiceImp estadoOfertaServiceImp;
 
-    @ApiOperation("Lista todos los estados de las  ofertas")
+    @ApiOperation("Lista todos los estados de las ofertas")
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/listar")
     public ResponseEntity<?> listarEstados() {
