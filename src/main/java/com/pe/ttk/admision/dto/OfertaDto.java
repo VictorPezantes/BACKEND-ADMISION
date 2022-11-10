@@ -3,7 +3,7 @@ package com.pe.ttk.admision.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pe.ttk.admision.entity.master.Cargo;
 import com.pe.ttk.admision.entity.master.Encargado;
-import com.pe.ttk.admision.entity.master.Estado;
+import com.pe.ttk.admision.entity.master.EstadoOferta;
 import lombok.*;
 
 import java.util.Date;
@@ -14,7 +14,7 @@ import java.util.Date;
 public class OfertaDto {
 
     private Long id;
-    private Estado estadoOferta;
+    private EstadoOferta estadoOferta;
     private String titulo;
     private String descripcion;
     private String requisito;

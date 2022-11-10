@@ -1,6 +1,6 @@
 package com.pe.ttk.admision.service.impl;
 
-import com.pe.ttk.admision.repositoy.CentroMedicoRepository;
+import com.pe.ttk.admision.repository.CentroMedicoRepository;
 import com.pe.ttk.admision.entity.master.CentroMedico;
 import com.pe.ttk.admision.enums.CentroMedicoNombre;
 import com.pe.ttk.admision.service.CentroMedicoService;

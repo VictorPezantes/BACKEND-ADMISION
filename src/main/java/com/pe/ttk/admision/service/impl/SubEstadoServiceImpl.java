@@ -1,6 +1,6 @@
 package com.pe.ttk.admision.service.impl;
 
-import com.pe.ttk.admision.repositoy.SubEstadoRepository;
+import com.pe.ttk.admision.repository.SubEstadoRepository;
 import com.pe.ttk.admision.entity.master.SubEstado;
 import com.pe.ttk.admision.enums.SubEstadoNombre;
 import com.pe.ttk.admision.service.SubEstadoService;

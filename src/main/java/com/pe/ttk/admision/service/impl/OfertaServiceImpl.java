@@ -1,17 +1,18 @@
 package com.pe.ttk.admision.service.impl;
 
-import com.pe.ttk.admision.repositoy.CargoRepository;
-import com.pe.ttk.admision.repositoy.EncargadoRepository;
-import com.pe.ttk.admision.repositoy.EstadoRepository;
-import com.pe.ttk.admision.repositoy.OfertaRepository;
+import com.pe.ttk.admision.enums.EstadoOfertaNombre;
+import com.pe.ttk.admision.repository.CargoRepository;
+import com.pe.ttk.admision.repository.EncargadoRepository;
+import com.pe.ttk.admision.repository.EstadoOfertaRepository;
+import com.pe.ttk.admision.repository.OfertaRepository;
 import com.pe.ttk.admision.dto.Mensaje;
 import com.pe.ttk.admision.dto.OfertaDto;
 import com.pe.ttk.admision.entity.master.Cargo;
 import com.pe.ttk.admision.entity.master.Encargado;
-import com.pe.ttk.admision.entity.master.Estado;
+import com.pe.ttk.admision.entity.master.EstadoOferta;
 import com.pe.ttk.admision.entity.admision.OfertaEntity;
 import com.pe.ttk.admision.entity.security.UsuarioPrincipal;
-import com.pe.ttk.admision.repositoy.security.UsuarioRepository;
+import com.pe.ttk.admision.repository.security.UsuarioRepository;
 import com.pe.ttk.admision.service.OfertaService;
 import com.pe.ttk.admision.util.Constantes;
 import com.pe.ttk.admision.util.ConvertirFechas;
@@ -46,7 +47,7 @@ public class OfertaServiceImpl implements OfertaService {
     EncargadoRepository encargadoRepository;
 
     @Autowired
-    EstadoRepository estadoRepository;
+    EstadoOfertaRepository estadoOfertaRepository;
 
     @Autowired
     OfertaMapper ofertaMapper;
@@ -94,12 +95,12 @@ public class OfertaServiceImpl implements OfertaService {
         }
         Encargado encargadoDb = encargadoOp.get();
 
-        Estado estado = new Estado();
-        estado.setId(Constantes.ESTADO_CREADA);
+        EstadoOferta estadoOferta = new EstadoOferta();
+        estadoOferta.setId(EstadoOfertaNombre.PENDIENTE.getValue());
 
         OfertaEntity ofertaEntity = new OfertaEntity();
 
-        ofertaEntity.setEstadoOferta(estado);
+        ofertaEntity.setEstadoOferta(estadoOferta);
         ofertaEntity.setCantidadPostulantes(Constantes.CERO);
         ofertaEntity.setCargoOferta(ofertaDto.getCargoOferta());
         ofertaEntity.setCreadorOferta(encargadoDb);
@@ -150,20 +151,20 @@ public class OfertaServiceImpl implements OfertaService {
         Optional<OfertaEntity> ofertaOp = ofertaRepository.findByIdAndEstado(ofertaDto.getId(), Constantes.ESTADO_ACTIVO);
         if(ofertaOp.isPresent()){
             OfertaEntity ofertaDb = ofertaOp.get();
-            Long idEstado = ofertaDto.getEstadoOferta().getId();
-            Optional<Estado> estadoOp = estadoRepository.findById(idEstado);
+            int idEstado = ofertaDto.getEstadoOferta().getId();
+            Optional<EstadoOferta> estadoOp = estadoOfertaRepository.findById(idEstado);
             if(estadoOp.isEmpty()){
                 return new Mensaje("No existe el estado",false);
             }
-            Estado estadoDb = estadoOp.get();
-            if(Objects.equals(estadoDb.getId(), Constantes.ESTADO_ACTIVADA)){
+            EstadoOferta estadoOfertaDb = estadoOp.get();
+            if(Objects.equals(estadoOfertaDb.getId(), Constantes.ESTADO_ACTIVADA)){
                 ofertaDb.setFechaPublicacion(convertirFechas.stringToDateSql());
-                ofertaDb.setEstadoOferta(estadoDb);
+                ofertaDb.setEstadoOferta(estadoOfertaDb);
                 ofertaRepository.save(ofertaDb);
             }
-            if(Objects.equals(estadoDb.getId(), Constantes.ESTADO_DESACTIVADA)){
+            if(Objects.equals(estadoOfertaDb.getId(), Constantes.ESTADO_DESACTIVADA)){
                 ofertaDb.setFechaDesactivado(convertirFechas.stringToDateSql());
-                ofertaDb.setEstadoOferta(estadoDb);
+                ofertaDb.setEstadoOferta(estadoOfertaDb);
                 ofertaRepository.save(ofertaDb);
             }
             return  new Mensaje("Estado de la oferta actualizado correctamente",true);
@@ -191,9 +192,9 @@ public class OfertaServiceImpl implements OfertaService {
         return ofertaRepository.findByCreadorOferta(creador);
     }
 
-    public List<OfertaEntity> findByEstadoOferta(Estado estado) {
+    public List<OfertaEntity> findByEstadoOferta(EstadoOferta estadoOferta) {
 
-        return ofertaRepository.findByEstadoOferta(estado);
+        return ofertaRepository.findByEstadoOferta(estadoOferta);
 
 
     }

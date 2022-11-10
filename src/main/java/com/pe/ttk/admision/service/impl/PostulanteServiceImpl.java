@@ -5,10 +5,13 @@ import com.pe.ttk.admision.dto.PostulanteDto;
 import com.pe.ttk.admision.entity.admision.OfertaEntity;
 import com.pe.ttk.admision.entity.admision.PostulanteEntity;
 import com.pe.ttk.admision.entity.admision.PostulanteEntityExt;
+import com.pe.ttk.admision.entity.master.EstadoPostulante;
 import com.pe.ttk.admision.entity.master.HistorialEntity;
-import com.pe.ttk.admision.repositoy.HistorialRepository;
-import com.pe.ttk.admision.repositoy.OfertaRepository;
-import com.pe.ttk.admision.repositoy.PostulanteRepository;
+import com.pe.ttk.admision.enums.EstadoPostulanteNombre;
+import com.pe.ttk.admision.repository.EstadoPostulanteRepository;
+import com.pe.ttk.admision.repository.HistorialRepository;
+import com.pe.ttk.admision.repository.OfertaRepository;
+import com.pe.ttk.admision.repository.PostulanteRepository;
 import com.pe.ttk.admision.service.security.EmailService;
 import com.pe.ttk.admision.service.PostulanteService;
 import com.pe.ttk.admision.util.Constantes;
@@ -48,7 +51,8 @@ public class PostulanteServiceImpl implements PostulanteService {
     ConvertirFechas convertirFechas = new ConvertirFechas();
     GuardarArchivos guardarArchivos = new GuardarArchivos();
 
-
+    @Autowired
+    EstadoPostulanteRepository estadoPostulanteRepository;
     public List<PostulanteEntity> list() {
         return postulanteRepository.findAll();
     }
@@ -132,7 +136,7 @@ public class PostulanteServiceImpl implements PostulanteService {
 
         String dni = postulanteDto.getDni();
 
-        if(postulanteRepository.existsByDniAndEstado(dni, Constantes.ESTADO_ACTIVO)){
+        if(postulanteRepository.existsByDniAndEstadoPostulante(dni, EstadoPostulanteNombre.INGRESADO.getValue())){
             return new Mensaje("Ya existe una postulación, solo puede postular una sola vez",false);
         }
 
@@ -170,7 +174,7 @@ public class PostulanteServiceImpl implements PostulanteService {
         }
         OfertaEntity ofertaDb = ofertaOp.get();
         ofertaDb.setCantidadPostulantes(ofertaDb.getCantidadPostulantes() + 1);
-        postulanteEntity.setOfertaPostulada(ofertaDb.getTitulo());
+        postulanteEntity.setOferta(ofertaDb);
 
         int anioActual = ConvertirFechas.getInstance().obtenerAnioMesDia(Calendar.YEAR);
         int mesActual = ConvertirFechas.getInstance().obtenerAnioMesDia(Calendar.MONTH);
@@ -210,8 +214,8 @@ public class PostulanteServiceImpl implements PostulanteService {
             mensaje = Constantes.MENSAJE_NO_CUMPLE_EDAD;
         }
 
-        postulanteEntity.setEstadoPostulacion(Constantes.ESTADO_EVALUACION_INGRESADO);
-        postulanteEntity.setEstado(Constantes.ESTADO_ACTIVO);
+        Optional<EstadoPostulante> estadoPostulante = estadoPostulanteRepository.findById(EstadoPostulanteNombre.INGRESADO.getValue());
+        postulanteEntity.setEstadoPostulante(estadoPostulante.get());
 
         ofertaRepository.save(ofertaDb);
         postulanteEntity = postulanteRepository.save(postulanteEntity);
@@ -269,7 +273,7 @@ public class PostulanteServiceImpl implements PostulanteService {
     public Page<PostulanteDto> listarPostulanteFiltro(Integer numPagina, Integer tamPagina, Integer estado, Integer subEstadoExamen, Date fechaInformeMedico, Date fechaProgramada, String filtro) {
         Pageable pageable = PageRequest.of(numPagina, tamPagina);
         try{
-            List<PostulanteEntityExt> lista = postulanteRepository.findPostulanteFiltro(subEstadoExamen,fechaInformeMedico,fechaProgramada,filtro,estado,pageable);
+            List<PostulanteEntityExt> lista = postulanteRepository.findPostulanteFiltro(subEstadoExamen,fechaInformeMedico,fechaProgramada,filtro,pageable);
             List<PostulanteDto> listaPostulante = lista.stream().map(PostulanteMapperImpl.INSTANCE::toPostulanteFromExtityExt).collect(Collectors.toList());
             if(!lista.isEmpty()){
                 return new PageImpl<>(listaPostulante, pageable, lista.size());
@@ -289,7 +293,7 @@ public class PostulanteServiceImpl implements PostulanteService {
         historialEntity.setApellidoPaterno(postulanteEntity.getApellidoPaterno());
         historialEntity.setApellidoMaterno(postulanteEntity.getApellidoMaterno());
         historialEntity.setFechaCambioEstado(ConvertirFechas.getInstance().obtenerFecha(new java.util.Date()));
-        historialEntity.setEstadoPostulacion(postulanteEntity.getEstadoPostulacion());
+        historialEntity.setEstadoPostulante(postulanteEntity.getEstadoPostulante());
         historialEntity.setCantidadPostulaciones(1);
         historialEntity.setMensajeEnviado(mensaje);
         historialEntity.setEdadPostulante(edad);

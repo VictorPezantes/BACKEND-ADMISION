@@ -1,6 +1,7 @@
 package com.pe.ttk.admision.entity.admision;
 
 import com.pe.ttk.admision.entity.master.Encargado;
+import com.pe.ttk.admision.entity.master.EstadoPostulante;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -81,8 +82,6 @@ public class PostulanteEntityExt {
     private Integer disponibilidadViajar;
     @Column(name = "experiencia_rubro")
     private Integer experienciaRubro;
-    @Column(name = "estado_postulacion")
-    private Integer estadoPostulacion;
     @Column(name = "fecha_postulacion")
     private Date fechaPostulacion;
     private String procedencia;
@@ -95,6 +94,8 @@ public class PostulanteEntityExt {
     @Column(name = "dni_posterior")
     private String dniPosterior;
     private String foto;
+    private Integer estadoPostulanteId;
+    private String estadoPostulanteNombre;
     private Integer subEstadoExamen;
     private Long examenId;
     private int centroMedicoId;
@@ -136,11 +137,12 @@ public class PostulanteEntityExt {
         motivoSalidaTrabajoReciente=postulanteEntity.getMotivoSalidaTrabajoReciente();
         disponibilidadViajar=postulanteEntity.getDisponibilidadViajar();
         experienciaRubro=postulanteEntity.getExperienciaRubro();
-        estadoPostulacion=postulanteEntity.getEstadoPostulacion();
         fechaPostulacion=postulanteEntity.getFechaPostulacion();
         procedencia=postulanteEntity.getProcedencia();
-        idOferta=postulanteEntity.getIdOferta();
-        ofertaPostulada=postulanteEntity.getOfertaPostulada();
+        if(postulanteEntity.getOferta() != null){
+            idOferta=postulanteEntity.getOferta().getId();
+            ofertaPostulada=postulanteEntity.getOferta().getTitulo();
+        }
         distritoDescripcion =distrito;
         provinciaDescripcion =provincia;
         departamentoDescripcion=departamento;
@@ -159,6 +161,10 @@ public class PostulanteEntityExt {
             encargadoNombre=encargadoBd.getNombre()+ " "+encargadoBd.getApellido();
             encargadoTelefono = encargadoBd.getTelefono();
             encargadoEmail = encargadoBd.getEmail();
+        }
+        if(postulanteEntity.getEstadoPostulante()!=null){
+            estadoPostulanteNombre = postulanteEntity.getEstadoPostulante().getEstadoPostulanteNombre().toString();
+            estadoPostulanteId = postulanteEntity.getEstadoPostulante().getId();
         }
     }
     public PostulanteEntityExt(PostulanteEntity postulanteEntity, String distrito,String provincia, String departamento) {
@@ -190,11 +196,12 @@ public class PostulanteEntityExt {
         motivoSalidaTrabajoReciente=postulanteEntity.getMotivoSalidaTrabajoReciente();
         disponibilidadViajar=postulanteEntity.getDisponibilidadViajar();
         experienciaRubro=postulanteEntity.getExperienciaRubro();
-        estadoPostulacion=postulanteEntity.getEstadoPostulacion();
         fechaPostulacion=postulanteEntity.getFechaPostulacion();
         procedencia=postulanteEntity.getProcedencia();
-        idOferta=postulanteEntity.getIdOferta();
-        ofertaPostulada=postulanteEntity.getOfertaPostulada();
+        if(postulanteEntity.getOferta() != null){
+            idOferta=postulanteEntity.getOferta().getId();
+            ofertaPostulada=postulanteEntity.getOferta().getTitulo();
+        }
         distritoDescripcion =distrito;
         provinciaDescripcion =provincia;
         departamentoDescripcion=departamento;

@@ -19,7 +19,9 @@ public class HistorialEntity {
     private String apellidoPaterno;
     private String apellidoMaterno;
     private Date fechaCambioEstado;
-    private Integer estadoPostulacion;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "estadoPostulanteId", referencedColumnName = "id")
+    private EstadoPostulante estadoPostulante;
     private String observacion;
     private Integer cantidadPostulaciones;
     private String mensajeEnviado;

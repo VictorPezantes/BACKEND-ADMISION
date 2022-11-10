@@ -11,7 +11,7 @@ import com.pe.ttk.admision.entity.master.EstadoResultadoExamen;
 import com.pe.ttk.admision.entity.master.SubEstado;
 import com.pe.ttk.admision.entity.master.TipoExamen;
 import com.pe.ttk.admision.enums.SubEstadoNombre;
-import com.pe.ttk.admision.repositoy.*;
+import com.pe.ttk.admision.repository.*;
 import com.pe.ttk.admision.service.security.EmailService;
 import com.pe.ttk.admision.service.ExamenService;
 import com.pe.ttk.admision.util.Constantes;

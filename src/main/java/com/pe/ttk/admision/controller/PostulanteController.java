@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.pe.ttk.admision.dto.Mensaje;
 import com.pe.ttk.admision.dto.PostulanteDto;
 import com.pe.ttk.admision.entity.admision.PostulanteEntity;
-import com.pe.ttk.admision.exceptions.TTKDataException;
 import com.pe.ttk.admision.service.PostulanteService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -132,7 +130,7 @@ public class PostulanteController {
         postulanteDto.setUrlDniFrontal(urlDniFrontal);
         postulanteDto.setUrlDniPosterior(urlDniPosterior);
         postulanteDto.setUrlFotografia(urlFotografia);
-        postulanteDto.setEstado(estado);
+        postulanteDto.setEstadoPostulanteId(estado);
         List<String> validaciones = postulanteDto.Validar();
         /*if (bindingResult.hasErrors())
             return ResponseEntity.badRequest().body(new Mensaje("Por favor ingrese los campos correctamente"));*/

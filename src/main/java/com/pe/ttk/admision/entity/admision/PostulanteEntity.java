@@ -1,6 +1,8 @@
 package com.pe.ttk.admision.entity.admision;
 
 import com.pe.ttk.admision.entity.master.Encargado;
+import com.pe.ttk.admision.entity.master.EstadoPostulante;
+import com.pe.ttk.admision.enums.EstadoPostulanteNombre;
 import lombok.*;
 
 import javax.persistence.*;
@@ -145,21 +147,21 @@ public class PostulanteEntity {
     private Integer disponibilidadViajar;
     @Column(name = "experiencia_rubro")
     private Integer experienciaRubro;
-    @Column(name = "estado_postulacion")
-    private Integer estadoPostulacion;
     @Column(name = "fecha_postulacion")
     private Date fechaPostulacion;
     private String procedencia;
-    private Long idOferta;
-    @Column(name = "oferta_postulada")
-    private String ofertaPostulada;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "IdOferta", referencedColumnName = "id")
+    private OfertaEntity oferta;
     private String curriculum;
     @Column(name = "dni_frontal")
     private String dniFrontal;
     @Column(name = "dni_posterior")
     private String dniPosterior;
     private String foto;
-    private Integer estado;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "estadoPostulanteId", referencedColumnName = "id")
+    private EstadoPostulante estadoPostulante;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "encargadoId", referencedColumnName = "id")
     private Encargado encargado;

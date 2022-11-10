@@ -1,6 +1,6 @@
 package com.pe.ttk.admision.service.impl;
 
-import com.pe.ttk.admision.repositoy.ResultadoExamenRepository;
+import com.pe.ttk.admision.repository.ResultadoExamenRepository;
 import com.pe.ttk.admision.entity.master.EstadoResultadoExamen;
 import com.pe.ttk.admision.enums.EstadoResultadoExamenNombre;
 import com.pe.ttk.admision.service.ResultadoExamenService;

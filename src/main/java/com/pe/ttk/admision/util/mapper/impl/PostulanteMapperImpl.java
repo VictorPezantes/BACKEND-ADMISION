@@ -1,8 +1,10 @@
 package com.pe.ttk.admision.util.mapper.impl;
 
 import com.pe.ttk.admision.dto.PostulanteDto;
+import com.pe.ttk.admision.entity.admision.OfertaEntity;
 import com.pe.ttk.admision.entity.admision.PostulanteEntity;
 import com.pe.ttk.admision.entity.admision.PostulanteEntityExt;
+import com.pe.ttk.admision.entity.master.EstadoPostulante;
 import com.pe.ttk.admision.util.mapper.PostulanteMapper;
 
 public class PostulanteMapperImpl implements PostulanteMapper {
@@ -43,12 +45,15 @@ public class PostulanteMapperImpl implements PostulanteMapper {
         postulanteDto.setMotivoSalidaTrabajoReciente( postulanteEntity.getMotivoSalidaTrabajoReciente() );
         postulanteDto.setDisponibilidadViajar( postulanteEntity.getDisponibilidadViajar() );
         postulanteDto.setExperienciaRubro( postulanteEntity.getExperienciaRubro() );
-        postulanteDto.setEstadoPostulacion( postulanteEntity.getEstadoPostulacion() );
         postulanteDto.setFechaPostulacion( postulanteEntity.getFechaPostulacion() );
         postulanteDto.setProcedencia( postulanteEntity.getProcedencia() );
-        postulanteDto.setIdOferta( postulanteEntity.getIdOferta() );
-        postulanteDto.setOfertaPostulada( postulanteEntity.getOfertaPostulada() );
-        postulanteDto.setEstado( postulanteEntity.getEstado() );
+        postulanteDto.setIdOferta( postulanteEntity.getOferta().getId() );
+        postulanteDto.setOfertaPostulada( postulanteEntity.getOferta().getTitulo() );
+        if(postulanteEntity.getEstadoPostulante() != null){
+            postulanteDto.setEstadoPostulanteId( postulanteEntity.getEstadoPostulante().getId() );
+            postulanteDto.setEstadoPostulanteNombre( postulanteEntity.getEstadoPostulante().getEstadoPostulanteNombre().toString());
+        }
+
 
         return postulanteDto;
     }
@@ -92,7 +97,6 @@ public class PostulanteMapperImpl implements PostulanteMapper {
         postulanteDto.setMotivoSalidaTrabajoReciente( postulanteEntityExt.getMotivoSalidaTrabajoReciente() );
         postulanteDto.setDisponibilidadViajar( postulanteEntityExt.getDisponibilidadViajar() );
         postulanteDto.setExperienciaRubro( postulanteEntityExt.getExperienciaRubro() );
-        postulanteDto.setEstadoPostulacion( postulanteEntityExt.getEstadoPostulacion() );
         postulanteDto.setFechaPostulacion( postulanteEntityExt.getFechaPostulacion() );
         postulanteDto.setProcedencia( postulanteEntityExt.getProcedencia() );
         postulanteDto.setIdOferta( postulanteEntityExt.getIdOferta() );
@@ -109,6 +113,8 @@ public class PostulanteMapperImpl implements PostulanteMapper {
         postulanteDto.setFechaProgramadaExamen( postulanteEntityExt.getFechaProgramadaExamen() );
         postulanteDto.setExamenId( postulanteEntityExt.getExamenId());
         postulanteDto.setTipoExamenNombre( postulanteEntityExt.getTipoExamenNombre());
+        postulanteDto.setEstadoPostulanteId( postulanteEntityExt.getEstadoPostulanteId() );
+        postulanteDto.setEstadoPostulanteNombre( postulanteEntityExt.getEstadoPostulanteNombre());
         return postulanteDto;
     }
 
@@ -148,12 +154,14 @@ public class PostulanteMapperImpl implements PostulanteMapper {
         postulanteEntity.setMotivoSalidaTrabajoReciente( postulanteDto.getMotivoSalidaTrabajoReciente() );
         postulanteEntity.setDisponibilidadViajar( postulanteDto.getDisponibilidadViajar() );
         postulanteEntity.setExperienciaRubro( postulanteDto.getExperienciaRubro() );
-        postulanteEntity.setEstadoPostulacion( postulanteDto.getEstadoPostulacion() );
         postulanteEntity.setFechaPostulacion( postulanteDto.getFechaPostulacion() );
         postulanteEntity.setProcedencia( postulanteDto.getProcedencia() );
-        postulanteEntity.setIdOferta( postulanteDto.getIdOferta() );
-        postulanteEntity.setOfertaPostulada( postulanteDto.getOfertaPostulada() );
-        postulanteEntity.setEstado( postulanteDto.getEstado() );
+        OfertaEntity ofertaEntity = new OfertaEntity();
+        ofertaEntity.setId( postulanteDto.getIdOferta());
+        postulanteEntity.setOferta( ofertaEntity );
+        EstadoPostulante estadoPostulante = new EstadoPostulante();
+        estadoPostulante.setId(postulanteDto.getEstadoPostulanteId());
+        postulanteEntity.setEstadoPostulante(  estadoPostulante);
 
         return postulanteEntity;
     }

@@ -3,7 +3,7 @@ package com.pe.ttk.admision.controller;
 import com.pe.ttk.admision.dto.Mensaje;
 import com.pe.ttk.admision.dto.OfertaDto;
 import com.pe.ttk.admision.entity.master.Encargado;
-import com.pe.ttk.admision.entity.master.Estado;
+import com.pe.ttk.admision.entity.master.EstadoOferta;
 import com.pe.ttk.admision.entity.admision.OfertaEntity;
 import com.pe.ttk.admision.exceptions.TTKDataException;
 import com.pe.ttk.admision.service.impl.OfertaServiceImpl;
@@ -104,7 +104,7 @@ public class OfertaController {
     public String obtenerOfertaPorEstado(@RequestParam(value = "search") String query,
                                          @RequestParam(value = "numpagina") Integer page,
                                          @RequestParam(value = "size") Integer size,
-                                         @RequestParam(value = "estadoOferta") Estado estado,
+                                         @RequestParam(value = "estadoOferta") EstadoOferta estadoOferta,
                                          @RequestParam(value = "creadorOferta") Encargado creador,
                                          @RequestParam(value = "fechaPublicacion") String fechaPublicacion,
                                          Model model) throws TTKDataException {
@@ -117,8 +117,8 @@ public class OfertaController {
             input.fillData(params);
             listaOfertaEntities = ofertaService.findOfertaByQueryString(input.getTitulo());
         }
-        if(estado  != null)
-            listaOfertaEntities = ofertaService.findByEstadoOferta(estado);
+        if(estadoOferta != null)
+            listaOfertaEntities = ofertaService.findByEstadoOferta(estadoOferta);
         if(creador != null)
             listaOfertaEntities = ofertaService.findByCreadorOferta(creador);
 

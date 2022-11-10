@@ -1,20 +1,11 @@
 package com.pe.ttk.admision.util;
 
-import com.pe.ttk.admision.entity.master.CentroMedico;
-import com.pe.ttk.admision.entity.master.EstadoResultadoExamen;
-import com.pe.ttk.admision.entity.master.SubEstado;
-import com.pe.ttk.admision.entity.master.TipoExamen;
-import com.pe.ttk.admision.enums.CentroMedicoNombre;
-import com.pe.ttk.admision.enums.EstadoResultadoExamenNombre;
-import com.pe.ttk.admision.enums.SubEstadoNombre;
-import com.pe.ttk.admision.enums.TipoExamenNombre;
+import com.pe.ttk.admision.entity.master.*;
+import com.pe.ttk.admision.enums.*;
 import com.pe.ttk.admision.entity.security.Rol;
 import com.pe.ttk.admision.enums.security.RolNombre;
+import com.pe.ttk.admision.service.*;
 import com.pe.ttk.admision.service.security.RolService;
-import com.pe.ttk.admision.service.CentroMedicoService;
-import com.pe.ttk.admision.service.ResultadoExamenService;
-import com.pe.ttk.admision.service.SubEstadoService;
-import com.pe.ttk.admision.service.TipoExamenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -45,6 +36,13 @@ public class CreateMasters implements CommandLineRunner {
 
     @Autowired
     CentroMedicoService centroMedicoService;
+
+    @Autowired
+    EstadoPostulanteService estadoPostulanteService;
+
+    @Autowired
+    EstadoOfertaService estadoOfertaService;
+
     @Override
     public void run(String... args) throws Exception {
 
@@ -117,5 +115,79 @@ public class CreateMasters implements CommandLineRunner {
             CentroMedico centroMedico = new CentroMedico(CentroMedicoNombre.CENTRO_MEDICO_TEST);
             centroMedicoService.save(centroMedico);
         }
+        //Estado postulante
+        Optional<EstadoPostulanteNombre> estadoPostulanteNombreIngresado = estadoPostulanteService.findAllByEstadoPostulanteNombre(EstadoPostulanteNombre.INGRESADO);
+        if(estadoPostulanteNombreIngresado.isEmpty()){
+            EstadoPostulante estadoPostulanteIngresado = new EstadoPostulante(EstadoPostulanteNombre.INGRESADO);
+            estadoPostulanteService.save(estadoPostulanteIngresado);
+        }
+
+        Optional<EstadoPostulanteNombre> estadoPostulanteNombreVerificacion = estadoPostulanteService.findAllByEstadoPostulanteNombre(EstadoPostulanteNombre.VERIFICACION);
+        if(estadoPostulanteNombreVerificacion.isEmpty()){
+            EstadoPostulante estadoPostulanteVerificacion = new EstadoPostulante(EstadoPostulanteNombre.VERIFICACION);
+            estadoPostulanteService.save(estadoPostulanteVerificacion);
+        }
+
+        Optional<EstadoPostulanteNombre> estadoPostulanteNombreEntrevistaPersonal = estadoPostulanteService.findAllByEstadoPostulanteNombre(EstadoPostulanteNombre.ENTREVISTA_PERSONAL);
+        if(estadoPostulanteNombreEntrevistaPersonal.isEmpty()){
+            EstadoPostulante estadoPostulanteEntrevistaPersonal = new EstadoPostulante(EstadoPostulanteNombre.ENTREVISTA_PERSONAL);
+            estadoPostulanteService.save(estadoPostulanteEntrevistaPersonal);
+        }
+
+        Optional<EstadoPostulanteNombre> estadoestadoPostulanteFueraDelProceso = estadoPostulanteService.findAllByEstadoPostulanteNombre(EstadoPostulanteNombre.FUERA_DEL_PROCESO);
+        if(estadoestadoPostulanteFueraDelProceso.isEmpty()){
+            EstadoPostulante estadoPostulanteFueraDelProceso = new EstadoPostulante(EstadoPostulanteNombre.FUERA_DEL_PROCESO);
+            estadoPostulanteService.save(estadoPostulanteFueraDelProceso);
+        }
+
+        Optional<EstadoPostulanteNombre> estadoPostulanteNombreExamenMedico = estadoPostulanteService.findAllByEstadoPostulanteNombre(EstadoPostulanteNombre.EXAMEN_MEDICO);
+        if(estadoPostulanteNombreExamenMedico.isEmpty()){
+            EstadoPostulante estadoPostulanteExamenMedico = new EstadoPostulante(EstadoPostulanteNombre.EXAMEN_MEDICO);
+            estadoPostulanteService.save(estadoPostulanteExamenMedico);
+        }
+
+        Optional<EstadoPostulanteNombre> estadoPostulanteNombreReferenciasPersonales = estadoPostulanteService.findAllByEstadoPostulanteNombre(EstadoPostulanteNombre.REFERENCIAS_PERSONALES);
+        if(estadoPostulanteNombreReferenciasPersonales.isEmpty()){
+            EstadoPostulante estadoPostulanteReferenciasPersonales = new EstadoPostulante(EstadoPostulanteNombre.REFERENCIAS_PERSONALES);
+            estadoPostulanteService.save(estadoPostulanteReferenciasPersonales);
+        }
+
+        Optional<EstadoPostulanteNombre> estadoPostulanteNombrePoligrafia = estadoPostulanteService.findAllByEstadoPostulanteNombre(EstadoPostulanteNombre.POLIGRAFIA);
+        if(estadoPostulanteNombrePoligrafia.isEmpty()){
+            EstadoPostulante estadoPostulantePoligrafia = new EstadoPostulante(EstadoPostulanteNombre.POLIGRAFIA);
+            estadoPostulanteService.save(estadoPostulantePoligrafia);
+        }
+
+        Optional<EstadoPostulanteNombre> estadoPostulanteNombreEvaluacion = estadoPostulanteService.findAllByEstadoPostulanteNombre(EstadoPostulanteNombre.EVALUACION);
+        if(estadoPostulanteNombreEvaluacion.isEmpty()){
+            EstadoPostulante estadoPostulanteEvaluacion = new EstadoPostulante(EstadoPostulanteNombre.EVALUACION);
+            estadoPostulanteService.save(estadoPostulanteEvaluacion);
+        }
+
+        Optional<EstadoPostulanteNombre> estadoPostulanteNombreAltaEmpresa = estadoPostulanteService.findAllByEstadoPostulanteNombre(EstadoPostulanteNombre.ALTA_EMPRESA);
+        if(estadoPostulanteNombreAltaEmpresa.isEmpty()){
+            EstadoPostulante estadoPostulanteAltaEmpresa = new EstadoPostulante(EstadoPostulanteNombre.ALTA_EMPRESA);
+            estadoPostulanteService.save(estadoPostulanteAltaEmpresa);
+        }
+
+        //estado oferta
+        Optional<EstadoOfertaNombre> estadoOfertaNombrePendiente = estadoOfertaService.findAllByEstadoOfertaNombre(EstadoOfertaNombre.PENDIENTE);
+        if(estadoOfertaNombrePendiente.isEmpty()){
+            EstadoOferta estadoOfertaPendiente = new EstadoOferta(EstadoOfertaNombre.PENDIENTE);
+            estadoOfertaService.save(estadoOfertaPendiente);
+        }
+
+        Optional<EstadoOfertaNombre> estadoOfertaNombreAprobado = estadoOfertaService.findAllByEstadoOfertaNombre(EstadoOfertaNombre.APROBADO);
+        if(estadoOfertaNombreAprobado.isEmpty()){
+            EstadoOferta estadoOfertaAprobado = new EstadoOferta(EstadoOfertaNombre.APROBADO);
+            estadoOfertaService.save(estadoOfertaAprobado);
+        }
+
+        Optional<EstadoOfertaNombre> estadoOfertaNombreRechazado = estadoOfertaService.findAllByEstadoOfertaNombre(EstadoOfertaNombre.RECHAZADO);
+        if(estadoOfertaNombreRechazado.isEmpty()){
+            EstadoOferta estadoOfertaRechazado = new EstadoOferta(EstadoOfertaNombre.RECHAZADO);
+            estadoOfertaService.save(estadoOfertaRechazado);
+        }
+
     }
 }

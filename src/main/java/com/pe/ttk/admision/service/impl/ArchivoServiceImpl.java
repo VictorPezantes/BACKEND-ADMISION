@@ -2,7 +2,7 @@ package com.pe.ttk.admision.service.impl;
 
 import com.pe.ttk.admision.dto.MensajeData;
 import com.pe.ttk.admision.entity.admision.PostulanteEntity;
-import com.pe.ttk.admision.repositoy.PostulanteRepository;
+import com.pe.ttk.admision.repository.PostulanteRepository;
 import com.pe.ttk.admision.service.ArchivoService;
 import com.pe.ttk.admision.util.GuardarArchivos;
 import org.springframework.beans.factory.annotation.Autowired;

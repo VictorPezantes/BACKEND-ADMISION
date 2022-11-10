@@ -57,7 +57,8 @@ public class PostulanteDto {
     private String urlDniFrontal;
     private String urlDniPosterior;
     private String urlFotografia;
-    private Integer estado;
+    private Integer estadoPostulanteId;
+    private String estadoPostulanteNombre;
     private Integer subEstadoExamen;
     private Long examenId;
     private int centroMedicoId;

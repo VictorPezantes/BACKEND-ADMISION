@@ -12,7 +12,7 @@ import com.pe.ttk.admision.entity.security.Rol;
 import com.pe.ttk.admision.entity.security.Usuario;
 import com.pe.ttk.admision.entity.security.UsuarioPrincipal;
 import com.pe.ttk.admision.enums.security.RolNombre;
-import com.pe.ttk.admision.repositoy.security.UsuarioRepository;
+import com.pe.ttk.admision.repository.security.UsuarioRepository;
 import com.pe.ttk.admision.service.security.RolService;
 import com.pe.ttk.admision.service.security.UsuarioService;
 import com.pe.ttk.admision.util.Constantes;

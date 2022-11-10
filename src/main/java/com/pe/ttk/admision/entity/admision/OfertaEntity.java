@@ -2,7 +2,7 @@ package com.pe.ttk.admision.entity.admision;
 
 import com.pe.ttk.admision.entity.master.Cargo;
 import com.pe.ttk.admision.entity.master.Encargado;
-import com.pe.ttk.admision.entity.master.Estado;
+import com.pe.ttk.admision.entity.master.EstadoOferta;
 import lombok.*;
 
 import javax.persistence.*;
@@ -37,7 +37,7 @@ public class OfertaEntity implements Serializable{
 
     @ManyToOne(fetch = FetchType.EAGER )
     @JoinColumn(name ="fk_estado", referencedColumnName = "id")
-    private Estado estadoOferta;
+    private EstadoOferta estadoOferta;
 
 
     @ManyToOne(fetch = FetchType.EAGER )
