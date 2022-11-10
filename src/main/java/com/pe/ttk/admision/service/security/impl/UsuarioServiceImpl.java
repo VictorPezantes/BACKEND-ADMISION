@@ -162,15 +162,17 @@ public class UsuarioServiceImpl implements UsuarioService {
 		usuario.setRoles(roles);
 		usuario.setEstado(Constantes.ESTADO_ACTIVO);
 
-		if(!foto.isEmpty()){
-			String nombreFoto = usuario.getNombreUsuario()+Constantes.AVATAR+"."+ FilenameUtils.getExtension(foto.getOriginalFilename());
-			guardarArchivos.guardarArchivo(foto, nombreFoto, "archivos/Empleado");
-			usuario.setFotografia(nombreFoto);
+		if(foto != null){
+			if(!foto.isEmpty()){
+				String nombreFoto = usuario.getNombreUsuario()+Constantes.AVATAR+"."+ FilenameUtils.getExtension(foto.getOriginalFilename());
+				guardarArchivos.guardarArchivo(foto, nombreFoto, "archivos/Empleado");
+				usuario.setFotografia(nombreFoto);
+			}
 		}
 
 		usuarioRepository.save(usuario);
 
-		return new Mensaje("Usuario registrado correctamente",false);
+		return new Mensaje("Usuario registrado correctamente",true);
 	}
 
 }
