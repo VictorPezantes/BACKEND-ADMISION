@@ -23,7 +23,7 @@ public interface PostulanteService {
     PostulanteDto findByDni(String dni);
 
     Mensaje registrarPostulante(PostulanteDto postulanteDto, MultipartFile cv, MultipartFile dniF, MultipartFile dniP, MultipartFile foto);
-    void  UpdatePostulante(PostulanteEntity postulanteEntity, PostulanteDto postulanteDto, MultipartFile dnifrontal, MultipartFile dniposterior, MultipartFile foto);
+    Mensaje UpdatePostulante(PostulanteDto postulanteDto, MultipartFile dnifrontal, MultipartFile dniposterior, MultipartFile foto,MultipartFile curriculum);
 
     void delete(int id);
     Optional<PostulanteEntity> getOne(int id);

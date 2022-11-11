@@ -105,10 +105,15 @@ public class GuardarArchivos {
     public void actualizarArchivo( MultipartFile dnifrontal, MultipartFile dniposterior, MultipartFile foto){
 
         try {
-
-            Files.copy(dnifrontal.getInputStream(), this.rootFolder.resolve(dnifrontal.getOriginalFilename()));
-            Files.copy(dniposterior.getInputStream(), this.rootFolder.resolve(dniposterior.getOriginalFilename()));
-            Files.copy(foto.getInputStream(), this.rootFolder.resolve(foto.getOriginalFilename()));
+            if(dnifrontal != null){
+                Files.copy(dnifrontal.getInputStream(), this.rootFolder.resolve(dnifrontal.getOriginalFilename()));
+            }
+            if(dniposterior != null){
+                Files.copy(dniposterior.getInputStream(), this.rootFolder.resolve(dniposterior.getOriginalFilename()));
+            }
+            if(foto != null){
+                Files.copy(foto.getInputStream(), this.rootFolder.resolve(foto.getOriginalFilename()));
+            }
         }catch(IOException e){
             logger.error(e.getMessage());
         }

@@ -235,27 +235,103 @@ public class PostulanteServiceImpl implements PostulanteService {
     }
 
     @Override
-    public void UpdatePostulante(PostulanteEntity postulanteEntity, PostulanteDto postulanteDto, MultipartFile dnifrontal, MultipartFile dniposterior, MultipartFile foto) {
+    public Mensaje UpdatePostulante(PostulanteDto postulanteDto, MultipartFile dnifrontal, MultipartFile dniposterior, MultipartFile foto,MultipartFile curriculum) {
 
+        PostulanteEntity postulanteEntity = postulanteRepository.getOne(postulanteDto.getId());
+        if(postulanteEntity == null){
+            return new Mensaje("No se encontró postulante",false);
+        }
         guardarArchivos.actualizarArchivo(dnifrontal, dniposterior, foto);
-        postulanteEntity.setCelularFamiliar(postulanteDto.getCelularFamiliar());
-        /*postulanteEntity.setCelularPrincipal(postulanteDto.getCelularPrincipal());
-        postulanteEntity.setDepartamento(postulanteDto.getDepartamento());
-        postulanteEntity.setDistrito(postulanteDto.getDistrito());
-        postulanteEntity.setProvincia(postulanteDto.getProvincia());
-        postulanteEntity.setDniFrontal(dnifrontal.getOriginalFilename());
-        postulanteEntity.setDniPosterior(dniposterior.getOriginalFilename());
-        postulanteEntity.setFotografia(foto.getOriginalFilename());
-        postulanteEntity.setEmailPrincipal(postulanteDto.getEmailPrincipal());
-        postulanteEntity.setDireccionPrincipal(postulanteDto.getDireccionPrincipal());
-        postulanteEntity.setEstadoCivil(postulanteDto.getEstadoCivil());
-        postulanteEntity.setEstadoPostulacion(postulanteDto.getEstadoPostulacion());
-        postulanteEntity.setFotografia(postulanteDto.getFotografia());
-        postulanteEntity.setTelefonoFijo(postulanteDto.getTelefonoFijo());
-        postulanteEntity.setSubEstadoPostulacion(postulanteDto.getSubEstadoPostulacion());
-        postulanteEntity.setResponsableAsignado(postulanteDto.getResponsableAsignado());
-        postulanteEntity.setProcedencia(postulanteDto.getProcedencia());
-        postulanteRepository.save(postulanteEntity);*/
+        if(postulanteDto.getApellidoPaterno() != null){
+            postulanteEntity.setApellidoPaterno(postulanteDto.getApellidoPaterno());
+        }
+        if(postulanteDto.getApellidoMaterno() != null){
+            postulanteEntity.setApellidoMaterno(postulanteDto.getApellidoMaterno());
+        }
+        if(postulanteDto.getCelularFamiliar() != null){
+            postulanteEntity.setCelularFamiliar(postulanteDto.getCelularFamiliar());
+        }
+        if(postulanteDto.getCelular() != null){
+            postulanteEntity.setCelular(postulanteDto.getCelular());
+        }
+        if(postulanteDto.getIdDepartamento() != null){
+            postulanteEntity.setIdDepartamento(postulanteDto.getIdDepartamento());
+        }
+        if(postulanteDto.getIdDistrito() != null){
+            postulanteEntity.setIdDistrito(postulanteDto.getIdDistrito());
+        }
+        if(postulanteDto.getIdProvincia() != null){
+            postulanteEntity.setIdProvincia(postulanteDto.getIdProvincia());
+        }
+        if(dnifrontal != null){
+            if(!dnifrontal.isEmpty()){
+                postulanteEntity.setDniFrontal(dnifrontal.getOriginalFilename());
+            }
+        }
+        if(dniposterior != null){
+            if(!dniposterior.isEmpty()){
+                postulanteEntity.setDniPosterior(dniposterior.getOriginalFilename());
+            }
+        }
+        if(foto != null){
+            if(!foto.isEmpty()){
+                postulanteEntity.setFoto(foto.getOriginalFilename());
+            }
+        }
+
+        if(curriculum != null){
+            if(!curriculum.isEmpty()){
+                String nombre = postulanteEntity.getDni()+Constantes.CURRICULUM+"."+FilenameUtils.getExtension(curriculum.getOriginalFilename());
+                guardarArchivos.guardarArchivo(curriculum, nombre);
+                postulanteEntity.setCurriculum(nombre);
+            }
+        }
+        if(postulanteDto.getDireccion() != null){
+            postulanteEntity.setDireccion(postulanteDto.getDireccion());
+        }
+        if(postulanteDto.getDisponibilidadViajar() != null){
+            postulanteEntity.setDisponibilidadViajar(postulanteDto.getDisponibilidadViajar());
+        }
+        if(postulanteDto.getEmail() != null){
+            postulanteEntity.setEmail(postulanteDto.getEmail());
+        }
+        if(postulanteDto.getEmailSecundario() != null){
+            postulanteEntity.setEmailSecundario(postulanteDto.getEmailSecundario());
+        }
+        if(postulanteDto.getEmpresaCurso() != null){
+            postulanteEntity.setEmpresaCurso(postulanteDto.getEmpresaCurso());
+        }
+        if(postulanteDto.getEmpresaTrabajoReciente() != null){
+            postulanteEntity.setEmpresaTrabajoReciente(postulanteDto.getEmpresaTrabajoReciente());
+        }
+        if(postulanteDto.getExperienciaRubro() != null){
+            postulanteEntity.setExperienciaRubro(postulanteDto.getExperienciaRubro());
+        }
+        if(postulanteDto.getFechaIngresoTrabajoReciente() != null){
+            postulanteEntity.setFechaIngresoTrabajoReciente(postulanteDto.getFechaIngresoTrabajoReciente());
+        }
+        if(postulanteDto.getFechaNacimiento() != null){
+            postulanteEntity.setFechaNacimiento(postulanteDto.getFechaNacimiento());
+        }
+        if(postulanteDto.getFechaPostulacion() != null){
+            postulanteEntity.setFechaPostulacion(postulanteDto.getFechaPostulacion());
+        }
+        if(postulanteDto.getFechaSalidaTrabajoReciente() != null){
+            postulanteEntity.setFechaSalidaTrabajoReciente(postulanteDto.getFechaSalidaTrabajoReciente());
+        }
+        if(postulanteDto.getIdOferta() != null){
+            Optional<OfertaEntity> ofertaOp = ofertaRepository.findById(postulanteDto.getIdOferta());
+            if(ofertaOp.isPresent()){
+                postulanteEntity.setOferta(ofertaOp.get());
+            }
+        }
+        if(postulanteDto.getEstadoPostulanteId() != null){
+            Optional<EstadoPostulante> estadoPostulante = estadoPostulanteRepository.findById(postulanteDto.getEstadoPostulanteId());
+            if(estadoPostulante.isPresent()){
+                postulanteEntity.setEstadoPostulante(estadoPostulante.get());
+            }
+        }
+        return new Mensaje("datos de postulante actualizados",true);
     }
 
     public void delete(int id) {

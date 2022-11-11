@@ -3,6 +3,8 @@ package com.pe.ttk.admision.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pe.ttk.admision.util.Constantes;
 import lombok.*;
+
+import javax.validation.constraints.Email;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,6 +34,7 @@ public class PostulanteDto {
     private String celular;
     private String celularFamiliar;
     private String telefonoFijo;
+    @Email
     private String email;
     private String emailSecundario;
     private String profesion;
@@ -99,11 +102,6 @@ public class PostulanteDto {
         if(celular != null && celular.length() <= Constantes.LONGITUD_CELULAR_MINIMA) {
             validaciones.add("Cantidad de dígitos tiene que ser mayor a "+Constantes.LONGITUD_CELULAR_MINIMA);
         }
-        //email
-        String emailPattern = "^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@" +
-                "[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$";
-        Pattern pattern = Pattern.compile(emailPattern);
-
         return validaciones;
     }
 }

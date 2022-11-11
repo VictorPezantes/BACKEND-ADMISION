@@ -143,19 +143,25 @@ public class PostulanteController {
         }
     }
 
-    @ApiOperation("Actualizar distintos campos de un postulante")
+    @ApiOperation("Actualizar archivos de un postulante")
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/actualizar/")
-    public ResponseEntity<?> actualizarPostulante(@RequestParam("id") int id,
+    @PutMapping("/actualizar-archivos")
+    public ResponseEntity<?> actualizarPostulante(@RequestParam(name = "postulanteId") Long postulanteId,
                                                   @RequestParam(name = "dnifrontal", required = false) MultipartFile dnifrontal,
                                                   @RequestParam(name = "foto", required = false) MultipartFile foto,
                                                   @RequestParam(name = "dniposterior", required = false) MultipartFile dniposterior,
-                                                  PostulanteDto postulanteDto) {
-
-        PostulanteEntity postulanteEntity = postulanteService.getOne(id).get();
-        postulanteService.UpdatePostulante(postulanteEntity, postulanteDto, dnifrontal, dniposterior, foto);
+                                                  @RequestParam(name = "curriculum", required = false) MultipartFile curriculum) {
+        PostulanteDto postulanteDto = new PostulanteDto();
+        postulanteDto.setId(postulanteId);
+        postulanteService.UpdatePostulante(postulanteDto, dnifrontal, dniposterior, foto,curriculum);
 
         return new ResponseEntity(new Mensaje("Datos del postulante actualizados correctamente",true), HttpStatus.ACCEPTED);
+    }
+    @ApiOperation("Actualizar distintos campos de un postulante")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/actualizar-data")
+    public ResponseEntity<?> actualizarPostulante(@RequestBody PostulanteDto postulanteDto) {
+        return new ResponseEntity(postulanteService.UpdatePostulante(postulanteDto, null, null, null,null), HttpStatus.ACCEPTED);
     }
 
 
