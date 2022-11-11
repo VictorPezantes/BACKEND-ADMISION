@@ -84,15 +84,14 @@ public class PostulanteController {
                                                  @RequestParam(name = "motivoSalidaTrabajoReciente", required = false) String motivoSalidaTrabajoReciente,
                                                  @RequestParam(name = "disponibilidadViajar") Integer disponibilidadViajar,
                                                  @RequestParam(name = "experienciaRubro") Integer experienciaRubro,
-                                                 @RequestParam(name = "estadoPostulacion", required = false) Integer estadoPostulacion,
+                                                 @RequestParam(name = "estadoPostulanteId", required = false) Integer estadoPostulanteId,
                                                  @RequestParam(name = "procedencia", required = false) String procedencia,
                                                  @RequestParam(name = "idOferta", required = false) Long idOferta,
                                                  @RequestParam(name = "ofertaPostulada", required = false) String ofertaPostulada,
                                                  @RequestParam(name = "urlCurriculumVitae", required = false) String urlCurriculumVitae,
                                                  @RequestParam(name = "urlDniFrontal", required = false) String urlDniFrontal,
                                                  @RequestParam(name = "urlDniPosterior", required = false) String urlDniPosterior,
-                                                 @RequestParam(name = "urlFotografia", required = false) String urlFotografia,
-                                                 @RequestParam(name = "estado", required = false) Integer estado) throws JsonProcessingException {
+                                                 @RequestParam(name = "urlFotografia", required = false) String urlFotografia) throws JsonProcessingException {
         PostulanteDto postulanteDto = new PostulanteDto();
         postulanteDto.setPrimerNombre(primerNombre);
         postulanteDto.setSegundoNombre(segundoNombre);
@@ -121,7 +120,7 @@ public class PostulanteController {
         postulanteDto.setMotivoSalidaTrabajoReciente(motivoSalidaTrabajoReciente);
         postulanteDto.setDisponibilidadViajar(disponibilidadViajar);
         postulanteDto.setExperienciaRubro(experienciaRubro);
-        postulanteDto.setEstadoPostulacion(estadoPostulacion);
+        postulanteDto.setEstadoPostulanteId(estadoPostulanteId);
         postulanteDto.setFechaPostulacion(new Date(System.currentTimeMillis()));
         postulanteDto.setProcedencia(procedencia);
         postulanteDto.setIdOferta(idOferta);
@@ -130,7 +129,6 @@ public class PostulanteController {
         postulanteDto.setUrlDniFrontal(urlDniFrontal);
         postulanteDto.setUrlDniPosterior(urlDniPosterior);
         postulanteDto.setUrlFotografia(urlFotografia);
-        postulanteDto.setEstadoPostulanteId(estado);
         List<String> validaciones = postulanteDto.Validar();
         /*if (bindingResult.hasErrors())
             return ResponseEntity.badRequest().body(new Mensaje("Por favor ingrese los campos correctamente"));*/

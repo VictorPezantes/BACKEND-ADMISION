@@ -231,7 +231,7 @@ public class PostulanteServiceImpl implements PostulanteService {
         registrarHistorial(postulanteEntity, edad, mensaje);
 
         emailService.enviarEmailPostulante(postulanteDto.getEmail(), mensaje, asunto, postulanteDto.getPrimerNombre());
-        return new Mensaje("Postulante registrado correctamente",false);
+        return new Mensaje("Postulante registrado correctamente",true);
     }
 
     @Override

@@ -156,12 +156,19 @@ public class PostulanteMapperImpl implements PostulanteMapper {
         postulanteEntity.setExperienciaRubro( postulanteDto.getExperienciaRubro() );
         postulanteEntity.setFechaPostulacion( postulanteDto.getFechaPostulacion() );
         postulanteEntity.setProcedencia( postulanteDto.getProcedencia() );
-        OfertaEntity ofertaEntity = new OfertaEntity();
-        ofertaEntity.setId( postulanteDto.getIdOferta());
-        postulanteEntity.setOferta( ofertaEntity );
-        EstadoPostulante estadoPostulante = new EstadoPostulante();
-        estadoPostulante.setId(postulanteDto.getEstadoPostulanteId());
-        postulanteEntity.setEstadoPostulante(  estadoPostulante);
+        if(postulanteDto.getIdOferta()!= null ){
+
+            OfertaEntity ofertaEntity = new OfertaEntity();
+            ofertaEntity.setId( postulanteDto.getIdOferta());
+            postulanteEntity.setOferta( ofertaEntity );
+        }
+
+        if(postulanteDto.getEstadoPostulanteId()!= null){
+
+            EstadoPostulante estadoPostulante = new EstadoPostulante();
+            estadoPostulante.setId(postulanteDto.getEstadoPostulanteId());
+            postulanteEntity.setEstadoPostulante(  estadoPostulante);
+        }
 
         return postulanteEntity;
     }

@@ -103,23 +103,7 @@ public class PostulanteDto {
         String emailPattern = "^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@" +
                 "[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$";
         Pattern pattern = Pattern.compile(emailPattern);
-        if (email != null) {
-            Matcher matcher = pattern.matcher(email);
-            if (!matcher.matches()) {
-                validaciones.add("Email no válido");
-            }
-        }else {
-            validaciones.add("Email no ingresado");
-        }
-        if (emailSecundario != null) {
-            Matcher matcher = pattern.matcher(emailSecundario);
-            if (!matcher.matches()) {
-                validaciones.add("Email Secundario no válido");
-            }
-            else {
-                validaciones.add("Email no ingresado");
-            }
-        }
+
         return validaciones;
     }
 }
