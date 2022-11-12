@@ -74,6 +74,12 @@ public class PostulanteDto {
     private Date fechaProgramadaExamen;
     private Integer tipoExamenId;
     private String tipoExamenNombre;
+    private String sexo;
+    private String nacionalidad;
+    private Boolean sabeNadar;
+    private Date fechaMatrimonio;
+    private String lugarNacimiento;
+    private String grupoSanguineo;
     public List<String> Validar()
     {
         List<String> validaciones = new ArrayList<String>();

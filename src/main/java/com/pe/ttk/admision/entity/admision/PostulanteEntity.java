@@ -171,4 +171,10 @@ public class PostulanteEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "subEstadoId", referencedColumnName = "id")
     private SubEstado subEstado;
+    private String sexo;
+    private String nacionalidad;
+    private Boolean sabeNadar;
+    private Date fechaMatrimonio;
+    private String lugarNacimiento;
+    private String grupoSanguineo;
 }

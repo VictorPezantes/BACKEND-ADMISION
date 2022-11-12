@@ -53,7 +53,12 @@ public class PostulanteMapperImpl implements PostulanteMapper {
             postulanteDto.setEstadoPostulanteId( postulanteEntity.getEstadoPostulante().getId() );
             postulanteDto.setEstadoPostulanteNombre( postulanteEntity.getEstadoPostulante().getEstadoPostulanteNombre().toString());
         }
-
+        postulanteDto.setSexo(postulanteEntity.getSexo());
+        postulanteDto.setNacionalidad(postulanteEntity.getNacionalidad());
+        postulanteDto.setGrupoSanguineo(postulanteEntity.getGrupoSanguineo());
+        postulanteDto.setSabeNadar(postulanteEntity.getSabeNadar());
+        postulanteDto.setFechaMatrimonio(postulanteEntity.getFechaMatrimonio());
+        postulanteDto.setLugarNacimiento(postulanteEntity.getLugarNacimiento());
 
         return postulanteDto;
     }
@@ -115,6 +120,12 @@ public class PostulanteMapperImpl implements PostulanteMapper {
         postulanteDto.setTipoExamenNombre( postulanteEntityExt.getTipoExamenNombre());
         postulanteDto.setEstadoPostulanteId( postulanteEntityExt.getEstadoPostulanteId() );
         postulanteDto.setEstadoPostulanteNombre( postulanteEntityExt.getEstadoPostulanteNombre());
+        postulanteDto.setSexo(postulanteEntityExt.getSexo());
+        postulanteDto.setNacionalidad(postulanteEntityExt.getNacionalidad());
+        postulanteDto.setGrupoSanguineo(postulanteEntityExt.getGrupoSanguineo());
+        postulanteDto.setSabeNadar(postulanteEntityExt.getSabeNadar());
+        postulanteDto.setFechaMatrimonio(postulanteEntityExt.getFechaMatrimonio());
+        postulanteDto.setLugarNacimiento(postulanteEntityExt.getLugarNacimiento());
         return postulanteDto;
     }
 
@@ -169,6 +180,12 @@ public class PostulanteMapperImpl implements PostulanteMapper {
             estadoPostulante.setId(postulanteDto.getEstadoPostulanteId());
             postulanteEntity.setEstadoPostulante(  estadoPostulante);
         }
+        postulanteDto.setSexo(postulanteDto.getSexo());
+        postulanteDto.setNacionalidad(postulanteDto.getNacionalidad());
+        postulanteDto.setGrupoSanguineo(postulanteDto.getGrupoSanguineo());
+        postulanteDto.setSabeNadar(postulanteDto.getSabeNadar());
+        postulanteDto.setFechaMatrimonio(postulanteDto.getFechaMatrimonio());
+        postulanteDto.setLugarNacimiento(postulanteDto.getLugarNacimiento());
 
         return postulanteEntity;
     }

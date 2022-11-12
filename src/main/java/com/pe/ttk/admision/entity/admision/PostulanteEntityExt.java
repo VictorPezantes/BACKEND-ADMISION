@@ -108,6 +108,12 @@ public class PostulanteEntityExt {
     private Date fechaProgramadaExamen;
     private Integer tipoExamenId;
     private String tipoExamenNombre;
+    private String sexo;
+    private String nacionalidad;
+    private Boolean sabeNadar;
+    private Date fechaMatrimonio;
+    private String lugarNacimiento;
+    private String grupoSanguineo;
     public PostulanteEntityExt(PostulanteEntity postulanteEntity, String distrito,String provincia, String departamento, ExamenEntity examen,Encargado encargadoBd) {
         id = postulanteEntity.getId();
         primerNombre = postulanteEntity.getPrimerNombre();
@@ -166,6 +172,12 @@ public class PostulanteEntityExt {
             estadoPostulanteNombre = postulanteEntity.getEstadoPostulante().getEstadoPostulanteNombre().toString();
             estadoPostulanteId = postulanteEntity.getEstadoPostulante().getId();
         }
+        sexo = postulanteEntity.getSexo();
+        nacionalidad = postulanteEntity.getNacionalidad();
+        grupoSanguineo = postulanteEntity.getGrupoSanguineo();
+        sabeNadar = postulanteEntity.getSabeNadar();
+        fechaMatrimonio = postulanteEntity.getFechaMatrimonio();
+        lugarNacimiento = postulanteEntity.getLugarNacimiento();
     }
     public PostulanteEntityExt(PostulanteEntity postulanteEntity, String distrito,String provincia, String departamento) {
         id = postulanteEntity.getId();
@@ -205,5 +217,11 @@ public class PostulanteEntityExt {
         distritoDescripcion =distrito;
         provinciaDescripcion =provincia;
         departamentoDescripcion=departamento;
+        sexo = postulanteEntity.getSexo();
+        nacionalidad = postulanteEntity.getNacionalidad();
+        grupoSanguineo = postulanteEntity.getGrupoSanguineo();
+        sabeNadar = postulanteEntity.getSabeNadar();
+        fechaMatrimonio = postulanteEntity.getFechaMatrimonio();
+        lugarNacimiento = postulanteEntity.getLugarNacimiento();
     }
 }

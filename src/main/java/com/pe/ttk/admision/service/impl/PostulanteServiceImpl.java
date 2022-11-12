@@ -353,6 +353,24 @@ public class PostulanteServiceImpl implements PostulanteService {
                 }
             }
         }
+        if(postulanteDto.getSexo() != null){
+            postulanteEntity.setSexo(postulanteDto.getSexo());
+        }
+        if(postulanteDto.getNacionalidad() != null){
+            postulanteEntity.setNacionalidad(postulanteDto.getNacionalidad());
+        }
+        if(postulanteDto.getGrupoSanguineo() != null){
+            postulanteEntity.setGrupoSanguineo(postulanteDto.getGrupoSanguineo());
+        }
+        if(postulanteDto.getSabeNadar() != null){
+            postulanteEntity.setSabeNadar(postulanteDto.getSabeNadar());
+        }
+        if(postulanteDto.getFechaMatrimonio() != null){
+            postulanteEntity.setFechaMatrimonio(postulanteDto.getFechaMatrimonio());
+        }
+        if(postulanteDto.getLugarNacimiento() != null){
+            postulanteEntity.setLugarNacimiento(postulanteDto.getLugarNacimiento());
+        }
         return new Mensaje("datos de postulante actualizados",true);
     }
 

@@ -43,6 +43,9 @@ public class CreateMasters implements CommandLineRunner {
     @Autowired
     EstadoOfertaService estadoOfertaService;
 
+    @Autowired
+    ParentescoService parentescoService;
+
     @Override
     public void run(String... args) throws Exception {
 
@@ -194,6 +197,31 @@ public class CreateMasters implements CommandLineRunner {
             EstadoOferta estadoOfertaDesactivado = new EstadoOferta(EstadoOfertaNombre.DESACTIVADO);
             estadoOfertaService.save(estadoOfertaDesactivado);
         }
-
+        //parentescos
+        Optional<ParentescoNombre> parentescoNombreHijo = parentescoService.findAllByParentescoNombre(ParentescoNombre.HIJO);
+        if(parentescoNombreHijo.isEmpty()){
+            Parentesco parentescoHijo = new Parentesco(ParentescoNombre.HIJO);
+            parentescoService.save(parentescoHijo);
+        }
+        Optional<ParentescoNombre> parentescoNombrePareja = parentescoService.findAllByParentescoNombre(ParentescoNombre.PAREJA);
+        if(parentescoNombrePareja.isEmpty()){
+            Parentesco parentescoPareja = new Parentesco(ParentescoNombre.PAREJA);
+            parentescoService.save(parentescoPareja);
+        }
+        Optional<ParentescoNombre> parentescoNombrePadre = parentescoService.findAllByParentescoNombre(ParentescoNombre.PADRE);
+        if(parentescoNombrePadre.isEmpty()){
+            Parentesco parentescoPadre = new Parentesco(ParentescoNombre.PADRE);
+            parentescoService.save(parentescoPadre);
+        }
+        Optional<ParentescoNombre> parentescoNombreHermano = parentescoService.findAllByParentescoNombre(ParentescoNombre.HERMANO);
+        if(parentescoNombreHermano.isEmpty()){
+            Parentesco parentescoHermano = new Parentesco(ParentescoNombre.HERMANO);
+            parentescoService.save(parentescoHermano);
+        }
+        Optional<ParentescoNombre> parentescoNombreSuegro = parentescoService.findAllByParentescoNombre(ParentescoNombre.SUEGRO);
+        if(parentescoNombreSuegro.isEmpty()){
+            Parentesco parentescoSuegro = new Parentesco(ParentescoNombre.SUEGRO);
+            parentescoService.save(parentescoSuegro);
+        }
     }
 }
