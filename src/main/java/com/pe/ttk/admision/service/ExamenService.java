@@ -3,11 +3,13 @@ package com.pe.ttk.admision.service;
 import com.pe.ttk.admision.dto.ExamenActDto;
 import com.pe.ttk.admision.dto.ExamenDto;
 import com.pe.ttk.admision.dto.Mensaje;
+import com.pe.ttk.admision.entity.admision.ExamenEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public interface ExamenService {
     Mensaje registrarExamen(ExamenDto examenDto);

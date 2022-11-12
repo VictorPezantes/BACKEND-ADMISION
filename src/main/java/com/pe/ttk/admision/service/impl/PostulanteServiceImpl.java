@@ -3,17 +3,18 @@ package com.pe.ttk.admision.service.impl;
 import com.pe.ttk.admision.dto.Mensaje;
 import com.pe.ttk.admision.dto.MensajeData;
 import com.pe.ttk.admision.dto.PostulanteDto;
+import com.pe.ttk.admision.entity.admision.ExamenEntity;
 import com.pe.ttk.admision.entity.admision.OfertaEntity;
 import com.pe.ttk.admision.entity.admision.PostulanteEntity;
 import com.pe.ttk.admision.entity.admision.PostulanteEntityExt;
 import com.pe.ttk.admision.entity.master.EstadoPostulante;
 import com.pe.ttk.admision.entity.master.HistorialEntity;
+import com.pe.ttk.admision.entity.master.SubEstado;
 import com.pe.ttk.admision.enums.EstadoPostulanteNombre;
-import com.pe.ttk.admision.repository.EstadoPostulanteRepository;
-import com.pe.ttk.admision.repository.HistorialRepository;
-import com.pe.ttk.admision.repository.OfertaRepository;
-import com.pe.ttk.admision.repository.PostulanteRepository;
+import com.pe.ttk.admision.enums.SubEstadoNombre;
+import com.pe.ttk.admision.repository.*;
 import com.pe.ttk.admision.service.ArchivoService;
+import com.pe.ttk.admision.service.ExamenService;
 import com.pe.ttk.admision.service.security.EmailService;
 import com.pe.ttk.admision.service.PostulanteService;
 import com.pe.ttk.admision.util.Constantes;
@@ -47,6 +48,12 @@ public class PostulanteServiceImpl implements PostulanteService {
 
     @Autowired
     ArchivoService archivoService;
+
+    @Autowired
+    ExamenRepository examenRepository;
+
+    @Autowired
+    SubEstadoRepository subEstadoRepository;
 
 
     private Date fechaNacimiento;
@@ -332,6 +339,18 @@ public class PostulanteServiceImpl implements PostulanteService {
             Optional<EstadoPostulante> estadoPostulante = estadoPostulanteRepository.findById(postulanteDto.getEstadoPostulanteId());
             if(estadoPostulante.isPresent()){
                 postulanteEntity.setEstadoPostulante(estadoPostulante.get());
+                if(estadoPostulante.get().getEstadoPostulanteNombre() == EstadoPostulanteNombre.FUERA_DEL_PROCESO){
+                    ExamenEntity examenEntity = examenRepository.findByPostulante_Id(postulanteDto.getId());
+                    if(examenEntity != null){
+                        if(examenEntity.getSubEstado() != null){
+                            Optional<SubEstado> subEstado = subEstadoRepository.findById(SubEstadoNombre.CANCELADO.getValue());
+                            if(subEstado.isPresent()){
+                                examenEntity.setSubEstado(subEstado.get());
+                                postulanteEntity.setSubEstado(subEstado.get());
+                            }
+                        }
+                    }
+                }
             }
         }
         return new Mensaje("datos de postulante actualizados",true);
