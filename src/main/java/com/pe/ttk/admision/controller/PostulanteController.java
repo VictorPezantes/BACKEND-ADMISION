@@ -3,7 +3,6 @@ package com.pe.ttk.admision.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.pe.ttk.admision.dto.Mensaje;
 import com.pe.ttk.admision.dto.PostulanteDto;
-import com.pe.ttk.admision.entity.admision.PostulanteEntity;
 import com.pe.ttk.admision.service.PostulanteService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,13 +35,13 @@ public class PostulanteController {
     @GetMapping("/listarFiltro")
     public ResponseEntity<?> listarPostulanteExamen(@RequestParam(defaultValue = "0") Integer numPagina,
                                                     @RequestParam(defaultValue = "10") Integer tamPagina,
-                                                    @RequestParam(required = false) Integer estado,
+                                                    @RequestParam(required = false) Integer estadoPostulanteId,
                                                     @RequestParam(required = false) Integer subEstadoExamen,
                                                     @RequestParam(required = false) Date fechaInformeMedico,
                                                     @RequestParam(required = false) Date fechaProgramada,
                                                     @RequestParam(required = false) String filtro) {
         try {
-            return ResponseEntity.ok(postulanteService.listarPostulanteFiltro(numPagina, tamPagina,estado,subEstadoExamen,fechaInformeMedico,fechaProgramada,filtro));
+            return ResponseEntity.ok(postulanteService.listarPostulanteFiltro(numPagina, tamPagina, estadoPostulanteId,subEstadoExamen,fechaInformeMedico,fechaProgramada,filtro));
         }
         catch (Exception e) {
             e.printStackTrace();

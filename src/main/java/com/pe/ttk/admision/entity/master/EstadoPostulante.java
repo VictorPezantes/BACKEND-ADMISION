@@ -1,7 +1,6 @@
 package com.pe.ttk.admision.entity.master;
 
 import com.pe.ttk.admision.enums.EstadoPostulanteNombre;
-import com.pe.ttk.admision.enums.EstadoResultadoExamenNombre;
 import lombok.*;
 
 import javax.persistence.*;
@@ -9,6 +8,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
+@Table(name = "estado_postulante")
 public class EstadoPostulante {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

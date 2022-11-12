@@ -355,10 +355,10 @@ public class PostulanteServiceImpl implements PostulanteService {
     }
 
     @Override
-    public Page<PostulanteDto> listarPostulanteFiltro(Integer numPagina, Integer tamPagina, Integer estado, Integer subEstadoExamen, Date fechaInformeMedico, Date fechaProgramada, String filtro) {
+    public Page<PostulanteDto> listarPostulanteFiltro(Integer numPagina, Integer tamPagina, Integer estadoPostulanteId, Integer subEstadoExamen, Date fechaInformeMedico, Date fechaProgramada, String filtro) {
         Pageable pageable = PageRequest.of(numPagina, tamPagina);
         try{
-            List<PostulanteEntityExt> lista = postulanteRepository.findPostulanteFiltro(subEstadoExamen,fechaInformeMedico,fechaProgramada,filtro,pageable);
+            List<PostulanteEntityExt> lista = postulanteRepository.findPostulanteFiltro(subEstadoExamen,fechaInformeMedico,fechaProgramada,filtro,estadoPostulanteId, pageable);
             List<PostulanteDto> listaPostulante = lista.stream().map(PostulanteMapperImpl.INSTANCE::toPostulanteFromExtityExt).collect(Collectors.toList());
             if(!lista.isEmpty()){
                 return new PageImpl<>(listaPostulante, pageable, lista.size());
