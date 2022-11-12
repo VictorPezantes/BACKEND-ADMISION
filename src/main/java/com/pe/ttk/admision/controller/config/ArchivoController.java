@@ -11,14 +11,21 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/archivo")
 public class ArchivoController {
 
-    @Autowired
-    ArchivoService archivoService;
+  /*  @Autowired
+    ArchivoService archivoService;*/
 
-    @ApiOperation("obtenerImagen")
+    /*@ApiOperation("obtenerImagen")
     @GetMapping("/obtenerFotoPostulante")
-    public ResponseEntity<?> registrarUsuario(@RequestParam Long postulanteId)
+    public ResponseEntity<?> obtenerFotoPostulante(@RequestParam Long postulanteId)
     {
 
-        return ResponseEntity.status(HttpStatus.OK).body(archivoService.obtenerFotoPostulante(postulanteId));
+        return ResponseEntity.status(HttpStatus.OK).body(archivoService.obtenerFotoPostulanteBase64(postulanteId));
     }
+    @ApiOperation("obtenerImagen")
+    @GetMapping("/obtenerCVPostulante")
+    public ResponseEntity<?> obtenerCurriculumPostulante(@RequestParam Long postulanteId)
+    {
+
+        return ResponseEntity.status(HttpStatus.OK).body(archivoService.obtenerCurriculumPostulanteBase64(postulanteId));
+    }*/
 }

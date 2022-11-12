@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.mail.util.ByteArrayDataSource;
 
 import com.pe.ttk.admision.dto.security.EmailValuesDto;
 import com.pe.ttk.admision.service.security.EmailService;
@@ -12,9 +13,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
@@ -101,6 +104,29 @@ public class EmailServiceImpl implements EmailService {
 			helper.setTo(toEmail);
 			helper.setSubject(asunto);
 			helper.setText(htmlText,true);
+			javaMailSender.send(message);
+
+		} catch (MessagingException e) {
+			logger.error(e.getMessage());
+		}
+	}
+
+	@Override
+	public void enviarEmail(String toEmail, String mensaje, String asunto, String nombre, byte[] archivo,String nombreArchivo) {
+		MimeMessage message = javaMailSender.createMimeMessage();
+		try {
+			MimeMessageHelper helper = new MimeMessageHelper(message,true);
+			Context context = new Context();
+			Map<String,Object> model = new HashMap<>();
+			model.put("nombre", nombre);
+			model.put("mensaje", mensaje);
+			context.setVariables(model);
+			String htmlText = templateEngine.process("email-examen", context);
+			helper.setFrom(fromEmail);
+			helper.setTo(toEmail);
+			helper.setSubject(asunto);
+			helper.setText(htmlText,true);
+			helper.addAttachment(nombreArchivo, new ByteArrayResource(archivo));
 			javaMailSender.send(message);
 
 		} catch (MessagingException e) {

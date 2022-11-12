@@ -30,7 +30,7 @@ public class PostulanteController {
                                                @RequestParam(defaultValue = "10") Integer tamPagina) {
         return ResponseEntity.ok(postulanteService.listarPostulantes(numPagina, tamPagina));
     }
-    @ApiOperation("Lista todos los postulantes que tienen no tienen examen")
+    @ApiOperation("Lista todos los postulantes con diferentes filtros")
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/listarFiltro")
     public ResponseEntity<?> listarPostulanteExamen(@RequestParam(defaultValue = "0") Integer numPagina,
@@ -165,5 +165,26 @@ public class PostulanteController {
         return new ResponseEntity(postulanteService.UpdatePostulante(postulanteDto, null, null, null,null), HttpStatus.ACCEPTED);
     }
 
+    @ApiOperation("obtener foto de postulante")
+    @GetMapping("/obtenerFotoPostulante")
+    public ResponseEntity<?> obtenerFotoPostulante(@RequestParam Long postulanteId)
+    {
+
+        return ResponseEntity.status(HttpStatus.OK).body(postulanteService.obtenerFotoPostulanteBase64(postulanteId));
+    }
+    @ApiOperation("obtener CV de postulante")
+    @GetMapping("/obtenerCVPostulante")
+    public ResponseEntity<?> obtenerCurriculumPostulante(@RequestParam Long postulanteId)
+    {
+
+        return ResponseEntity.status(HttpStatus.OK).body(postulanteService.obtenerCurriculumPostulanteBase64(postulanteId));
+    }
+    @ApiOperation("enviar cv a varios correos de postulante")
+    @PostMapping("/enviarCVPorCorreo")
+    public ResponseEntity<?> enviarCVPorCorreo(@RequestParam Long postulanteId,@RequestParam List<String> correos)
+    {
+
+        return ResponseEntity.status(HttpStatus.OK).body(postulanteService.enviarCVPorCorreo(postulanteId,correos));
+    }
 
 }

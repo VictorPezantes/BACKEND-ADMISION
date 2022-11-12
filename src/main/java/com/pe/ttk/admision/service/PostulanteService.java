@@ -1,6 +1,7 @@
 package com.pe.ttk.admision.service;
 
 import com.pe.ttk.admision.dto.Mensaje;
+import com.pe.ttk.admision.dto.MensajeData;
 import com.pe.ttk.admision.dto.PostulanteDto;
 import com.pe.ttk.admision.entity.admision.PostulanteEntity;
 import org.springframework.data.domain.Page;
@@ -30,4 +31,8 @@ public interface PostulanteService {
 
     Page<PostulanteDto> listarPostulantes(Integer numPagina, Integer tamPagina);
     Page<PostulanteDto> listarPostulanteFiltro(Integer numPagina, Integer tamPagina, Integer estado, Integer subEstadoExamen, Date fechaInformeMedico, Date fechaProgramada, String filtro, Long encargadoId,Long cargoId);
+    MensajeData<String> obtenerCurriculumPostulanteBase64(Long postulanteId);
+    MensajeData<byte[]> obtenerCurriculumPostulanteByte(Long postulanteId);
+    MensajeData<String> obtenerFotoPostulanteBase64(Long postulanteId);
+    Mensaje enviarCVPorCorreo(Long postulanteId, List<String> correos);
 }

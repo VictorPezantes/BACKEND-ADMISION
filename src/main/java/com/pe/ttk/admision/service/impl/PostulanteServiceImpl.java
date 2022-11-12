@@ -1,6 +1,7 @@
 package com.pe.ttk.admision.service.impl;
 
 import com.pe.ttk.admision.dto.Mensaje;
+import com.pe.ttk.admision.dto.MensajeData;
 import com.pe.ttk.admision.dto.PostulanteDto;
 import com.pe.ttk.admision.entity.admision.OfertaEntity;
 import com.pe.ttk.admision.entity.admision.PostulanteEntity;
@@ -12,11 +13,11 @@ import com.pe.ttk.admision.repository.EstadoPostulanteRepository;
 import com.pe.ttk.admision.repository.HistorialRepository;
 import com.pe.ttk.admision.repository.OfertaRepository;
 import com.pe.ttk.admision.repository.PostulanteRepository;
+import com.pe.ttk.admision.service.ArchivoService;
 import com.pe.ttk.admision.service.security.EmailService;
 import com.pe.ttk.admision.service.PostulanteService;
 import com.pe.ttk.admision.util.Constantes;
 import com.pe.ttk.admision.util.ConvertirFechas;
-import com.pe.ttk.admision.util.GuardarArchivos;
 import com.pe.ttk.admision.util.mapper.impl.PostulanteMapperImpl;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,12 +45,14 @@ public class PostulanteServiceImpl implements PostulanteService {
     @Autowired
     private HistorialRepository historialRepository;
 
+    @Autowired
+    ArchivoService archivoService;
+
 
     private Date fechaNacimiento;
     private Date fechaIngresoTrabajoReciente;
     private Date fechaSalidaTrabajoreciente;
     ConvertirFechas convertirFechas = new ConvertirFechas();
-    GuardarArchivos guardarArchivos = new GuardarArchivos();
 
     @Autowired
     EstadoPostulanteRepository estadoPostulanteRepository;
@@ -147,25 +150,25 @@ public class PostulanteServiceImpl implements PostulanteService {
         if(curriculum != null){
             if(!curriculum.isEmpty()){
                 nombreCurriculum = dni+Constantes.CURRICULUM+"."+FilenameUtils.getExtension(curriculum.getOriginalFilename());
-                guardarArchivos.guardarArchivo(curriculum, nombreCurriculum);
+                archivoService.guardarArchivo(curriculum, nombreCurriculum);
             }
         }
         if(dniFrontal != null){
             if(!dniFrontal.isEmpty()){
                 nombreDniFrontal = dni+Constantes.DNI_FRONTAL+"."+FilenameUtils.getExtension(dniFrontal.getOriginalFilename());
-                guardarArchivos.guardarArchivo(dniFrontal, nombreDniFrontal);
+                archivoService.guardarArchivo(dniFrontal, nombreDniFrontal);
             }
         }
         if(dniPosterior != null){
             if(!dniPosterior.isEmpty()){
                 nombreDniPosterior = dni+Constantes.DNI_POSTERIOR+"."+FilenameUtils.getExtension(dniPosterior.getOriginalFilename());
-                guardarArchivos.guardarArchivo(dniPosterior, nombreDniPosterior);
+                archivoService.guardarArchivo(dniPosterior, nombreDniPosterior);
             }
         }
         if(foto != null){
             if(!foto.isEmpty()){
                 nombreFoto = dni+Constantes.FOTO+"."+FilenameUtils.getExtension(foto.getOriginalFilename());
-                guardarArchivos.guardarArchivo(foto, nombreFoto);
+                archivoService.guardarArchivo(foto, nombreFoto);
             }
         }
 
@@ -241,7 +244,7 @@ public class PostulanteServiceImpl implements PostulanteService {
         if(postulanteEntity == null){
             return new Mensaje("No se encontró postulante",false);
         }
-        guardarArchivos.actualizarArchivo(dnifrontal, dniposterior, foto);
+        archivoService.actualizarArchivo(dnifrontal, dniposterior, foto);
         if(postulanteDto.getApellidoPaterno() != null){
             postulanteEntity.setApellidoPaterno(postulanteDto.getApellidoPaterno());
         }
@@ -282,7 +285,7 @@ public class PostulanteServiceImpl implements PostulanteService {
         if(curriculum != null){
             if(!curriculum.isEmpty()){
                 String nombre = postulanteEntity.getDni()+Constantes.CURRICULUM+"."+FilenameUtils.getExtension(curriculum.getOriginalFilename());
-                guardarArchivos.guardarArchivo(curriculum, nombre);
+                archivoService.guardarArchivo(curriculum, nombre);
                 postulanteEntity.setCurriculum(nombre);
             }
         }
@@ -367,6 +370,74 @@ public class PostulanteServiceImpl implements PostulanteService {
             System.out.println(ex);
         }
 
+        return null;
+    }
+
+    @Override
+    public MensajeData<String> obtenerCurriculumPostulanteBase64(Long postulanteId) {
+        MensajeData<String> data = new MensajeData<>();
+        try {
+            Optional<PostulanteEntity> postulanteEntity = postulanteRepository.findById(postulanteId);
+            if(postulanteEntity.isEmpty()) {
+                data.setExito(false);
+                data.setMensaje("Postulante no existe");
+                return data;
+            }
+            data = archivoService.obtenerArchivoBase64("archivos/Postulante/",postulanteEntity.get().getFoto());
+        }catch (Exception e) {
+            data.setExito(false);
+            data.setMensaje("Error: " + e.getMessage());
+        }
+
+        return data;
+    }
+
+    @Override
+    public MensajeData<byte[]> obtenerCurriculumPostulanteByte(Long postulanteId) {
+        MensajeData<byte[]> data = new MensajeData<>();
+        try {
+            Optional<PostulanteEntity> postulanteEntity = postulanteRepository.findById(postulanteId);
+            if(postulanteEntity.isEmpty()) {
+                data.setExito(false);
+                data.setMensaje("Postulante no existe");
+                return data;
+            }
+            data = archivoService.obtenerArchivoByteArray("archivos/Postulante/",postulanteEntity.get().getCurriculum());
+        }catch (Exception e) {
+            data.setExito(false);
+            data.setMensaje("Error: " + e.getMessage());
+        }
+
+        return data;
+    }
+
+
+    @Override
+    public MensajeData<String> obtenerFotoPostulanteBase64(Long postulanteId) {
+        MensajeData<String> data = new MensajeData<>();
+        try {
+            Optional<PostulanteEntity> postulanteEntity = postulanteRepository.findById(postulanteId);
+            if(postulanteEntity.isEmpty()) {
+                data.setExito(false);
+                data.setMensaje("Postulante no existe");
+                return data;
+            }
+            data = archivoService.obtenerArchivoBase64("archivos/Postulante/",postulanteEntity.get().getCurriculum());
+        }catch (Exception e) {
+            data.setExito(false);
+            data.setMensaje("Error: " + e.getMessage());
+        }
+
+        return data;
+    }
+
+    @Override
+    public Mensaje enviarCVPorCorreo(Long postulanteId, List<String> correos) {
+        Optional<PostulanteEntity> postulanteEntity = postulanteRepository.findById(postulanteId);
+        MensajeData<byte[]> curriculum = archivoService.obtenerArchivoByteArray("archivos/Postulante/",postulanteEntity.get().getCurriculum());
+        for (String correo : correos){
+            emailService.enviarEmail(correo,"Adjuntamos el CV","CV",postulanteEntity.get().getPrimerNombre(),curriculum.getData(),postulanteEntity.get().getCurriculum());
+        }
         return null;
     }
 

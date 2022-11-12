@@ -12,10 +12,10 @@ import com.pe.ttk.admision.entity.master.SubEstado;
 import com.pe.ttk.admision.entity.master.TipoExamen;
 import com.pe.ttk.admision.enums.SubEstadoNombre;
 import com.pe.ttk.admision.repository.*;
+import com.pe.ttk.admision.service.ArchivoService;
 import com.pe.ttk.admision.service.security.EmailService;
 import com.pe.ttk.admision.service.ExamenService;
 import com.pe.ttk.admision.util.Constantes;
-import com.pe.ttk.admision.util.GuardarArchivos;
 import com.pe.ttk.admision.util.mapper.ExamenMapper;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +59,8 @@ public class ExamenServiceImpl implements ExamenService {
 
     @Autowired
     ResultadoExamenRepository resultadoExamenRepository;
-    private GuardarArchivos guardarArchivos = new GuardarArchivos();
+    @Autowired
+    ArchivoService archivoService;
     @Override
     public Mensaje registrarExamen(ExamenDto examenDto) {
         try{
@@ -248,7 +249,7 @@ public class ExamenServiceImpl implements ExamenService {
             Optional<PostulanteEntity> postulanteEntityDb = postulanteRepository.findById(examenEntity.getPostulante().getId());
             String nombreResultadoExamen = postulanteEntityDb.get().getDni()+"_"+examenActDto.getId()+"."+ FilenameUtils.getExtension(examenActDto.getResultadoExamen().getOriginalFilename());
 
-            guardarArchivos.guardarArchivo(examenActDto.getResultadoExamen(), nombreResultadoExamen, "archivos/Examen");
+            archivoService.guardarArchivo(examenActDto.getResultadoExamen(), nombreResultadoExamen, "archivos/Examen");
             examenEntity.setResultadoExamen(nombreResultadoExamen);
             examenEntity.setFechaResultado(examenActDto.getFechaResultado());
         }

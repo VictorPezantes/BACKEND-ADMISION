@@ -13,10 +13,10 @@ import com.pe.ttk.admision.entity.security.Usuario;
 import com.pe.ttk.admision.entity.security.UsuarioPrincipal;
 import com.pe.ttk.admision.enums.security.RolNombre;
 import com.pe.ttk.admision.repository.security.UsuarioRepository;
+import com.pe.ttk.admision.service.ArchivoService;
 import com.pe.ttk.admision.service.security.RolService;
 import com.pe.ttk.admision.service.security.UsuarioService;
 import com.pe.ttk.admision.util.Constantes;
-import com.pe.ttk.admision.util.GuardarArchivos;
 import com.pe.ttk.admision.util.mapper.UsuarioMapper;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Autowired
 	RolService rolService;
 
-	private GuardarArchivos guardarArchivos = new GuardarArchivos();
+	@Autowired
+	ArchivoService archivoService;
 
 	@Override
 	public Optional<Usuario> getByNombreUsuario(String nombreUsuario) {
@@ -165,7 +166,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 		if(foto != null){
 			if(!foto.isEmpty()){
 				String nombreFoto = usuario.getNombreUsuario()+Constantes.AVATAR+"."+ FilenameUtils.getExtension(foto.getOriginalFilename());
-				guardarArchivos.guardarArchivo(foto, nombreFoto, "archivos/Empleado");
+				archivoService.guardarArchivo(foto, nombreFoto, "archivos/Empleado");
 				usuario.setFotografia(nombreFoto);
 			}
 		}
