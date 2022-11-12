@@ -4,8 +4,11 @@ import com.pe.ttk.admision.dto.EncargadoDto;
 import com.pe.ttk.admision.dto.Mensaje;
 import com.pe.ttk.admision.entity.admision.PostulanteEntity;
 import com.pe.ttk.admision.entity.master.Encargado;
+import com.pe.ttk.admision.entity.master.SubEstado;
+import com.pe.ttk.admision.enums.SubEstadoNombre;
 import com.pe.ttk.admision.repository.EncargadoRepository;
 import com.pe.ttk.admision.repository.PostulanteRepository;
+import com.pe.ttk.admision.repository.SubEstadoRepository;
 import com.pe.ttk.admision.service.EncargadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +27,8 @@ public class EncargadoServiceImp implements EncargadoService {
 
     @Autowired
     private PostulanteRepository postulanteRepository;
+    @Autowired
+    private SubEstadoRepository subEstadoRepository;
 
     @Override
     public List<Encargado> listaEncargados() {
@@ -77,7 +82,10 @@ public class EncargadoServiceImp implements EncargadoService {
                 return new Mensaje("El postulante no existe",false);
             }
             postulanteEntityBd.get().setEncargado(encargadoBd.get());
+            Optional<SubEstado> subEstadoPendiente = subEstadoRepository.findById(SubEstadoNombre.PENDIENTE.getValue());
+            postulanteEntityBd.get().setSubEstado(subEstadoPendiente.get());
         }
+
         return new Mensaje("Se asignó el/los postulante(s) con éxito",true);
     }
 }

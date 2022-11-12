@@ -39,9 +39,11 @@ public class PostulanteController {
                                                     @RequestParam(required = false) Integer subEstadoExamen,
                                                     @RequestParam(required = false) Date fechaInformeMedico,
                                                     @RequestParam(required = false) Date fechaProgramada,
-                                                    @RequestParam(required = false) String filtro) {
+                                                    @RequestParam(required = false) String filtro,
+                                                    @RequestParam(required = false) Long encargadoId,
+                                                    @RequestParam(required = false) Long cargoId) {
         try {
-            return ResponseEntity.ok(postulanteService.listarPostulanteFiltro(numPagina, tamPagina, estadoPostulanteId,subEstadoExamen,fechaInformeMedico,fechaProgramada,filtro));
+            return ResponseEntity.ok(postulanteService.listarPostulanteFiltro(numPagina, tamPagina, estadoPostulanteId,subEstadoExamen,fechaInformeMedico,fechaProgramada,filtro,encargadoId,cargoId));
         }
         catch (Exception e) {
             e.printStackTrace();

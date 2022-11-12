@@ -94,6 +94,12 @@ public class CreateMasters implements CommandLineRunner {
             SubEstado subEstadoReprogramado = new SubEstado(SubEstadoNombre.REPROGRAMADO);
             subEstadoService.save(subEstadoReprogramado);
         }
+        //SubEstado
+        Optional<SubEstadoNombre> subEstadoNombrePendiente = subEstadoService.findBySubEstadoNombre(SubEstadoNombre.PENDIENTE);
+        if (subEstadoNombrePendiente.isEmpty()){
+            SubEstado subEstadoPendiente = new SubEstado(SubEstadoNombre.PENDIENTE);
+            subEstadoService.save(subEstadoPendiente);
+        }
         //Resultado
         Optional<EstadoResultadoExamenNombre> resultadoExamenNombreAprobado = resultadoExamenService.findByResultadoExamenNombre(EstadoResultadoExamenNombre.APROBADO);
         if (resultadoExamenNombreAprobado.isEmpty()){

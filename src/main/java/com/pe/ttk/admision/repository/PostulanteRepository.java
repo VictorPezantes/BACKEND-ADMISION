@@ -38,12 +38,16 @@ public interface PostulanteRepository extends JpaRepository<PostulanteEntity,Lon
             "(:fechaInformeMedico is null OR (DATE(e.fechaInformeMedico)=DATE(:fechaInformeMedico))) AND" +
             " (:fechaProgramada is null OR (DATE(e.fechaProgramada)=DATE(:fechaProgramada))) AND" +
             " (:filtro is null or (po.apellidoPaterno LIKE %:filtro% or po.apellidoMaterno LIKE %:filtro% or po.primerNombre LIKE %:filtro% or po.segundoNombre LIKE %:filtro%) ) AND" +
-            " (:estadoExamenId is null OR (e.subEstado.id = :estadoExamenId))" +
-            " AND :estadoPostulanteId is null OR (po.estadoPostulante.id = :estadoPostulanteId)")
+            " (:estadoExamenId is null OR (po.subEstado.id = :estadoExamenId))" +
+            " AND (:estadoPostulanteId is null OR (po.estadoPostulante.id = :estadoPostulanteId))" +
+            " AND (:encargadoId is null OR (en.id =:encargadoId))" +
+            " AND (:cargoId is null OR (po.oferta.cargoOferta.id = :cargoId)) ")
     List<PostulanteEntityExt> findPostulanteFiltro(@Param("estadoExamenId")Integer estadoExamenId,
                                                    @Param("fechaInformeMedico") Date fechaInformeMedico,
                                                    @Param("fechaProgramada") Date fechaProgramada,
                                                    @Param("filtro") String filtro,
                                                    @Param("estadoPostulanteId") Integer estadoPostulanteId,
+                                                   @Param("encargadoId") Long encargadoId,
+                                                   @Param("cargoId") Long cargoId,
                                                    Pageable pageable);
 }

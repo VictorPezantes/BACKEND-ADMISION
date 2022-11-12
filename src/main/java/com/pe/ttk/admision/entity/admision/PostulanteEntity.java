@@ -2,6 +2,7 @@ package com.pe.ttk.admision.entity.admision;
 
 import com.pe.ttk.admision.entity.master.Encargado;
 import com.pe.ttk.admision.entity.master.EstadoPostulante;
+import com.pe.ttk.admision.entity.master.SubEstado;
 import com.pe.ttk.admision.enums.EstadoPostulanteNombre;
 import lombok.*;
 
@@ -167,4 +168,7 @@ public class PostulanteEntity {
     private Encargado encargado;
     @Column(columnDefinition = "bit default 1")
     private boolean activo;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "subEstadoId", referencedColumnName = "id")
+    private SubEstado subEstado;
 }
