@@ -3,6 +3,7 @@ package com.pe.ttk.admision.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
@@ -14,10 +15,11 @@ public class ExamenActDto {
 
     @NotNull
     private Long id;
-    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd/MM/yyyy HH:mm:ss", timezone = "America/Lima")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date fechaProgramada;
     @Null
     private Integer subEstadoId;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Null
     private Date fechaInformeMedico;
     @Null
@@ -30,10 +32,12 @@ public class ExamenActDto {
     private Integer EstadoResultadoExamenId;
     @Null
     private String autorizoGerencia;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Null
     private Date fechaCambioEstado;
     @Null
     private MultipartFile resultadoExamen;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Null
     private Date fechaResultado;
     @Null
