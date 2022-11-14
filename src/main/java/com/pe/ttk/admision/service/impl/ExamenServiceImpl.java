@@ -194,6 +194,8 @@ public class ExamenServiceImpl implements ExamenService {
                 historialExamen.setSubEstado(subEstadoActDb.get());
             }
             examenEntity.setSubEstado(subEstadoActDb.get());
+            Optional<PostulanteEntity> postulanteEntityDb = postulanteRepository.findById(examenEntity.getPostulante().getId());
+            postulanteEntityDb.get().setSubEstado(subEstadoActDb.get());
             historialExamen.setExamen(examenEntity);
             historialExamen.setSubEstado(subEstadoActDb.get());
         }
