@@ -174,17 +174,16 @@ public class PostulanteController {
     }
     @ApiOperation("obtener CV de postulante")
     @GetMapping("/obtenerCVPostulante")
-    public ResponseEntity<?> obtenerCurriculumPostulante(@RequestParam Long postulanteId)
+    public ResponseEntity<?> obtenerCurriculumPostulante(@RequestParam String postulanteId)
     {
-
-        return ResponseEntity.status(HttpStatus.OK).body(postulanteService.obtenerCurriculumPostulanteBase64(postulanteId));
+        Long postulanteIdL = Long.parseLong(postulanteId);
+        return ResponseEntity.status(HttpStatus.OK).body(postulanteService.obtenerCurriculumPostulanteBase64(postulanteIdL));
     }
     @ApiOperation("enviar cv a varios correos de postulante")
     @PostMapping("/enviarCVPorCorreo")
-    public ResponseEntity<?> enviarCVPorCorreo(@RequestParam String postulanteId,@RequestParam List<String> correos)
+    public ResponseEntity<?> enviarCVPorCorreo(@RequestParam Long postulanteId,@RequestParam List<String> correos)
     {
-        Long postulanteIdL = Long.parseLong(postulanteId);
-        return ResponseEntity.status(HttpStatus.OK).body(postulanteService.enviarCVPorCorreo(postulanteIdL,correos));
+        return ResponseEntity.status(HttpStatus.OK).body(postulanteService.enviarCVPorCorreo(postulanteId,correos));
     }
 
 }
