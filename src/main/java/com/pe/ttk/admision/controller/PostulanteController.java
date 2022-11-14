@@ -174,7 +174,7 @@ public class PostulanteController {
     }
     @ApiOperation("obtener CV de postulante")
     @GetMapping("/obtenerCVPostulante")
-    public ResponseEntity<?> obtenerCurriculumPostulante(@RequestParam String postulanteId)
+    public ResponseEntity<?> obtenerCurriculumPostulante(@RequestParam(name = "id") String postulanteId)
     {
         Long postulanteIdL = Long.parseLong(postulanteId);
         return ResponseEntity.status(HttpStatus.OK).body(postulanteService.obtenerCurriculumPostulanteBase64(postulanteIdL));
