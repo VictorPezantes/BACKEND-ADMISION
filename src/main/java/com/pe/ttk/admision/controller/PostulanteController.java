@@ -181,10 +181,10 @@ public class PostulanteController {
     }
     @ApiOperation("enviar cv a varios correos de postulante")
     @PostMapping("/enviarCVPorCorreo")
-    public ResponseEntity<?> enviarCVPorCorreo(@RequestParam Long postulanteId,@RequestParam List<String> correos)
+    public ResponseEntity<?> enviarCVPorCorreo(@RequestParam String postulanteId,@RequestParam List<String> correos)
     {
-
-        return ResponseEntity.status(HttpStatus.OK).body(postulanteService.enviarCVPorCorreo(postulanteId,correos));
+        Long postulanteIdL = Long.parseLong(postulanteId);
+        return ResponseEntity.status(HttpStatus.OK).body(postulanteService.enviarCVPorCorreo(postulanteIdL,correos));
     }
 
 }
