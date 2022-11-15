@@ -286,5 +286,15 @@ public class ExamenServiceImpl implements ExamenService {
         return resultado;
     }
 
+    @Override
+    public List<SubEstado> listarSubEstado() {
+        return subEstadoRepository.findAll();
+    }
+
+    @Override
+    public List<EstadoResultadoExamen> listarEstadoResultadoExamen() {
+        return resultadoExamenRepository.findAll();
+    }
+
 
 }

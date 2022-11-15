@@ -44,4 +44,16 @@ public class ExamenController {
             @JsonFormat(pattern = "dd/MM/yyyy", timezone = "America/Lima") Date fechaInformeMedico){
         return ResponseEntity.ok(examenService.registrarResultadoExamen(examenId,estadoResultadoExamenId,resultadoExamen,fechaResultado,fechaInformeMedico));
     }
+    @ApiOperation("lista los sub estados de un examen")
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/listarSubEstado")
+    public ResponseEntity<?> listarSubEstado(){
+        return ResponseEntity.ok(examenService.listarSubEstado());
+    }
+    @ApiOperation("lista los estados de resultado de un examen")
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/listarEstadoResultadoExamen")
+    public ResponseEntity<?> listarEstadoResultadoExamen(){
+        return ResponseEntity.ok(examenService.listarEstadoResultadoExamen());
+    }
 }
