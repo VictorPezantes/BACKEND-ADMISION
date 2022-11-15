@@ -15,11 +15,11 @@ public class ExamenActDto {
 
     @NotNull
     private Long id;
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy", timezone = "America/Lima")
     private Date fechaProgramada;
     @Null
     private Integer subEstadoId;
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy", timezone = "America/Lima")
     @Null
     private Date fechaInformeMedico;
     @Null
@@ -32,12 +32,12 @@ public class ExamenActDto {
     private Integer EstadoResultadoExamenId;
     @Null
     private String autorizoGerencia;
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy", timezone = "America/Lima")
     @Null
     private Date fechaCambioEstado;
     @Null
     private MultipartFile resultadoExamen;
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy", timezone = "America/Lima")
     @Null
     private Date fechaResultado;
     @Null
