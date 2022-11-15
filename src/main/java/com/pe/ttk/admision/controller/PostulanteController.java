@@ -33,7 +33,7 @@ public class PostulanteController {
     @ApiOperation("Lista todos los postulantes con diferentes filtros")
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/listarFiltro")
-    public ResponseEntity<?> listarPostulanteExamen(@RequestParam(defaultValue = "0") Integer numPagina,
+    public ResponseEntity<?> listarPostulanteFiltro(@RequestParam(defaultValue = "0") Integer numPagina,
                                                     @RequestParam(defaultValue = "10") Integer tamPagina,
                                                     @RequestParam(required = false) Integer estadoPostulanteId,
                                                     @RequestParam(required = false) Integer subEstadoExamen,

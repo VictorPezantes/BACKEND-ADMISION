@@ -239,24 +239,26 @@ public class ExamenServiceImpl implements ExamenService {
         }
         //registrar resultado
 
-        if(examenActDto.getEstadoResultadoExamenId() != null && examenActDto.getResultadoExamen() != null && examenActDto.getFechaResultado() != null){
-            Optional<EstadoResultadoExamen> estadoResultadoExamenDb = resultadoExamenRepository.findById(examenActDto.getEstadoResultadoExamenId());
-            if (estadoResultadoExamenDb.isEmpty()){
-                return new Mensaje("Estado de resultado no existe",false);
+        if(examenActDto.getEstadoResultadoExamenId() != null ){
+            if(examenActDto.getResultadoExamen() != null && examenActDto.getFechaResultado() != null){
+                Optional<EstadoResultadoExamen> estadoResultadoExamenDb = resultadoExamenRepository.findById(examenActDto.getEstadoResultadoExamenId());
+                if (estadoResultadoExamenDb.isEmpty()){
+                    return new Mensaje("Estado de resultado no existe",false);
+                }
+
+                historialExamen.setExamen(examenEntity);
+                examenEntity.setEstadoResultadoExamen(estadoResultadoExamenDb.get());
+
+                Optional<PostulanteEntity> postulanteEntityDb = postulanteRepository.findById(examenEntity.getPostulante().getId());
+                String nombreResultadoExamen = postulanteEntityDb.get().getDni()+"_"+examenActDto.getId()+"."+ FilenameUtils.getExtension(examenActDto.getResultadoExamen().getOriginalFilename());
+
+                archivoService.guardarArchivo(examenActDto.getResultadoExamen(), nombreResultadoExamen, "archivos/Examen");
+                examenEntity.setResultadoExamen(nombreResultadoExamen);
+                examenEntity.setFechaResultado(examenActDto.getFechaResultado());
             }
-
-            historialExamen.setExamen(examenEntity);
-            examenEntity.setEstadoResultadoExamen(estadoResultadoExamenDb.get());
-
-            Optional<PostulanteEntity> postulanteEntityDb = postulanteRepository.findById(examenEntity.getPostulante().getId());
-            String nombreResultadoExamen = postulanteEntityDb.get().getDni()+"_"+examenActDto.getId()+"."+ FilenameUtils.getExtension(examenActDto.getResultadoExamen().getOriginalFilename());
-
-            archivoService.guardarArchivo(examenActDto.getResultadoExamen(), nombreResultadoExamen, "archivos/Examen");
-            examenEntity.setResultadoExamen(nombreResultadoExamen);
-            examenEntity.setFechaResultado(examenActDto.getFechaResultado());
-        }
-        else{
-            return new Mensaje("Para actualizar el resultado del examen los datos de resultadoExamenId, resultadoExamen, fechaResultado no pueden estar vacíos",false);
+            else{
+                return new Mensaje("Para actualizar el resultado del examen los datos de resultadoExamenId, resultadoExamen, fechaResultado no pueden estar vacíos",false);
+            }
         }
 
         if(historialExamen.getExamen()!= null){
