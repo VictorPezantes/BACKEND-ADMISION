@@ -167,15 +167,15 @@ public class PostulanteController {
     }
 
     @ApiOperation("obtener foto de postulante")
-    @GetMapping("/obtenerFotoPostulante")
-    public ResponseEntity<?> obtenerFotoPostulante(@RequestParam Long postulanteId)
+    @GetMapping("/obtenerFotoPostulante/{id}")
+    public ResponseEntity<?> obtenerFotoPostulante(@PathVariable(name = "id") String postulanteId)
     {
-
-        return ResponseEntity.status(HttpStatus.OK).body(postulanteService.obtenerFotoPostulanteBase64(postulanteId));
+        Long postulanteIdL = Long.parseLong(postulanteId);
+        return ResponseEntity.status(HttpStatus.OK).body(postulanteService.obtenerFotoPostulanteBase64(postulanteIdL));
     }
     @ApiOperation("obtener CV de postulante")
-    @GetMapping("/obtenerCVPostulante")
-    public ResponseEntity<?> obtenerCurriculumPostulante(@RequestParam(name = "id") String postulanteId)
+    @GetMapping("/obtenerCVPostulante/{id}")
+    public ResponseEntity<?> obtenerCurriculumPostulante(@PathVariable(name = "id") String postulanteId)
     {
         Long postulanteIdL = Long.parseLong(postulanteId);
         return ResponseEntity.status(HttpStatus.OK).body(postulanteService.obtenerCurriculumPostulanteBase64(postulanteIdL));
