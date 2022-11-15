@@ -420,7 +420,7 @@ public class PostulanteServiceImpl implements PostulanteService {
                 data.setMensaje("Postulante no existe");
                 return data;
             }
-            data = archivoService.obtenerArchivoBase64("archivos/Postulante/",postulanteEntity.get().getFoto());
+            data = archivoService.obtenerArchivoBase64("archivos/Postulante/",postulanteEntity.get().getCurriculum());
         }catch (Exception e) {
             data.setExito(false);
             data.setMensaje("Error: " + e.getMessage());
