@@ -272,12 +272,13 @@ public class ExamenServiceImpl implements ExamenService {
     }
 
     @Override
-    public Mensaje registrarResultadoExamen(Long examenId,Integer estadoResultadoExamenId, MultipartFile resultadoExamen,Date fechaResultado) {
+    public Mensaje registrarResultadoExamen(Long examenId,Integer estadoResultadoExamenId, MultipartFile resultadoExamen,Date fechaResultado, Date fechaInformeMedico) {
         ExamenActDto examenActDto = new ExamenActDto();
         examenActDto.setId(examenId);
         examenActDto.setEstadoResultadoExamenId(estadoResultadoExamenId);
         examenActDto.setResultadoExamen(resultadoExamen);
         examenActDto.setFechaResultado(fechaResultado);
+        examenActDto.setFechaInformeMedico(fechaInformeMedico);
         Mensaje resultado = actualizarExamen(examenActDto);
         if(resultado.isExito()){
             return new Mensaje("Resultado se guardó de manera correcta",true);

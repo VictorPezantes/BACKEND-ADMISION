@@ -1,5 +1,6 @@
 package com.pe.ttk.admision.controller;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pe.ttk.admision.dto.ExamenActDto;
 import com.pe.ttk.admision.dto.ExamenDto;
 import com.pe.ttk.admision.service.impl.ExamenServiceImpl;
@@ -35,7 +36,12 @@ public class ExamenController {
     @ApiOperation("registra el resultado de un examen")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/registrarResultado")
-    public ResponseEntity<?> cancelar(@RequestParam Long examenId,@RequestParam Integer estadoResultadoExamenId,@RequestParam MultipartFile resultadoExamen,@RequestParam Date fechaResultado){
-        return ResponseEntity.ok(examenService.registrarResultadoExamen(examenId,estadoResultadoExamenId,resultadoExamen,fechaResultado));
+    public ResponseEntity<?> cancelar(
+            @RequestParam Long examenId,
+            @RequestParam Integer estadoResultadoExamenId,
+            @RequestParam MultipartFile resultadoExamen,
+            @RequestParam(required = false) @JsonFormat(pattern = "dd/MM/yyyy", timezone = "America/Lima") Date fechaResultado,
+            @JsonFormat(pattern = "dd/MM/yyyy", timezone = "America/Lima") Date fechaInformeMedico){
+        return ResponseEntity.ok(examenService.registrarResultadoExamen(examenId,estadoResultadoExamenId,resultadoExamen,fechaResultado,fechaInformeMedico));
     }
 }

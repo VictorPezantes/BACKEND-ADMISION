@@ -41,7 +41,8 @@ public interface PostulanteRepository extends JpaRepository<PostulanteEntity,Lon
             " (:estadoExamenId is null OR (po.subEstado.id = :estadoExamenId))" +
             " AND (:estadoPostulanteId is null OR (po.estadoPostulante.id = :estadoPostulanteId))" +
             " AND (:encargadoId is null OR (en.id =:encargadoId))" +
-            " AND (:cargoId is null OR (po.oferta.cargoOferta.id = :cargoId)) ")
+            " AND (:cargoId is null OR (po.oferta.cargoOferta.id = :cargoId))" +
+            " AND (:postulanteId is null OR (po.id = :postulanteId)) ")
     List<PostulanteEntityExt> findPostulanteFiltro(@Param("estadoExamenId")Integer estadoExamenId,
                                                    @Param("fechaInformeMedico") Date fechaInformeMedico,
                                                    @Param("fechaProgramada") Date fechaProgramada,
@@ -49,5 +50,6 @@ public interface PostulanteRepository extends JpaRepository<PostulanteEntity,Lon
                                                    @Param("estadoPostulanteId") Integer estadoPostulanteId,
                                                    @Param("encargadoId") Long encargadoId,
                                                    @Param("cargoId") Long cargoId,
+                                                   @Param("postulanteId") Long postulanteId,
                                                    Pageable pageable);
 }

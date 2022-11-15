@@ -30,7 +30,7 @@ public interface PostulanteService {
     Optional<PostulanteEntity> getOne(int id);
 
     Page<PostulanteDto> listarPostulantes(Integer numPagina, Integer tamPagina);
-    Page<PostulanteDto> listarPostulanteFiltro(Integer numPagina, Integer tamPagina, Integer estado, Integer subEstadoExamen, Date fechaInformeMedico, Date fechaProgramada, String filtro, Long encargadoId,Long cargoId);
+    Page<PostulanteDto> listarPostulanteFiltro(Integer numPagina, Integer tamPagina, Integer estado, Integer subEstadoExamen, Date fechaInformeMedico, Date fechaProgramada, String filtro, Long encargadoId,Long cargoId, Long postulanteId);
     MensajeData<String> obtenerCurriculumPostulanteBase64(Long postulanteId);
     MensajeData<byte[]> obtenerCurriculumPostulanteByte(Long postulanteId);
     MensajeData<String> obtenerFotoPostulanteBase64(Long postulanteId);

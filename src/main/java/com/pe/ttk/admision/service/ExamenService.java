@@ -15,6 +15,6 @@ public interface ExamenService {
     Mensaje registrarExamen(ExamenDto examenDto);
     Page<ExamenDto> listarExamenes(Integer numPagina, Integer tamPagina, String buscador, List subEstado, String fechaInformeMedico, String fechaProgramada);
     Mensaje actualizarExamen(ExamenActDto examenActDto);
-    Mensaje registrarResultadoExamen(Long examenId,Integer estadoResultadoExamenId, MultipartFile resultadoExamen,Date fechaResultado);
+    Mensaje registrarResultadoExamen(Long examenId,Integer estadoResultadoExamenId, MultipartFile resultadoExamen,Date fechaResultado, Date fechaInformeMedico);
     
 }
