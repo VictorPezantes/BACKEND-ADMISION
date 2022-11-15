@@ -59,7 +59,6 @@ public class PostulanteMapperImpl implements PostulanteMapper {
         postulanteDto.setSabeNadar(postulanteEntity.getSabeNadar());
         postulanteDto.setFechaMatrimonio(postulanteEntity.getFechaMatrimonio());
         postulanteDto.setLugarNacimiento(postulanteEntity.getLugarNacimiento());
-
         return postulanteDto;
     }
 
@@ -126,6 +125,7 @@ public class PostulanteMapperImpl implements PostulanteMapper {
         postulanteDto.setSabeNadar(postulanteEntityExt.getSabeNadar());
         postulanteDto.setFechaMatrimonio(postulanteEntityExt.getFechaMatrimonio());
         postulanteDto.setLugarNacimiento(postulanteEntityExt.getLugarNacimiento());
+        postulanteDto.setExamenObservacion(postulanteEntityExt.getExamenObservacion());
         return postulanteDto;
     }
 

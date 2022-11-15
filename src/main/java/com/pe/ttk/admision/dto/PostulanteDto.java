@@ -66,11 +66,13 @@ public class PostulanteDto {
     private Long examenId;
     private int centroMedicoId;
     private String centroMedicoNombre;
+    @JsonFormat(pattern = "dd/MM/yyyy", timezone = "America/Lima")
     private Date fechaRegistroExamen;
     private Long encargadoId;
     private String encargadoNombre;
     private String encargadoEmail;
     private String encargadoTelefono;
+    @JsonFormat(pattern = "dd/MM/yyyy", timezone = "America/Lima")
     private Date fechaProgramadaExamen;
     private Integer tipoExamenId;
     private String tipoExamenNombre;
@@ -80,6 +82,7 @@ public class PostulanteDto {
     private Date fechaMatrimonio;
     private String lugarNacimiento;
     private String grupoSanguineo;
+    private String examenObservacion;
     public List<String> Validar()
     {
         List<String> validaciones = new ArrayList<String>();
