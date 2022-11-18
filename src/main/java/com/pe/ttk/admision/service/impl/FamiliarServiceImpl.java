@@ -170,9 +170,9 @@ public class FamiliarServiceImpl implements FamiliarService {
     public Page<FamiliarDto> listar(Integer numPagina, Integer tamPagina, Long postulanteId) {
         Pageable pageable = PageRequest.of(numPagina, tamPagina);
         List<Familiar> lista = familiarRepository.listar(postulanteId, pageable);
-        List<FamiliarDto> listaPostulante = lista.stream().map(familiarMapper.INSTANCE::toFamiliarDto).collect(Collectors.toList());
+        List<FamiliarDto> listaFamiliares = lista.stream().map(familiarMapper.INSTANCE::toFamiliarDto).collect(Collectors.toList());
         if(!lista.isEmpty()){
-            return new PageImpl<>(listaPostulante, pageable, lista.size());
+            return new PageImpl<>(listaFamiliares, pageable, lista.size());
         }
         return null;
     }

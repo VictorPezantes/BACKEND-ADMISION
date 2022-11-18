@@ -44,6 +44,7 @@ public class FamiliarDto {
     private String departamentoNombre;
     @NotNull
     private Integer parentescoId;
+    @NotNull
     private Long postulanteId;
     private String postulanteNombre;
 }

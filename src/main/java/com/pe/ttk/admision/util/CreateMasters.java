@@ -46,6 +46,12 @@ public class CreateMasters implements CommandLineRunner {
     @Autowired
     ParentescoService parentescoService;
 
+    @Autowired
+    TipoDatoAcademicoService tipoDatoAcademicoService;
+
+    @Autowired
+    NivelEstudioService nivelEstudioService;
+
     @Override
     public void run(String... args) throws Exception {
 
@@ -222,6 +228,50 @@ public class CreateMasters implements CommandLineRunner {
         if(parentescoNombreSuegro.isEmpty()){
             Parentesco parentescoSuegro = new Parentesco(ParentescoNombre.SUEGRO);
             parentescoService.save(parentescoSuegro);
+        }
+
+        //TipoDatoAcademico
+        Optional<TipoDatoAcademicoNombre> tipoDatoAcademicoNombreEstudiosBasicos = tipoDatoAcademicoService.findByTipoDatoAcademicoNombre(TipoDatoAcademicoNombre.ESTUDIOS_BASICOS);
+        if(tipoDatoAcademicoNombreEstudiosBasicos.isEmpty()){
+            TipoDatoAcademico tipoDatoAcademicoEstudiosBasicos = new TipoDatoAcademico(TipoDatoAcademicoNombre.ESTUDIOS_BASICOS);
+            tipoDatoAcademicoService.save(tipoDatoAcademicoEstudiosBasicos);
+        }
+        Optional<TipoDatoAcademicoNombre> tipoDatoAcademicoNombreEstudiosSuperiores = tipoDatoAcademicoService.findByTipoDatoAcademicoNombre(TipoDatoAcademicoNombre.ESTUDIOS_SUPERIORES);
+        if(tipoDatoAcademicoNombreEstudiosSuperiores.isEmpty()){
+            TipoDatoAcademico tipoDatoAcademicoEstudiosSuperiores = new TipoDatoAcademico(TipoDatoAcademicoNombre.ESTUDIOS_SUPERIORES);
+            tipoDatoAcademicoService.save(tipoDatoAcademicoEstudiosSuperiores);
+        }
+        Optional<TipoDatoAcademicoNombre> tipoDatoAcademicoNombreOtrosEstudios = tipoDatoAcademicoService.findByTipoDatoAcademicoNombre(TipoDatoAcademicoNombre.OTROS_ESTUDIOS);
+        if(tipoDatoAcademicoNombreOtrosEstudios.isEmpty()){
+            TipoDatoAcademico tipoDatoAcademicoOtrosEstudios = new TipoDatoAcademico(TipoDatoAcademicoNombre.OTROS_ESTUDIOS);
+            tipoDatoAcademicoService.save(tipoDatoAcademicoOtrosEstudios);
+        }
+
+        //Nivel estudio
+        Optional<NivelEstudioNombre> nivelEstudioNombrePrimaria = nivelEstudioService.findByNivelEstudioNombre(NivelEstudioNombre.PRIMARIA);
+        if(nivelEstudioNombrePrimaria.isEmpty()){
+            NivelEstudio nivelEstudioPrimaria = new NivelEstudio(NivelEstudioNombre.PRIMARIA);
+            nivelEstudioService.save(nivelEstudioPrimaria);
+        }
+        Optional<NivelEstudioNombre> nivelEnivelEstudioSecundaria = nivelEstudioService.findByNivelEstudioNombre(NivelEstudioNombre.SECUNDARIA);
+        if(nivelEnivelEstudioSecundaria.isEmpty()){
+            NivelEstudio nivelEstudioSecundaria = new NivelEstudio(NivelEstudioNombre.SECUNDARIA);
+            nivelEstudioService.save(nivelEstudioSecundaria);
+        }
+        Optional<NivelEstudioNombre> nivelEnivelEstudioServMilitar = nivelEstudioService.findByNivelEstudioNombre(NivelEstudioNombre.SERV_MILITAR);
+        if(nivelEnivelEstudioServMilitar.isEmpty()){
+            NivelEstudio nivelEstudioServMilitar = new NivelEstudio(NivelEstudioNombre.SERV_MILITAR);
+            nivelEstudioService.save(nivelEstudioServMilitar);
+        }
+        Optional<NivelEstudioNombre> nivelEnivelEstudioTecnico = nivelEstudioService.findByNivelEstudioNombre(NivelEstudioNombre.TECNICO);
+        if(nivelEnivelEstudioTecnico.isEmpty()){
+            NivelEstudio nivelEstudioTecnico = new NivelEstudio(NivelEstudioNombre.TECNICO);
+            nivelEstudioService.save(nivelEstudioTecnico);
+        }
+        Optional<NivelEstudioNombre> nivelEnivelEstudioUniversitario = nivelEstudioService.findByNivelEstudioNombre(NivelEstudioNombre.UNIVERSITARIO);
+        if(nivelEnivelEstudioUniversitario.isEmpty()){
+            NivelEstudio nivelEstudioUniversitario = new NivelEstudio(NivelEstudioNombre.UNIVERSITARIO);
+            nivelEstudioService.save(nivelEstudioUniversitario);
         }
     }
 }
