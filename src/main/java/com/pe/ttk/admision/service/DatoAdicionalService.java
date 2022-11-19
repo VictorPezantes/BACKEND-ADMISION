@@ -1,9 +1,6 @@
 package com.pe.ttk.admision.service;
 
-import com.pe.ttk.admision.dto.DatoAcademicoDto;
-import com.pe.ttk.admision.dto.DatoBancarioDto;
-import com.pe.ttk.admision.dto.DatoContactoEmergenciaDto;
-import com.pe.ttk.admision.dto.Mensaje;
+import com.pe.ttk.admision.dto.*;
 import com.pe.ttk.admision.entity.admision.*;
 import org.springframework.data.domain.Page;
 
@@ -17,13 +14,13 @@ public interface DatoAdicionalService {
     Mensaje registrarDatoContactoEmergencia(DatoContactoEmergenciaDto datoContactoEmergencia);
     Mensaje actualizarDatoContactoEmergencia(DatoContactoEmergenciaDto datoContactoEmergencia);
     Page<DatoContactoEmergenciaDto> listarDatoContactoEmergencia(Integer numPagina, Integer tamPagina, Long postulanteId);
-    Mensaje registrarDatoEmbarque(DatoEmbarque datoEmbarque);
-    Mensaje actualizarDatoEmbarque(DatoEmbarque datoEmbarque);
-    Page<DatoEmbarque> listarDatoEmbarque(Integer numPagina, Integer tamPagina, Long postulanteId);
-    Mensaje registrarDatoLaboral(DatoLaboral datoLaboral);
-    Mensaje actualizarDatoLaboral(DatoLaboral datoLaboral);
-    Page<DatoLaboral> listarDatoLaboral(Integer numPagina, Integer tamPagina, Long postulanteId);
-    Mensaje registrarDatoRedSocial(DatoRedSocial datoRedSocial);
-    Mensaje actualizarDatoRedSocial(DatoRedSocial datoRedSocial);
-    Page<DatoRedSocial> listarDatoRedSocial(Integer numPagina, Integer tamPagina, Long postulanteId);
+    Mensaje registrarDatoEmbarque(DatoEmbarqueDto datoEmbarque);
+    Mensaje actualizarDatoEmbarque(DatoEmbarqueDto datoEmbarque);
+    Page<DatoEmbarqueDto> listarDatoEmbarque(Integer numPagina, Integer tamPagina, Long postulanteId);
+    Mensaje registrarDatoLaboral(DatoLaboralDto datoLaboral);
+    Mensaje actualizarDatoLaboral(DatoLaboralDto datoLaboral);
+    Page<DatoLaboralDto> listarDatoLaboral(Integer numPagina, Integer tamPagina, Long postulanteId);
+    Mensaje registrarDatoRedSocial(DatoRedSocialDto datoRedSocial);
+    Mensaje actualizarDatoRedSocial(DatoRedSocialDto datoRedSocial);
+    Page<DatoRedSocialDto> listarDatoRedSocial(Integer numPagina, Integer tamPagina, Long postulanteId);
 }

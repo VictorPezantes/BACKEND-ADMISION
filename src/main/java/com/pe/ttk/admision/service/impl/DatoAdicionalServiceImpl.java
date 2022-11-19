@@ -1,16 +1,11 @@
 package com.pe.ttk.admision.service.impl;
 
-import com.pe.ttk.admision.dto.DatoAcademicoDto;
-import com.pe.ttk.admision.dto.DatoBancarioDto;
-import com.pe.ttk.admision.dto.DatoContactoEmergenciaDto;
-import com.pe.ttk.admision.dto.Mensaje;
+import com.pe.ttk.admision.dto.*;
 import com.pe.ttk.admision.entity.admision.*;
 import com.pe.ttk.admision.entity.master.*;
 import com.pe.ttk.admision.repository.*;
 import com.pe.ttk.admision.service.DatoAdicionalService;
-import com.pe.ttk.admision.util.mapper.DatoAcademicoMapper;
-import com.pe.ttk.admision.util.mapper.DatoBancarioMapper;
-import com.pe.ttk.admision.util.mapper.DatoContactoEmergenciaMapper;
+import com.pe.ttk.admision.util.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -72,6 +67,15 @@ public class DatoAdicionalServiceImpl implements DatoAdicionalService {
 
     @Autowired
     DatoContactoEmergenciaMapper datoContactoEmergenciaMapper;
+
+    @Autowired
+    DatoEmbarqueMapper datoEmbarqueMapper;
+
+    @Autowired
+    DatoLaboralMapper datoLaboralMapper;
+
+    @Autowired
+    DatoRedSocialMapper datoRedSocialMapper;
 
     @Override
     public Mensaje registrarDatoAcademico(DatoAcademicoDto datoAcademicoDto) {
@@ -291,7 +295,7 @@ public class DatoAdicionalServiceImpl implements DatoAdicionalService {
         datoContactoEmergencia.setCelular(datoContactoEmergenciaDto.getCelular());
         datoContactoEmergencia.setTelefono(datoContactoEmergenciaDto.getTelefono());
         datoContactoEmergencia.setEmail(datoContactoEmergenciaDto.getEmail());
-
+        datoContactoEmergenciaRepository.save(datoContactoEmergencia);
         return new Mensaje("Se registró con éxito",true);
     }
 
@@ -355,47 +359,222 @@ public class DatoAdicionalServiceImpl implements DatoAdicionalService {
     }
 
     @Override
-    public Mensaje registrarDatoEmbarque(DatoEmbarque datoEmbarque) {
+    public Mensaje registrarDatoEmbarque(DatoEmbarqueDto datoEmbarqueDto) {
+        DatoEmbarque datoEmbarque = new DatoEmbarque();
+        Optional<PostulanteEntity> postulanteEntity = postulanteRepository.findById(datoEmbarqueDto.getPostulanteId());
+        if (postulanteEntity.isEmpty()){
+            return new Mensaje("No existe postulante",false);
+        }
+        datoEmbarque.setPostulante(postulanteEntity.get());
+        datoEmbarque.setNumeroEmbarque(datoEmbarqueDto.getNumeroEmbarque());
+        datoEmbarque.setBuqueEmbarque(datoEmbarqueDto.getBuqueEmbarque());
+        datoEmbarque.setTecnicoACargo(datoEmbarqueDto.getTecnicoACargo());
+        datoEmbarque.setTrabajoARealizar(datoEmbarqueDto.getTrabajoARealizar());
+        datoEmbarque.setFechaEmbarque(datoEmbarqueDto.getFechaEmbarque());
+        datoEmbarque.setFechaDesembarque(datoEmbarqueDto.getFechaDesembarque());
+        datoEmbarqueRepository.save(datoEmbarque);
+        return new Mensaje("Se registró con éxito",true);
+    }
+
+    @Override
+    public Mensaje actualizarDatoEmbarque(DatoEmbarqueDto datoEmbarqueDto) {
+        if(datoEmbarqueDto.getId() ==null){
+            return new Mensaje("Id de dato academico no es válido",false);
+        }
+        Optional<DatoEmbarque> datoEmbarqueOptional = datoEmbarqueRepository.findById(datoEmbarqueDto.getId());
+        if (datoEmbarqueOptional.isEmpty()){
+            return new Mensaje("No se encontró dato académico",false);
+        }
+        if(datoEmbarqueDto.getPostulanteId()!= null){
+            Optional<PostulanteEntity> postulanteEntity = postulanteRepository.findById(datoEmbarqueDto.getPostulanteId());
+            if (postulanteEntity.isEmpty()){
+                return new Mensaje("No existe postulante",false);
+            }
+            datoEmbarqueOptional.get().setPostulante(postulanteEntity.get());
+        }
+        if(datoEmbarqueDto.getNumeroEmbarque() != null){
+            datoEmbarqueOptional.get().setNumeroEmbarque(datoEmbarqueDto.getNumeroEmbarque());
+        }
+        if(datoEmbarqueDto.getBuqueEmbarque() != null){
+            datoEmbarqueOptional.get().setBuqueEmbarque(datoEmbarqueDto.getBuqueEmbarque());
+        }
+        if(datoEmbarqueDto.getTecnicoACargo() != null){
+            datoEmbarqueOptional.get().setTecnicoACargo(datoEmbarqueDto.getTecnicoACargo());
+        }
+        if(datoEmbarqueDto.getTrabajoARealizar() != null){
+            datoEmbarqueOptional.get().setTrabajoARealizar(datoEmbarqueDto.getTrabajoARealizar());
+        }
+        if(datoEmbarqueDto.getFechaEmbarque() != null){
+            datoEmbarqueOptional.get().setFechaEmbarque(datoEmbarqueDto.getFechaEmbarque());
+        }
+        if(datoEmbarqueDto.getFechaDesembarque() != null){
+            datoEmbarqueOptional.get().setFechaDesembarque(datoEmbarqueDto.getFechaDesembarque());
+        }
+        return new Mensaje("Se actualizó con éxito",true);
+    }
+
+    @Override
+    public Page<DatoEmbarqueDto> listarDatoEmbarque(Integer numPagina, Integer tamPagina, Long postulanteId) {
+        Pageable pageable = PageRequest.of(numPagina, tamPagina);
+        List<DatoEmbarque> lista = datoEmbarqueRepository.listar(postulanteId, pageable);
+        List<DatoEmbarqueDto> listaDatoEmbarque = lista.stream().map(datoEmbarqueMapper.INSTANCE::toDatoEmbarqueDto).collect(Collectors.toList());
+        if(!lista.isEmpty()){
+            return new PageImpl<>(listaDatoEmbarque, pageable, lista.size());
+        }
         return null;
     }
 
     @Override
-    public Mensaje actualizarDatoEmbarque(DatoEmbarque datoEmbarque) {
+    public Mensaje registrarDatoLaboral(DatoLaboralDto datoLaboralDto) {
+        DatoLaboral datoLaboral = new DatoLaboral();
+        Optional<PostulanteEntity> postulanteEntity = postulanteRepository.findById(datoLaboralDto.getPostulanteId());
+        if (postulanteEntity.isEmpty()){
+            return new Mensaje("No existe postulante",false);
+        }
+        Optional<Distrito> distrito = distritoRepository.findById(datoLaboralDto.getDistritoId());
+        if (distrito.isEmpty()){
+            return new Mensaje("No existe distrito",false);
+        }
+        datoLaboral.setDistrito(distrito.get());
+
+        Optional<Provincia> provincia = provinciaRepository.findById(datoLaboralDto.getProvinciaId());
+        if (provincia.isEmpty()){
+            return new Mensaje("No existe provincia",false);
+        }
+        datoLaboral.setProvincia(provincia.get());
+
+        Optional<Departamento> departamento = departamentoRepository.findById(datoLaboralDto.getDepartamentoId());
+        if (departamento.isEmpty()){
+            return new Mensaje("No existe departamento",false);
+        }
+        datoLaboral.setDepartamento(departamento.get());
+
+        datoLaboral.setPostulante(postulanteEntity.get());
+        datoLaboral.setTrabajo(datoLaboralDto.getTrabajo());
+        datoLaboral.setPuesto(datoLaboralDto.getPuesto());
+        datoLaboral.setEmpresa(datoLaboralDto.getEmpresa());
+        datoLaboral.setFechaInicio(datoLaboralDto.getFechaInicio());
+        datoLaboral.setFechaTermino(datoLaboralDto.getFechaTermino());
+        datoLaboral.setFunciones(datoLaboralDto.getFunciones());
+        datoLaboralRepository.save(datoLaboral);
+        return new Mensaje("Se registró con éxito",true);
+    }
+
+    @Override
+    public Mensaje actualizarDatoLaboral(DatoLaboralDto datoLaboralDto) {
+        if(datoLaboralDto.getId() ==null){
+            return new Mensaje("Id de dato academico no es válido",false);
+        }
+        Optional<DatoLaboral> datoLaboralOptional = datoLaboralRepository.findById(datoLaboralDto.getId());
+        if (datoLaboralOptional.isEmpty()){
+            return new Mensaje("No se encontró dato académico",false);
+        }
+        if(datoLaboralDto.getPostulanteId()!= null){
+            Optional<PostulanteEntity> postulanteEntity = postulanteRepository.findById(datoLaboralDto.getPostulanteId());
+            if (postulanteEntity.isEmpty()){
+                return new Mensaje("No existe postulante",false);
+            }
+            datoLaboralOptional.get().setPostulante(postulanteEntity.get());
+        }
+        if(datoLaboralDto.getDistritoId()!= null){
+            Optional<Distrito> distrito = distritoRepository.findById(datoLaboralDto.getDistritoId());
+            if (distrito.isEmpty()){
+                return new Mensaje("No existe distrito",false);
+            }
+            datoLaboralOptional.get().setDistrito(distrito.get());
+        }
+        if(datoLaboralDto.getProvinciaId()!= null){
+            Optional<Provincia> provincia = provinciaRepository.findById(datoLaboralDto.getProvinciaId());
+            if (provincia.isEmpty()){
+                return new Mensaje("No existe provincia",false);
+            }
+            datoLaboralOptional.get().setProvincia(provincia.get());
+        }
+        if(datoLaboralDto.getDepartamentoId()!= null){
+            Optional<Departamento> departamento = departamentoRepository.findById(datoLaboralDto.getDepartamentoId());
+            if (departamento.isEmpty()){
+                return new Mensaje("No existe departamento",false);
+            }
+            datoLaboralOptional.get().setDepartamento(departamento.get());
+        }
+        if(datoLaboralDto.getTrabajo() != null){
+            datoLaboralOptional.get().setTrabajo(datoLaboralDto.getTrabajo());
+        }
+        if(datoLaboralDto.getPuesto() != null){
+            datoLaboralOptional.get().setPuesto(datoLaboralDto.getPuesto());
+        }
+        if(datoLaboralDto.getEmpresa() != null){
+            datoLaboralOptional.get().setEmpresa(datoLaboralDto.getEmpresa());
+        }
+        if(datoLaboralDto.getFechaInicio() != null){
+            datoLaboralOptional.get().setFechaInicio(datoLaboralDto.getFechaInicio());
+        }
+        if(datoLaboralDto.getFechaTermino() != null){
+            datoLaboralOptional.get().setFechaTermino(datoLaboralDto.getFechaTermino());
+        }
+        if(datoLaboralDto.getFunciones() != null){
+            datoLaboralOptional.get().setFunciones(datoLaboralDto.getFunciones());
+        }
+        return new Mensaje("Se actualizó con éxito",true);
+    }
+
+    @Override
+    public Page<DatoLaboralDto> listarDatoLaboral(Integer numPagina, Integer tamPagina, Long postulanteId) {
+        Pageable pageable = PageRequest.of(numPagina, tamPagina);
+        List<DatoLaboral> lista = datoLaboralRepository.listar(postulanteId, pageable);
+        List<DatoLaboralDto> listaDatoBancario = lista.stream().map(datoLaboralMapper.INSTANCE::toDatoLaboralDto).collect(Collectors.toList());
+        if(!lista.isEmpty()){
+            return new PageImpl<>(listaDatoBancario, pageable, lista.size());
+        }
         return null;
     }
 
     @Override
-    public Page<DatoEmbarque> listarDatoEmbarque(Integer numPagina, Integer tamPagina, Long postulanteId) {
-        return null;
+    public Mensaje registrarDatoRedSocial(DatoRedSocialDto datoRedSocialDto) {
+        DatoRedSocial datoRedSocial = new DatoRedSocial();
+        Optional<PostulanteEntity> postulanteEntity = postulanteRepository.findById(datoRedSocialDto.getPostulanteId());
+        if (postulanteEntity.isEmpty()){
+            return new Mensaje("No existe postulante",false);
+        }
+        datoRedSocial.setPostulante(postulanteEntity.get());
+        datoRedSocial.setNombre(datoRedSocialDto.getNombre());
+        datoRedSocial.setLink(datoRedSocialDto.getLink());
+        return new Mensaje("Se registró con éxito",true);
     }
 
     @Override
-    public Mensaje registrarDatoLaboral(DatoLaboral datoLaboral) {
-        return null;
+    public Mensaje actualizarDatoRedSocial(DatoRedSocialDto datoRedSocialDto) {
+        if(datoRedSocialDto.getId() ==null){
+            return new Mensaje("Id de dato academico no es válido",false);
+        }
+        Optional<DatoRedSocial> datoRedSocialOptional = datoRedSocialRepository.findById(datoRedSocialDto.getId());
+        if (datoRedSocialOptional.isEmpty()){
+            return new Mensaje("No se encontró dato académico",false);
+        }
+        if(datoRedSocialDto.getPostulanteId()!= null){
+            Optional<PostulanteEntity> postulanteEntity = postulanteRepository.findById(datoRedSocialDto.getPostulanteId());
+            if (postulanteEntity.isEmpty()){
+                return new Mensaje("No existe postulante",false);
+            }
+            datoRedSocialOptional.get().setPostulante(postulanteEntity.get());
+        }
+        if(datoRedSocialDto.getNombre() != null){
+            datoRedSocialOptional.get().setNombre(datoRedSocialDto.getNombre());
+        }
+        if(datoRedSocialDto.getLink() !=null){
+            datoRedSocialOptional.get().setLink(datoRedSocialDto.getLink());
+        }
+        return new Mensaje("Se actualizó con éxito",true);
     }
 
     @Override
-    public Mensaje actualizarDatoLaboral(DatoLaboral datoLaboral) {
-        return null;
-    }
-
-    @Override
-    public Page<DatoLaboral> listarDatoLaboral(Integer numPagina, Integer tamPagina, Long postulanteId) {
-        return null;
-    }
-
-    @Override
-    public Mensaje registrarDatoRedSocial(DatoRedSocial datoRedSocial) {
-        return null;
-    }
-
-    @Override
-    public Mensaje actualizarDatoRedSocial(DatoRedSocial datoRedSocial) {
-        return null;
-    }
-
-    @Override
-    public Page<DatoRedSocial> listarDatoRedSocial(Integer numPagina, Integer tamPagina, Long postulanteId) {
+    public Page<DatoRedSocialDto> listarDatoRedSocial(Integer numPagina, Integer tamPagina, Long postulanteId) {
+        Pageable pageable = PageRequest.of(numPagina, tamPagina);
+        List<DatoRedSocial> lista = datoRedSocialRepository.listar(postulanteId, pageable);
+        List<DatoRedSocialDto> listaRedSocial = lista.stream().map(datoRedSocialMapper.INSTANCE::toDatoRedSocialDto).collect(Collectors.toList());
+        if(!lista.isEmpty()){
+            return new PageImpl<>(listaRedSocial, pageable, lista.size());
+        }
         return null;
     }
 }

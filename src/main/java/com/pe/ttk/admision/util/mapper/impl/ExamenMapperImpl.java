@@ -2,13 +2,6 @@ package com.pe.ttk.admision.util.mapper.impl;
 
 import com.pe.ttk.admision.dto.ExamenDto;
 import com.pe.ttk.admision.entity.admision.ExamenEntity;
-import com.pe.ttk.admision.entity.admision.PostulanteEntity;
-import com.pe.ttk.admision.entity.master.CentroMedico;
-import com.pe.ttk.admision.entity.master.SubEstado;
-import com.pe.ttk.admision.entity.master.TipoExamen;
-import com.pe.ttk.admision.enums.CentroMedicoNombre;
-import com.pe.ttk.admision.enums.SubEstadoNombre;
-import com.pe.ttk.admision.enums.TipoExamenNombre;
 import com.pe.ttk.admision.util.mapper.ExamenMapper;
 import org.springframework.stereotype.Component;
 
