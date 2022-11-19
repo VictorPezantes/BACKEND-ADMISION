@@ -1,17 +1,14 @@
 package com.pe.ttk.admision.service.impl;
 
 import com.pe.ttk.admision.dto.DatoAcademicoDto;
-import com.pe.ttk.admision.dto.FamiliarDto;
+import com.pe.ttk.admision.dto.DatoBancarioDto;
 import com.pe.ttk.admision.dto.Mensaje;
-import com.pe.ttk.admision.entity.admision.DatoAcademico;
-import com.pe.ttk.admision.entity.admision.Familiar;
-import com.pe.ttk.admision.entity.admision.PostulanteEntity;
+import com.pe.ttk.admision.entity.admision.*;
 import com.pe.ttk.admision.entity.master.*;
 import com.pe.ttk.admision.repository.*;
-import com.pe.ttk.admision.service.DatoAcademicoService;
+import com.pe.ttk.admision.service.DatoAdicionalService;
 import com.pe.ttk.admision.util.mapper.DatoAcademicoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -23,10 +20,25 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class DatoAcademicoServiceImpl implements DatoAcademicoService {
+public class DatoAdicionalServiceImpl implements DatoAdicionalService {
 
     @Autowired
     DatoAcademicoRepository datoAcademicoRepository;
+
+    @Autowired
+    DatoBancarioRepository datoBancarioRepository;
+
+    @Autowired
+    DatoContactoEmergenciaRepository datoContactoEmergenciaRepository;
+
+    @Autowired
+    DatoEmbarqueRepository datoEmbarqueRepository;
+
+    @Autowired
+    DatoLaboralRepository datoLaboralRepository;
+
+    @Autowired
+    DatoRedSocialRepository datoRedSocialRepository;
 
     @Autowired
     DistritoRepository distritoRepository;
@@ -50,7 +62,7 @@ public class DatoAcademicoServiceImpl implements DatoAcademicoService {
     DatoAcademicoMapper datoAcademicoMapper;
 
     @Override
-    public Mensaje registrar(DatoAcademicoDto datoAcademicoDto) {
+    public Mensaje registrarDatoAcademico(DatoAcademicoDto datoAcademicoDto) {
         DatoAcademico datoAcademico = new DatoAcademico();
 
         Optional<Distrito> distrito = distritoRepository.findById(datoAcademicoDto.getDistritoId());
@@ -99,7 +111,7 @@ public class DatoAcademicoServiceImpl implements DatoAcademicoService {
     }
 
     @Override
-    public Mensaje actualizar(DatoAcademicoDto datoAcademicoDto) {
+    public Mensaje actualizarDatoAcademico(DatoAcademicoDto datoAcademicoDto) {
         if(datoAcademicoDto.getId() ==null){
             return new Mensaje("Id de dato academico no es válido",false);
         }
@@ -166,13 +178,137 @@ public class DatoAcademicoServiceImpl implements DatoAcademicoService {
     }
 
     @Override
-    public Page<DatoAcademicoDto> listar(Integer numPagina, Integer tamPagina, Long postulanteId) {
+    public Page<DatoAcademicoDto> listarDatoAcademico(Integer numPagina, Integer tamPagina, Long postulanteId) {
         Pageable pageable = PageRequest.of(numPagina, tamPagina);
         List<DatoAcademico> lista = datoAcademicoRepository.listar(postulanteId, pageable);
         List<DatoAcademicoDto> listaDatoAcademico = lista.stream().map(datoAcademicoMapper.INSTANCE::toDatoAcademicoDto).collect(Collectors.toList());
         if(!lista.isEmpty()){
             return new PageImpl<>(listaDatoAcademico, pageable, lista.size());
         }
+        return null;
+    }
+
+    @Override
+    public Mensaje registrarDatoBancario(DatoBancarioDto datoBancarioDto) {
+        DatoBancario datoBancario = new DatoBancario();
+        Optional<PostulanteEntity> postulanteEntity = postulanteRepository.findById(datoBancarioDto.getPostulanteId());
+        if (postulanteEntity.isEmpty()){
+            return new Mensaje("No existe postulante",false);
+        }
+        datoBancario.setPostulante(postulanteEntity.get());
+        datoBancario.setMoneda(datoBancarioDto.getMoneda());
+        datoBancario.setBanco(datoBancarioDto.getBanco());
+        datoBancario.setCuenta(datoBancarioDto.getCuenta());
+        datoBancario.setCci(datoBancarioDto.getCci());
+        datoBancario.setObservacion(datoBancarioDto.getObservacion());
+        datoBancario.setRuc(datoBancarioDto.getRuc());
+        datoBancario.setClaveSol(datoBancarioDto.getClaveSol());
+        datoBancarioRepository.save(datoBancario);
+        return new Mensaje("Se registró con éxito",true);
+    }
+
+    @Override
+    public Mensaje actualizarDatoBancario(DatoBancarioDto datoBancarioDto) {
+        if(datoBancarioDto.getId() ==null){
+            return new Mensaje("Id de dato academico no es válido",false);
+        }
+        Optional<DatoBancario> datoBancarioDb = datoBancarioRepository.findById(datoBancarioDto.getId());
+        if (datoBancarioDb.isEmpty()){
+            return new Mensaje("No se encontró dato académico",false);
+        }
+        if (datoBancarioDto.getPostulanteId()!= null){
+            Optional<PostulanteEntity> postulanteEntity = postulanteRepository.findById(datoBancarioDto.getPostulanteId());
+            if (postulanteEntity.isEmpty()){
+                return new Mensaje("No existe postulante",false);
+            }
+            datoBancarioDb.get().setPostulante(postulanteEntity.get());
+        }
+        if(datoBancarioDto.getMoneda() != null) {
+            datoBancarioDb.get().setMoneda(datoBancarioDto.getMoneda());
+        }
+        if(datoBancarioDto.getBanco() != null) {
+            datoBancarioDb.get().setBanco(datoBancarioDto.getBanco());
+        }
+        if(datoBancarioDto.getCuenta() != null) {
+            datoBancarioDb.get().setCuenta(datoBancarioDto.getCuenta());
+        }
+        if(datoBancarioDto.getCci() != null) {
+            datoBancarioDb.get().setCci(datoBancarioDto.getCci());
+        }
+        if(datoBancarioDto.getObservacion() != null) {
+            datoBancarioDb.get().setObservacion(datoBancarioDto.getObservacion());
+        }
+        if(datoBancarioDto.getRuc() != null) {
+            datoBancarioDb.get().setRuc(datoBancarioDto.getRuc());
+        }
+        if(datoBancarioDto.getClaveSol() != null) {
+            datoBancarioDb.get().setClaveSol(datoBancarioDto.getClaveSol());
+        }
+        return new Mensaje("Se actualizó con éxito",true);
+    }
+
+    @Override
+    public Page<DatoBancarioDto> listarDatoBancario(Integer numPagina, Integer tamPagina, Long postulanteId) {
+        return null;
+    }
+
+    @Override
+    public Mensaje registrarDatoBancario(DatoContactoEmergencia datoContactoEmergencia) {
+        return null;
+    }
+
+    @Override
+    public Mensaje actualizarDatoBancario(DatoContactoEmergencia datoContactoEmergencia) {
+        return null;
+    }
+
+    @Override
+    public Page<DatoContactoEmergencia> listarDatoContactoEmergencia(Integer numPagina, Integer tamPagina, Long postulanteId) {
+        return null;
+    }
+
+    @Override
+    public Mensaje registrarDatoEmbarque(DatoEmbarque datoEmbarque) {
+        return null;
+    }
+
+    @Override
+    public Mensaje actualizarDatoEmbarque(DatoEmbarque datoEmbarque) {
+        return null;
+    }
+
+    @Override
+    public Page<DatoEmbarque> listarDatoEmbarque(Integer numPagina, Integer tamPagina, Long postulanteId) {
+        return null;
+    }
+
+    @Override
+    public Mensaje registrarDatoLaboral(DatoLaboral datoLaboral) {
+        return null;
+    }
+
+    @Override
+    public Mensaje actualizarDatoLaboral(DatoLaboral datoLaboral) {
+        return null;
+    }
+
+    @Override
+    public Page<DatoLaboral> listarDatoLaboral(Integer numPagina, Integer tamPagina, Long postulanteId) {
+        return null;
+    }
+
+    @Override
+    public Mensaje registrarDatoRedSocial(DatoRedSocial datoRedSocial) {
+        return null;
+    }
+
+    @Override
+    public Mensaje actualizarDatoRedSocial(DatoRedSocial datoRedSocial) {
+        return null;
+    }
+
+    @Override
+    public Page<DatoRedSocial> listarDatoRedSocial(Integer numPagina, Integer tamPagina, Long postulanteId) {
         return null;
     }
 }

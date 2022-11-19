@@ -177,4 +177,12 @@ public class PostulanteEntity {
     private Date fechaMatrimonio;
     private String lugarNacimiento;
     private String grupoSanguineo;
+    private String ubigeo;
+    private String polo;
+    private String casaca;
+    private String pantalon;
+    private String overol;
+    private String calzado;
+    private Date fechaIngreso;
+    private String recomendadoPor;
 }
