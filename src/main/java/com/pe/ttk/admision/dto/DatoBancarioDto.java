@@ -1,14 +1,10 @@
 package com.pe.ttk.admision.dto;
 
-import com.pe.ttk.admision.entity.admision.PostulanteEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 @Getter
 @Setter
 @NoArgsConstructor

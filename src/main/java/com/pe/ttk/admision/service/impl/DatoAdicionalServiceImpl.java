@@ -2,12 +2,15 @@ package com.pe.ttk.admision.service.impl;
 
 import com.pe.ttk.admision.dto.DatoAcademicoDto;
 import com.pe.ttk.admision.dto.DatoBancarioDto;
+import com.pe.ttk.admision.dto.DatoContactoEmergenciaDto;
 import com.pe.ttk.admision.dto.Mensaje;
 import com.pe.ttk.admision.entity.admision.*;
 import com.pe.ttk.admision.entity.master.*;
 import com.pe.ttk.admision.repository.*;
 import com.pe.ttk.admision.service.DatoAdicionalService;
 import com.pe.ttk.admision.util.mapper.DatoAcademicoMapper;
+import com.pe.ttk.admision.util.mapper.DatoBancarioMapper;
+import com.pe.ttk.admision.util.mapper.DatoContactoEmergenciaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -59,7 +62,16 @@ public class DatoAdicionalServiceImpl implements DatoAdicionalService {
     NivelEstudioRepository nivelEstudioRepository;
 
     @Autowired
+    ParentescoRepository parentescoRepository;
+
+    @Autowired
     DatoAcademicoMapper datoAcademicoMapper;
+
+    @Autowired
+    DatoBancarioMapper datoBancarioMapper;
+
+    @Autowired
+    DatoContactoEmergenciaMapper datoContactoEmergenciaMapper;
 
     @Override
     public Mensaje registrarDatoAcademico(DatoAcademicoDto datoAcademicoDto) {
@@ -249,21 +261,96 @@ public class DatoAdicionalServiceImpl implements DatoAdicionalService {
 
     @Override
     public Page<DatoBancarioDto> listarDatoBancario(Integer numPagina, Integer tamPagina, Long postulanteId) {
+        Pageable pageable = PageRequest.of(numPagina, tamPagina);
+        List<DatoBancario> lista = datoBancarioRepository.listar(postulanteId, pageable);
+        List<DatoBancarioDto> listaDatoBancario = lista.stream().map(datoBancarioMapper.INSTANCE::toDatoBancarioDto).collect(Collectors.toList());
+        if(!lista.isEmpty()){
+            return new PageImpl<>(listaDatoBancario, pageable, lista.size());
+        }
         return null;
     }
 
     @Override
-    public Mensaje registrarDatoBancario(DatoContactoEmergencia datoContactoEmergencia) {
-        return null;
+    public Mensaje registrarDatoContactoEmergencia(DatoContactoEmergenciaDto datoContactoEmergenciaDto) {
+        DatoContactoEmergencia datoContactoEmergencia = new DatoContactoEmergencia();
+        Optional<PostulanteEntity> postulanteEntity = postulanteRepository.findById(datoContactoEmergenciaDto.getPostulanteId());
+        if (postulanteEntity.isEmpty()){
+            return new Mensaje("No existe postulante",false);
+        }
+        datoContactoEmergencia.setPostulante(postulanteEntity.get());
+        Optional<Parentesco> parentescoOptional = parentescoRepository.findById(datoContactoEmergenciaDto.getParentescoId());
+        if (parentescoOptional.isEmpty()){
+            return new Mensaje("No existe postulante",false);
+        }
+        datoContactoEmergencia.setParentesco(parentescoOptional.get());
+
+        datoContactoEmergencia.setPrimerNombre(datoContactoEmergenciaDto.getPrimerNombre());
+        datoContactoEmergencia.setSegundoNombre(datoContactoEmergenciaDto.getSegundoNombre());
+        datoContactoEmergencia.setPrimerApellido(datoContactoEmergenciaDto.getPrimerApellido());
+        datoContactoEmergencia.setSegundoApellido(datoContactoEmergenciaDto.getSegundoApellido());
+        datoContactoEmergencia.setCelular(datoContactoEmergenciaDto.getCelular());
+        datoContactoEmergencia.setTelefono(datoContactoEmergenciaDto.getTelefono());
+        datoContactoEmergencia.setEmail(datoContactoEmergenciaDto.getEmail());
+
+        return new Mensaje("Se registró con éxito",true);
     }
 
     @Override
-    public Mensaje actualizarDatoBancario(DatoContactoEmergencia datoContactoEmergencia) {
-        return null;
+    public Mensaje actualizarDatoContactoEmergencia(DatoContactoEmergenciaDto datoContactoEmergenciaDto) {
+        if(datoContactoEmergenciaDto.getId() ==null){
+            return new Mensaje("Id de dato academico no es válido",false);
+        }
+        Optional<DatoContactoEmergencia> datoContactoEmergenciaOptional = datoContactoEmergenciaRepository.findById(datoContactoEmergenciaDto.getId());
+        if (datoContactoEmergenciaOptional.isEmpty()){
+            return new Mensaje("No se encontró dato académico",false);
+        }
+        if(datoContactoEmergenciaDto.getPostulanteId()!= null){
+            Optional<PostulanteEntity> postulanteEntity = postulanteRepository.findById(datoContactoEmergenciaDto.getPostulanteId());
+            if (postulanteEntity.isEmpty()){
+                return new Mensaje("No existe postulante",false);
+            }
+            datoContactoEmergenciaOptional.get().setPostulante(postulanteEntity.get());
+        }
+        if(datoContactoEmergenciaDto.getParentescoId()!=null){
+            Optional<Parentesco> parentescoOptional = parentescoRepository.findById(datoContactoEmergenciaDto.getParentescoId());
+            if (parentescoOptional.isEmpty()){
+                return new Mensaje("No existe postulante",false);
+            }
+            datoContactoEmergenciaOptional.get().setParentesco(parentescoOptional.get());
+        }
+        if(datoContactoEmergenciaDto.getPrimerNombre() != null){
+            datoContactoEmergenciaOptional.get().setPrimerNombre(datoContactoEmergenciaDto.getPrimerNombre());
+        }
+        if(datoContactoEmergenciaDto.getSegundoNombre() != null){
+            datoContactoEmergenciaOptional.get().setSegundoNombre(datoContactoEmergenciaDto.getSegundoNombre());
+        }
+        if(datoContactoEmergenciaDto.getPrimerApellido() != null){
+            datoContactoEmergenciaOptional.get().setPrimerApellido(datoContactoEmergenciaDto.getPrimerApellido());
+        }
+        if(datoContactoEmergenciaDto.getSegundoApellido() != null){
+            datoContactoEmergenciaOptional.get().setSegundoApellido(datoContactoEmergenciaDto.getSegundoApellido());
+        }
+        if(datoContactoEmergenciaDto.getCelular() != null){
+            datoContactoEmergenciaOptional.get().setCelular(datoContactoEmergenciaDto.getCelular());
+        }
+        if(datoContactoEmergenciaDto.getTelefono() != null){
+            datoContactoEmergenciaOptional.get().setTelefono(datoContactoEmergenciaDto.getTelefono());
+        }
+        if(datoContactoEmergenciaDto.getEmail() != null){
+            datoContactoEmergenciaOptional.get().setEmail(datoContactoEmergenciaDto.getEmail());
+        }
+
+        return new Mensaje("Se actualizó con éxito",true);
     }
 
     @Override
-    public Page<DatoContactoEmergencia> listarDatoContactoEmergencia(Integer numPagina, Integer tamPagina, Long postulanteId) {
+    public Page<DatoContactoEmergenciaDto> listarDatoContactoEmergencia(Integer numPagina, Integer tamPagina, Long postulanteId) {
+        Pageable pageable = PageRequest.of(numPagina, tamPagina);
+        List<DatoContactoEmergencia> lista = datoContactoEmergenciaRepository.listar(postulanteId, pageable);
+        List<DatoContactoEmergenciaDto> listaDatoBancario = lista.stream().map(datoContactoEmergenciaMapper.INSTANCE::toDatoContactoEmergenciaDto).collect(Collectors.toList());
+        if(!lista.isEmpty()){
+            return new PageImpl<>(listaDatoBancario, pageable, lista.size());
+        }
         return null;
     }
 

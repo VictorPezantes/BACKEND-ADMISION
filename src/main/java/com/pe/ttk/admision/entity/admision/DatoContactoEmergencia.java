@@ -20,7 +20,7 @@ public class DatoContactoEmergencia {
     @JoinColumn(name = "parentescoId", referencedColumnName = "id")
     private Parentesco parentesco;
     private String primerNombre;
-    private String segundoNOmbre;
+    private String segundoNombre;
     private String primerApellido;
     private String segundoApellido;
     private String celular;
